@@ -127,3 +127,26 @@ model_decision:
 - [ ] Tidak ada `console.log` yang tertinggal di kode yang di-commit.
 - [ ] Semua Three.js object yang ditambah punya path `.dispose()` saat dihapus.
 - [ ] `workspace-os` bisa jalan standalone dengan `npm start` tanpa 3D shell.
+
+## Artistic Direction
+
+Project ini bukan:
+- SaaS dashboard
+- startup landing page
+- AI futuristic interface
+
+Project ini adalah:
+- immersive digital workspace
+- atmospheric personal environment
+- cinematic interactive experience
+
+Prioritas utama:
+- atmosphere
+- interaction feel
+- tactile computing
+- subtle branding
+- emotional immersion
+
+Jangan overdesign.
+Jangan overanimate.
+Jangan corporate-ify project.

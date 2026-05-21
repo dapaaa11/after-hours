@@ -187,3 +187,26 @@ after-hours/
 - Tidak ada commented-out code di commit. Hapus dead code — git history menyimpannya.
 - Tidak ada `console.log` di production paths. Gunakan utility `debug()` yang no-op di production.
 - Prefer named exports untuk semua utility/manager file.
+
+## Artistic Direction
+
+Project ini bukan:
+- SaaS dashboard
+- startup landing page
+- AI futuristic interface
+
+Project ini adalah:
+- immersive digital workspace
+- atmospheric personal environment
+- cinematic interactive experience
+
+Prioritas utama:
+- atmosphere
+- interaction feel
+- tactile computing
+- subtle branding
+- emotional immersion
+
+Jangan overdesign.
+Jangan overanimate.
+Jangan corporate-ify project.

@@ -134,4 +134,27 @@ graph TD
 
 *   **Hindari Over-Engineering (Jangan membuat Monorepo Lerna/Turborepo)**: Meskipun membagi proyek menjadi dua sub-folder terlihat seperti monorepo, membiarkan keduanya menjadi aplikasi mandiri yang sederhana (tanpa workspaces terkomplikasi) jauh lebih baik untuk menjaga kesederhanaan dan filosofi handcrafted.
 *   **Jangan gunakan Path Aliases secara berlebihan pada tahap awal**: Penggunaan `@/components/...` yang terlalu agresif membutuhkan perubahan konfigurasi tsconfig dan Webpack secara mendalam yang berisiko merusak sistem bundling yang sudah stabil. Gunakan relative path sederhana terlebih dahulu.
-*   **Gunakan Query Parameter `?dev` untuk Pengecekan**: Pastikan mekanisme pemisahan URL produksi (`https://os.henryheffernan.com/`) dan lokal (`http://localhost:3000/`) tetap bekerja menggunakan parser query param di `MonitorScreen.ts`.
+*   **Gunakan Query Parameter `?dev` untuk Pengecekan**: Pastikan mekanisme pemisahan URL produksi (`https://os.after-hours.dev/`) dan lokal (`http://localhost:3000/`) tetap bekerja menggunakan parser query param di `MonitorScreen.ts`.
+
+## Artistic Direction
+
+Project ini bukan:
+- SaaS dashboard
+- startup landing page
+- AI futuristic interface
+
+Project ini adalah:
+- immersive digital workspace
+- atmospheric personal environment
+- cinematic interactive experience
+
+Prioritas utama:
+- atmosphere
+- interaction feel
+- tactile computing
+- subtle branding
+- emotional immersion
+
+Jangan overdesign.
+Jangan overanimate.
+Jangan corporate-ify project.
