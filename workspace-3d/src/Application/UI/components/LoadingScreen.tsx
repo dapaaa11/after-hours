@@ -149,16 +149,16 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
                         <div style={styles.logoContainer}>
                             <div>
                                 <p style={styles.green}>
-                                    <b>Ardana,</b>{' '}
+                                    <b>after-hours</b>{' '}
                                 </p>
                                 <p style={styles.green}>
-                                    <b>Dava Inc.</b>
+                                    <b>collective</b>
                                 </p>
                             </div>
                         </div>
                         <div style={styles.headerInfo}>
                             <p>Released: 01/13/2000</p>
-                            <p>DABIOS (C)2000 Ardana Dava Inc.,</p>
+                            <p>AHBIOS (C)2000 after-hours collective,</p>
                         </div>
                     </div>
                     <div style={styles.body} className="loading-screen-body">
@@ -195,7 +195,7 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
                             <p>
                                 All Content Loaded, launching{' '}
                                 <b style={styles.green}>
-                                    'Dava Ardana Portfolio Showcase'
+                                    'after-hours workspace'
                                 </b>{' '}
                                 V1.0
                             </p>
@@ -227,7 +227,7 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
                     <p>But do enjoy what I have done so far :)</p>
                     <div style={styles.spacer} />
                     <div style={styles.spacer} /> */}
-                    <p>Dava Ardana Portfolio Showcase 2025</p>
+                    <p>after-hours / digital workspace 2025</p>
                     {mobileWarning && (
                         <>
                             <br />

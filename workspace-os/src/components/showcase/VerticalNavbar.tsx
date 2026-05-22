@@ -1,26 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from '../general';
-import forHire from '../../assets/pictures/forHireGif.gif';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 export interface VerticalNavbarProps {}
 
 const VerticalNavbar: React.FC<VerticalNavbarProps> = (props) => {
     const location = useLocation();
-    const [projectsExpanded, setProjectsExpanded] = useState(false);
     const [isHome, setIsHome] = useState(false);
 
-    const navigate = useNavigate();
-    const goToContact = () => {
-        navigate('/contact');
-    };
-
     useEffect(() => {
-        if (location.pathname.includes('/projects')) {
-            setProjectsExpanded(true);
-        } else {
-            setProjectsExpanded(false);
-        }
         if (location.pathname === '/') {
             setIsHome(true);
         } else {
@@ -32,59 +20,33 @@ const VerticalNavbar: React.FC<VerticalNavbarProps> = (props) => {
     return !isHome ? (
         <div style={styles.navbar}>
             <div style={styles.header}>
-                <h1 style={styles.headerText}>Dava</h1>
-                <h1 style={styles.headerText}>Ardana</h1>
-                <h3 style={styles.headerShowcase}>Showcase '25</h3>
+                <h1 style={styles.headerText}>after-hours</h1>
             </div>
             <div style={styles.links}>
                 <Link containerStyle={styles.link} to="" text="HOME" />
-                <Link containerStyle={styles.link} to="about" text="ABOUT" />
                 <Link
                     containerStyle={styles.link}
-                    to="experience"
-                    text="EXPERIENCE"
+                    to="operators"
+                    text="OPERATORS"
                 />
-                <Link
-                    containerStyle={Object.assign(
-                        {},
-                        styles.link,
-                        projectsExpanded && styles.expandedLink
-                    )}
-                    to="projects"
-                    text="PROJECTS"
-                />
-                {
-                    // if current path contains projects
-                    projectsExpanded && (
-                        <div style={styles.insetLinks}>
-                            <Link
-                                containerStyle={styles.insetLink}
-                                to="projects/software"
-                                text="SOFTWARE"
-                            />
-                            <Link
-                                containerStyle={styles.insetLink}
-                                to="projects/music"
-                                text="MUSIC"
-                            />
-                            <Link
-                                containerStyle={styles.insetLink}
-                                to="projects/art"
-                                text="ART"
-                            />
-                        </div>
-                    )
-                }
                 <Link
                     containerStyle={styles.link}
-                    to="contact"
-                    text="CONTACT"
+                    to="channel"
+                    text="CHANNEL"
                 />
+                <Link
+                    containerStyle={styles.link}
+                    to="systems"
+                    text="SYSTEMS"
+                />
+                <Link
+                    containerStyle={styles.link}
+                    to="archive"
+                    text="ARCHIVE"
+                />
+
             </div>
             <div style={styles.spacer} />
-            <div style={styles.forHireContainer} onMouseDown={goToContact}>
-                {/* <img src={forHire} style={styles.image} alt="" /> */}
-            </div>
         </div>
     ) : (
         <></>
@@ -103,7 +65,7 @@ const styles: StyleSheetCSS = {
     },
     header: {
         flexDirection: 'column',
-        marginBottom: 64,
+        marginBottom: 36,
     },
     headerText: {
         fontSize: 38,
@@ -117,34 +79,15 @@ const styles: StyleSheetCSS = {
         marginBottom: 8,
     },
     link: {
-        marginBottom: 32,
-    },
-    expandedLink: {
-        marginBottom: 16,
-    },
-    insetLinks: {
-        flexDirection: 'column',
-        marginLeft: 32,
-        marginBottom: 16,
-    },
-    insetLink: {
-        marginBottom: 8,
+        marginBottom: 18,
     },
     links: {
         flexDirection: 'column',
         flex: 1,
         justifyContent: 'center',
     },
-    image: {
-        width: '80%',
-    },
     spacer: {
         flex: 1,
-    },
-    forHireContainer: {
-        cursor: 'pointer',
-
-        width: '100%',
     },
 };
 

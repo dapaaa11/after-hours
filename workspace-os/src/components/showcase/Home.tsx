@@ -1,44 +1,32 @@
 import React from 'react';
 import { Link } from '../general';
 
-import forhire from '../../assets/pictures/forHireGif.gif';
-import { useNavigate } from 'react-router-dom';
-
 export interface HomeProps {}
 
 const Home: React.FC<HomeProps> = (props) => {
-    const navigate = useNavigate();
-
-    const goToContact = () => {
-        navigate('/contact');
-    };
-
     return (
         <div style={styles.page}>
             <div style={styles.header}>
-                <h1 style={styles.name}>Dava Ardana</h1>
-                <h2>Fullstack Developer & Digital Craftsman</h2>
+                <h1 style={styles.name}>after-hours</h1>
+                <h2>digital workspace / two operators</h2>
             </div>
             <div style={styles.buttons}>
-                <Link containerStyle={styles.link} to="about" text="ABOUT" />
+                <Link containerStyle={styles.link} to="operators" text="OPERATORS" />
                 <Link
                     containerStyle={styles.link}
-                    to="experience"
-                    text="EXPERIENCE"
+                    to="systems"
+                    text="SYSTEMS"
                 />
                 <Link
                     containerStyle={styles.link}
-                    to="projects"
-                    text="PROJECTS"
+                    to="archive"
+                    text="ARCHIVE"
                 />
                 <Link
                     containerStyle={styles.link}
-                    to="contact"
-                    text="CONTACT"
+                    to="channel"
+                    text="CHANNEL"
                 />
-            </div>
-            <div style={styles.forHireContainer} onMouseDown={goToContact}>
-                {/* <img src={forhire} alt="" /> */}
             </div>
         </div>
     );
@@ -72,17 +60,6 @@ const styles: StyleSheetCSS = {
     },
     link: {
         padding: 16,
-    },
-    nowHiring: {
-        backgroundColor: 'red',
-        padding: 16,
-    },
-    forHireContainer: {
-        marginTop: 64,
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        cursor: 'pointer',
     },
     name: {
         fontSize: 72,
