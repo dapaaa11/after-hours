@@ -11,7 +11,7 @@ const CREDITS = [
         rows: [['Dava Ardana', 'All']],
     },
     {
-        title: 'Modeling & Texturing',
+        title: 'Environment',
         rows: [
             ['Dava Ardana', 'Texturing, Composition, & UV'],
             ['Mickael Boitte', 'Computer Model'],
@@ -27,18 +27,15 @@ const CREDITS = [
         ],
     },
     {
-        title: 'Special Thanks',
+        title: 'References',
         rows: [
-            ['Bruno Simon', 'SimonDev'],
-            ['Lorelei Kravinsky', 'Scott Bass'],
-            ['Trey Briccetti', 'Mom, Dad & Angela'],
-        ],
-    },
-    {
-        title: 'Inspiration',
-        rows: [
-            ['Bruno Simon', 'Jesse Zhou'],
-            ['Pink Yellow', 'Vivek Patel'],
+            ['Bruno Simon', 'Archive'],
+            ['Lorelei Kravinsky', 'Archive'],
+            ['Scott Bass', 'Archive'],
+            ['Trey Briccetti', 'Archive'],
+            ['Jesse Zhou', 'Archive'],
+            ['Pink Yellow', 'Archive'],
+            ['Vivek Patel', 'Archive'],
         ],
     },
 ];

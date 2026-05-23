@@ -1,0 +1,83 @@
+- generic [active]:
+  - iframe [ref=e48] [cursor=pointer]:
+    - generic [active] [ref=f1e1]:
+      - generic:
+        - generic: abcdefghijklmnopqrstuvwxzy
+        - generic: abcdefghijklmnopqrstuvwxzy
+        - generic: abcdefghijklmnopqrstuvwxzy
+        - generic: abcdefghijklmnopqrstuvwxzy
+      - generic [ref=f1e4]:
+        - generic [ref=f1e7]:
+          - paragraph [ref=f1e11]: Dava Ardana - Showcase 2025
+          - generic [ref=f1e24]:
+            - generic [ref=f1e25]:
+              - heading "Dava Ardana" [level=1] [ref=f1e26]
+              - heading "Fullstack Developer & Digital Craftsman" [level=2] [ref=f1e27]
+            - generic [ref=f1e28]:
+              - link "ABOUT" [ref=f1e29] [cursor=pointer]:
+                - /url: /about
+                - heading "ABOUT" [level=4] [ref=f1e30]
+              - link "EXPERIENCE" [ref=f1e31] [cursor=pointer]:
+                - /url: /experience
+                - heading "EXPERIENCE" [level=4] [ref=f1e32]
+              - link "PROJECTS" [ref=f1e33] [cursor=pointer]:
+                - /url: /projects
+                - heading "PROJECTS" [level=4] [ref=f1e34]
+              - link "CONTACT" [ref=f1e35] [cursor=pointer]:
+                - /url: /contact
+                - heading "CONTACT" [level=4] [ref=f1e36]
+          - paragraph [ref=f1e40]: © Copyright 2025 Dava Ardana
+        - generic:
+          - paragraph [ref=f1e49] [cursor=pointer]: My Showcase
+          - paragraph [ref=f1e54] [cursor=pointer]: The Oregon Trail
+          - paragraph [ref=f1e59] [cursor=pointer]: Doom
+          - paragraph [ref=f1e64] [cursor=pointer]: Scrabble
+          - paragraph [ref=f1e69] [cursor=pointer]: Henordle
+          - paragraph [ref=f1e74] [cursor=pointer]: Credits
+        - generic [ref=f1e76]:
+          - generic [ref=f1e77]:
+            - paragraph [ref=f1e80] [cursor=pointer]: Start
+            - generic [ref=f1e82] [cursor=pointer]:
+              - generic:
+                - paragraph: My Showcase
+          - paragraph [ref=f1e84]: 1:48 PM
+  - generic:
+    - generic:
+      - generic:
+        - paragraph: Click anywhere to
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - paragraph: Ardana,
+                - paragraph: Dava Inc.
+            - generic:
+              - paragraph: "Released: 01/13/2000"
+              - paragraph: DABIOS (C)2000 Ardana Dava Inc.,
+          - generic:
+            - paragraph: HSP S13 2000-2022 Special UC131S
+            - paragraph: HSP Showcase(tm) XX 113
+            - paragraph: "Checking RAM : 14000 OK"
+            - paragraph: FINISHED LOADING RESOURCES
+            - generic:
+              - paragraph: Loaded keyboardKeydown1 ... 63%
+              - paragraph: Loaded keyboardKeydown5 ... 68%
+              - paragraph: Loaded keyboardKeydown6 ... 74%
+              - paragraph: Loaded keyboardKeydown3 ... 79%
+              - paragraph: Loaded ccType ... 84%
+              - paragraph: Loaded keyboardKeydown4 ... 89%
+              - paragraph: Loaded startup ... 95%
+              - paragraph: Loaded office ... 100%
+            - paragraph: All Content Loaded, launching 'Dava Ardana Portfolio Showcase' V1.0
+          - generic:
+            - paragraph: Press DEL to enter SETUP , ESC to skip memory test
+            - paragraph: 05/21/2026
+        - generic:
+          - generic:
+            - paragraph: Dava Ardana Portfolio Showcase 2025
+            - generic:
+              - paragraph: Click start to begin
+            - generic:
+              - generic:
+                - paragraph: START

@@ -2,13 +2,13 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Colors from '../../constants/colors';
 import ShowcaseExplorer from '../applications/ShowcaseExplorer';
 import Doom from '../applications/Doom';
-import OregonTrail from '../applications/OregonTrail';
+// import OregonTrail from '../applications/OregonTrail';
 import ShutdownSequence from './ShutdownSequence';
 // import ThisComputer from '../applications/ThisComputer';
 import Henordle from '../applications/Henordle';
 import Toolbar from './Toolbar';
 import DesktopShortcut, { DesktopShortcutProps } from './DesktopShortcut';
-import Scrabble from '../applications/Scrabble';
+// import Scrabble from '../applications/Scrabble';
 import { IconName } from '../../assets/icons';
 import Credits from '../applications/Credits';
 
@@ -36,24 +36,6 @@ const APPLICATIONS: {
         shortcutIcon: 'showcaseIcon',
         component: ShowcaseExplorer,
     },
-    trail: {
-        key: 'trail',
-        name: 'The Oregon Trail',
-        shortcutIcon: 'trailIcon',
-        component: OregonTrail,
-    },
-    doom: {
-        key: 'doom',
-        name: 'Doom',
-        shortcutIcon: 'doomIcon',
-        component: Doom,
-    },
-    scrabble: {
-        key: 'scrabble',
-        name: 'Scrabble',
-        shortcutIcon: 'scrabbleIcon',
-        component: Scrabble,
-    },
     henordle: {
         key: 'henordle',
         name: 'Henordle',
@@ -62,7 +44,7 @@ const APPLICATIONS: {
     },
     credits: {
         key: 'credits',
-        name: 'Credits',
+        name: 'Operator Manifest',
         shortcutIcon: 'credits',
         component: Credits,
     },
@@ -200,6 +182,45 @@ const Desktop: React.FC<DesktopProps> = (props) => {
         },
         [getHighestZIndex]
     );
+
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key !== 'F9') return;
+
+            setWindows((prevState) => {
+                if (prevState['doom']) return prevState;
+
+                const highestZ = Object.values(prevState).reduce(
+                    (max, w) => Math.max(max, w.zIndex),
+                    0
+                );
+
+                return {
+                    ...prevState,
+                    doom: {
+                        zIndex: highestZ + 1,
+                        minimized: false,
+                        component: (
+                            <Doom
+                                onInteract={() => onWindowInteract('doom')}
+                                onMinimize={() => minimizeWindow('doom')}
+                                onClose={() => removeWindow('doom')}
+                                key="doom"
+                            />
+                        ),
+                        name: 'DOOM',
+                        icon: 'doomIcon',
+                    },
+                };
+            });
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [onWindowInteract, minimizeWindow, removeWindow]);
 
     return !shutdown ? (
         <div style={styles.desktop}>

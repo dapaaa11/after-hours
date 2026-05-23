@@ -1,6 +1,6 @@
 # GEMINI.md — Antigravity Agent Rules
 # after-hours
-
+ 
 Antigravity-specific behavior overrides dan panduan MCP.
 Rules ini prioritasnya lebih tinggi dari AGENTS.md jika ada konflik.
 

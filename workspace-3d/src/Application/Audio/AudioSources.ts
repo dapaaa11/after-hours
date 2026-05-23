@@ -46,7 +46,7 @@ export class ComputerAudio extends AudioSource {
         });
 
         document.addEventListener('keydown', (event) => {
-            if (event.key.includes('_AUTO_')) {
+            if (event.key?.includes('_AUTO_')) {
                 this.manager.playAudio('ccType', {
                     volume: 0.1,
                     randDetuneScale: 0,
