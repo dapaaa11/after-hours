@@ -7,6 +7,8 @@ import Button from './Button';
 import DragIndicator from './DragIndicator';
 import ResizeIndicator from './ResizeIndicator';
 
+import { BEVEL } from './windowBevel';
+
 export interface WindowProps {
     closeWindow: () => void;
     minimizeWindow: () => void;
@@ -211,11 +213,11 @@ const Window: React.FC<WindowProps> = (props) => {
                             style={Object.assign(
                                 {},
                                 styles.topBar,
-                                props.windowBarColor && {
+                                props.windowBarColor && windowActive && {
                                     backgroundColor: props.windowBarColor,
                                 },
                                 !windowActive && {
-                                    backgroundColor: Colors.darkGray,
+                                    backgroundColor: BEVEL.spineColor,
                                 }
                             )}
                         >
@@ -226,7 +228,11 @@ const Window: React.FC<WindowProps> = (props) => {
                                         style={Object.assign(
                                             {},
                                             styles.windowBarIcon,
-                                            !windowActive && { opacity: 0.5 }
+                                            windowActive ? {
+                                                filter: 'brightness(1.5) saturate(0.4)'
+                                            } : {
+                                                filter: 'saturate(0.3) brightness(0.5)'
+                                            }
                                         )}
                                         size={16}
                                     />
@@ -236,8 +242,8 @@ const Window: React.FC<WindowProps> = (props) => {
                                 <p
                                     style={
                                         windowActive
-                                            ? {}
-                                            : { color: colors.lightGray }
+                                            ? { color: BEVEL.selectFg }
+                                            : { color: BEVEL.inactiveText }
                                     }
                                     className="showcase-header"
                                 >
@@ -285,6 +291,7 @@ const Window: React.FC<WindowProps> = (props) => {
                                         fontSize: 12,
                                         marginLeft: 4,
                                         fontFamily: 'MSSerif',
+                                        color: BEVEL.textDefault,
                                     }}
                                 >
                                     {props.bottomLeftText}
@@ -314,6 +321,7 @@ const Window: React.FC<WindowProps> = (props) => {
                                 <div
                                     style={{
                                         alignItems: 'flex-end',
+                                        filter: 'saturate(0.3) brightness(0.5)',
                                     }}
                                 >
                                     <Icon size={12} icon="windowResize" />
@@ -372,7 +380,7 @@ const Window: React.FC<WindowProps> = (props) => {
 
 const styles: StyleSheetCSS = {
     window: {
-        backgroundColor: Colors.lightGray,
+        backgroundColor: BEVEL.surface,
         position: 'absolute',
     },
     dragHitbox: {
@@ -385,15 +393,15 @@ const styles: StyleSheetCSS = {
         cursor: 'move',
     },
     windowBorderOuter: {
-        border: `1px solid ${Colors.black}`,
-        borderTopColor: colors.lightGray,
-        borderLeftColor: colors.lightGray,
+        border: `1px solid ${BEVEL.outerDark}`,
+        borderTopColor: BEVEL.outerLight,
+        borderLeftColor: BEVEL.outerLight,
         flex: 1,
     },
     windowBorderInner: {
-        border: `1px solid ${Colors.darkGray}`,
-        borderTopColor: colors.white,
-        borderLeftColor: colors.white,
+        border: `1px solid ${BEVEL.innerDark}`,
+        borderTopColor: BEVEL.innerLight,
+        borderLeftColor: BEVEL.innerLight,
         flex: 1,
         padding: 2,
 
@@ -408,7 +416,7 @@ const styles: StyleSheetCSS = {
         cursor: 'nwse-resize',
     },
     topBar: {
-        backgroundColor: Colors.blue,
+        backgroundColor: BEVEL.selectBg,
         width: '100%',
         height: 20,
 
@@ -417,9 +425,10 @@ const styles: StyleSheetCSS = {
         boxSizing: 'border-box',
     },
     contentOuter: {
-        border: `1px solid ${Colors.white}`,
-        borderTopColor: colors.darkGray,
-        borderLeftColor: colors.darkGray,
+        // Inverted for inset precision cut
+        border: `1px solid ${BEVEL.outerLight}`,
+        borderTopColor: BEVEL.outerDark,
+        borderLeftColor: BEVEL.outerDark,
         flexGrow: 1,
 
         marginTop: 8,
@@ -427,9 +436,10 @@ const styles: StyleSheetCSS = {
         overflow: 'hidden',
     },
     contentInner: {
-        border: `1px solid ${Colors.lightGray}`,
-        borderTopColor: colors.black,
-        borderLeftColor: colors.black,
+        // Inverted for inset precision cut
+        border: `1px solid ${BEVEL.innerLight}`,
+        borderTopColor: BEVEL.innerDark,
+        borderLeftColor: BEVEL.innerDark,
         flex: 1,
         overflow: 'hidden',
     },
@@ -451,9 +461,10 @@ const styles: StyleSheetCSS = {
         marginLeft: 2,
     },
     insetBorder: {
-        border: `1px solid ${Colors.white}`,
-        borderTopColor: colors.darkGray,
-        borderLeftColor: colors.darkGray,
+        // Inverted for inset precision cut
+        border: `1px solid ${BEVEL.outerLight}`,
+        borderTopColor: BEVEL.outerDark,
+        borderLeftColor: BEVEL.outerDark,
         padding: 2,
     },
     bottomResizeContainer: {

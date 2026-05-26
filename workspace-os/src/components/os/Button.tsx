@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { IconName } from '../../assets/icons';
 import Colors from '../../constants/colors';
 import { Icon } from '../general';
+import { BEVEL } from './windowBevel';
 
 export interface ButtonProps {
     icon?: IconName;
@@ -48,11 +49,11 @@ const Button: React.FC<ButtonProps> = ({ icon, text, onClick }) => {
             <div
                 style={Object.assign(
                     {},
-                    isHovering && { backgroundColor: Colors.darkGray },
+                    isHovering && { backgroundColor: BEVEL.innerDark },
                     innerBorderStyle
                 )}
             >
-                {icon && <Icon icon={icon} style={styles.icon} />}
+                {icon && <Icon icon={icon} style={{ filter: 'saturate(0.3) brightness(0.5)' }} />}
                 {text && (
                     // <Text noSelect style={styles.text}>
                     //     {text}
@@ -66,17 +67,17 @@ const Button: React.FC<ButtonProps> = ({ icon, text, onClick }) => {
 
 const styles: StyleSheetCSS = {
     outerBorder: {
-        border: `1px solid ${Colors.black}`,
-        borderTopColor: Colors.white,
-        borderLeftColor: Colors.white,
-        background: Colors.lightGray,
+        border: `1px solid ${BEVEL.outerDark}`,
+        borderTopColor: BEVEL.outerLight,
+        borderLeftColor: BEVEL.outerLight,
+        background: BEVEL.surface,
 
         cursor: 'pointer',
     },
     innerBorder: {
-        border: `1px solid ${Colors.darkGray}`,
-        borderTopColor: Colors.lightGray,
-        borderLeftColor: Colors.lightGray,
+        border: `1px solid ${BEVEL.innerDark}`,
+        borderTopColor: BEVEL.innerLight,
+        borderLeftColor: BEVEL.innerLight,
         flex: 1,
     },
 };

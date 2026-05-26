@@ -6,11 +6,15 @@ import Doom from '../applications/Doom';
 import ShutdownSequence from './ShutdownSequence';
 // import ThisComputer from '../applications/ThisComputer';
 import Henordle from '../applications/Henordle';
+import Reference from '../applications/Reference';
+import ArchiveBrowser from '../applications/ArchiveBrowser';
 import Toolbar from './Toolbar';
+import StartMenu from './StartMenu';
+import { StartMenuEntry } from './startMenuConfig';
 import DesktopShortcut, { DesktopShortcutProps } from './DesktopShortcut';
 // import Scrabble from '../applications/Scrabble';
 import { IconName } from '../../assets/icons';
-import Credits from '../applications/Credits';
+// import Credits from '../applications/Credits';
 
 export interface DesktopProps {}
 
@@ -32,7 +36,7 @@ const APPLICATIONS: {
     // },
     showcase: {
         key: 'showcase',
-        name: 'after-hours',
+        name: 'Reference',
         shortcutIcon: 'showcaseIcon',
         component: ShowcaseExplorer,
     },
@@ -42,11 +46,17 @@ const APPLICATIONS: {
         shortcutIcon: 'henordleIcon',
         component: Henordle,
     },
-    credits: {
-        key: 'credits',
-        name: 'Operator Manifest',
-        shortcutIcon: 'credits',
-        component: Credits,
+    reference: {
+        key: 'reference',
+        name: 'Reference',
+        shortcutIcon: 'showcaseIcon',
+        component: Reference,
+    },
+    archive: {
+        key: 'archive',
+        name: 'archive.sys',
+        shortcutIcon: 'windowExplorerIcon',
+        component: ArchiveBrowser,
     },
 };
 
@@ -57,6 +67,7 @@ const Desktop: React.FC<DesktopProps> = (props) => {
 
     const [shutdown, setShutdown] = useState(false);
     const [numShutdowns, setNumShutdowns] = useState(1);
+    const [startMenuOpen, setStartMenuOpen] = useState(false);
 
     useEffect(() => {
         if (shutdown === true) {
@@ -68,6 +79,7 @@ const Desktop: React.FC<DesktopProps> = (props) => {
     useEffect(() => {
         const newShortcuts: DesktopShortcutProps[] = [];
         Object.keys(APPLICATIONS).forEach((key) => {
+            if (key === 'reference') return;
             const app = APPLICATIONS[key];
             newShortcuts.push({
                 shortcutName: app.name,
@@ -87,7 +99,7 @@ const Desktop: React.FC<DesktopProps> = (props) => {
         });
 
         newShortcuts.forEach((shortcut) => {
-            if (shortcut.shortcutName === 'after-hours') {
+            if (shortcut.shortcutName === 'Reference') {
                 shortcut.onOpen();
             }
         });
@@ -183,10 +195,8 @@ const Desktop: React.FC<DesktopProps> = (props) => {
         [getHighestZIndex]
     );
 
-    useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key !== 'F9') return;
-
+    const openApplication = useCallback((key: string) => {
+        if (key === 'doom') {
             setWindows((prevState) => {
                 if (prevState['doom']) return prevState;
 
@@ -213,6 +223,26 @@ const Desktop: React.FC<DesktopProps> = (props) => {
                     },
                 };
             });
+        } else {
+            const app = APPLICATIONS[key];
+            if (app) {
+                addWindow(
+                    app.key,
+                    <app.component
+                        onInteract={() => onWindowInteract(app.key)}
+                        onMinimize={() => minimizeWindow(app.key)}
+                        onClose={() => removeWindow(app.key)}
+                        key={app.key}
+                    />
+                );
+            }
+        }
+    }, [onWindowInteract, minimizeWindow, removeWindow, addWindow]);
+
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key !== 'F9') return;
+            openApplication('doom');
         };
 
         window.addEventListener('keydown', handleKeyDown);
@@ -220,7 +250,7 @@ const Desktop: React.FC<DesktopProps> = (props) => {
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
-    }, [onWindowInteract, minimizeWindow, removeWindow]);
+    }, [openApplication]);
 
     return !shutdown ? (
         <div style={styles.desktop}>
@@ -263,10 +293,24 @@ const Desktop: React.FC<DesktopProps> = (props) => {
                     );
                 })}
             </div>
+            {startMenuOpen && (
+                <StartMenu
+                    onClose={() => setStartMenuOpen(false)}
+                    onSelect={(entry) => {
+                        if (entry.type === 'window') {
+                            openApplication(entry.target);
+                        } else if (entry.type === 'system' && entry.target === 'shutdown') {
+                            startShutdown();
+                        }
+                    }}
+                />
+            )}
             <Toolbar
                 windows={windows}
                 toggleMinimize={toggleMinimize}
                 shutdown={startShutdown}
+                isStartOpen={startMenuOpen}
+                onStartToggle={() => setStartMenuOpen(!startMenuOpen)}
             />
         </div>
     ) : (

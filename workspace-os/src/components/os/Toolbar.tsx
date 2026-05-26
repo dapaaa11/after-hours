@@ -9,12 +9,16 @@ export interface ToolbarProps {
     windows: DesktopWindows;
     toggleMinimize: (key: string) => void;
     shutdown: () => void;
+    isStartOpen: boolean;
+    onStartToggle: () => void;
 }
 
 const Toolbar: React.FC<ToolbarProps> = ({
     windows,
     toggleMinimize,
     shutdown,
+    isStartOpen,
+    onStartToggle,
 }) => {
     const getTime = () => {
         const date = new Date();
@@ -27,9 +31,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
         const strTime = hours + ':' + mins + ' ' + amPm;
         return strTime;
     };
-
-    const [startWindowOpen, setStartWindowOpen] = useState(false);
-    const lastClickInside = useRef(false);
 
     const [lastActive, setLastActive] = useState('');
 
@@ -58,81 +59,34 @@ const Toolbar: React.FC<ToolbarProps> = ({
         updateTime();
     });
 
-    const onCheckClick = () => {
-        if (lastClickInside.current) {
-            setStartWindowOpen(true);
-        } else {
-            setStartWindowOpen(false);
-        }
-        lastClickInside.current = false;
-    };
-
-    useEffect(() => {
-        window.addEventListener('mousedown', onCheckClick, false);
-        return () => {
-            window.removeEventListener('mousedown', onCheckClick, false);
-        };
-    }, []);
-
-    const onStartWindowClicked = () => {
-        setStartWindowOpen(true);
-        lastClickInside.current = true;
-    };
-
-    const toggleStartWindow = () => {
-        if (!startWindowOpen) {
-            lastClickInside.current = true;
-        } else {
-            lastClickInside.current = false;
-        }
-    };
-
     return (
         <div style={styles.toolbarOuter}>
-            {startWindowOpen && (
-                <div
-                    onMouseDown={onStartWindowClicked}
-                    style={styles.startWindow}
-                >
-                    <div style={styles.startWindowInner}>
-                        <div style={styles.verticalStartContainer}>
-                            <p style={styles.verticalText}>AfterHoursOS</p>
-                        </div>
-                        <div style={styles.startWindowContent}>
-                            <div style={styles.startMenuSpace} />
-                            <div style={styles.startMenuLine} />
-                            <div
-                                className="start-menu-option"
-                                style={styles.startMenuOption}
-                                onMouseDown={shutdown}
-                            >
-                                <Icon
-                                    style={styles.startMenuIcon}
-                                    icon="computerBig"
-                                />
-                                <p style={styles.startMenuText}>
-                                    Sh<u>u</u>t down...
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
             <div style={styles.toolbarInner}>
                 <div style={styles.toolbar}>
                     <div
                         style={Object.assign(
                             {},
                             styles.startContainerOuter,
-                            startWindowOpen && styles.activeTabOuter
+                            isStartOpen && {
+                                borderTopColor: Colors.black,
+                                borderLeftColor: Colors.black,
+                                borderBottomColor: Colors.white,
+                                borderRightColor: Colors.white,
+                            }
                         )}
-                        onMouseDown={toggleStartWindow}
+                        onMouseDown={onStartToggle}
                     >
                         <div
                             style={Object.assign(
                                 {},
                                 styles.startContainer,
-                                startWindowOpen && styles.activeTabInner
+                                isStartOpen && {
+                                    borderTopColor: Colors.darkGray,
+                                    borderLeftColor: Colors.darkGray,
+                                    borderBottomColor: Colors.lightGray,
+                                    borderRightColor: Colors.lightGray,
+                                    backgroundColor: '#b0b3b7',
+                                }
                             )}
                         >
                             <Icon

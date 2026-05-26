@@ -272,7 +272,7 @@ export default class MonitorScreen extends EventEmitter {
             smudge: {
                 texture: textures.monitorSmudgeTexture,
                 blending: THREE.AdditiveBlending,
-                opacity: 0.12,
+                opacity: 0.06,
                 offset: 24,
             },
             innerShadow: {
@@ -284,13 +284,13 @@ export default class MonitorScreen extends EventEmitter {
             video: {
                 texture: this.videoTextures['video-1'],
                 blending: THREE.AdditiveBlending,
-                opacity: 0.5,
+                opacity: 0.12,
                 offset: 10,
             },
             video2: {
                 texture: this.videoTextures['video-2'],
                 blending: THREE.AdditiveBlending,
-                opacity: 0.1,
+                opacity: 0.04,
                 offset: 15,
             },
         };
@@ -455,9 +455,9 @@ export default class MonitorScreen extends EventEmitter {
     createPerspectiveDimmer(maxOffset: number) {
         const material = new THREE.MeshBasicMaterial({
             side: THREE.DoubleSide,
-            color: 0x000000,
+            color: 0x0c0f12,
             transparent: true,
-            blending: THREE.AdditiveBlending,
+            blending: THREE.NormalBlending,
         });
 
         const plane = new THREE.PlaneGeometry(
@@ -504,23 +504,11 @@ export default class MonitorScreen extends EventEmitter {
 
             const dot = viewVector.dot(planeNormal);
 
-            // calculate the distance from the camera vector to the plane vector
-            const dimPos = this.dimmingPlane.position;
-            const camPos = this.camera.instance.position;
+            const DIM_FACTOR = 0.65;
 
-            const distance = Math.sqrt(
-                (camPos.x - dimPos.x) ** 2 +
-                    (camPos.y - dimPos.y) ** 2 +
-                    (camPos.z - dimPos.z) ** 2
-            );
-
-            const opacity = 1 / (distance / 10000);
-
-            const DIM_FACTOR = 0.7;
-
+            // Physical falloff based on viewing angle, capped at 0.55 opacity to prevent total blackout
             // @ts-ignore
-            this.dimmingPlane.material.opacity =
-                (1 - opacity) * DIM_FACTOR + (1 - dot) * DIM_FACTOR;
+            this.dimmingPlane.material.opacity = Math.max(0.0, Math.min(0.55, (1.0 - dot) * DIM_FACTOR));
         }
     }
 }
