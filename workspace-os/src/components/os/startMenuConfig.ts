@@ -10,59 +10,34 @@ export interface StartMenuEntry {
 }
 
 export const START_MENU_ENTRIES: StartMenuEntry[] = [
-    // Primary group — main applications
+    // Primary group — active desktop synchronized applications
     {
-        label: 'Archive Network',
+        label: 'Reference',
+        type: 'window',
+        target: 'showcase',
+        icon: 'showcaseIcon',
+        group: 'primary',
+    },
+    {
+        label: 'Henordle',
+        type: 'window',
+        target: 'henordle',
+        icon: 'henordleIcon',
+        group: 'primary',
+    },
+    {
+        label: 'archive.sys',
         type: 'window',
         target: 'archive',
         icon: 'windowExplorerIcon',
         group: 'primary',
     },
+    // Secondary group — secret/hidden operational systems
     {
-        label: 'Programs',
+        label: 'DOOM',
         type: 'window',
-        target: 'reference',
-        icon: 'showcaseIcon',
-        hasSubmenu: true,
-        group: 'primary',
-    },
-    {
-        label: 'Documents',
-        type: 'window',
-        target: 'reference',
-        icon: 'showcaseIcon',
-        hasSubmenu: true,
-        group: 'primary',
-    },
-    {
-        label: 'Settings',
-        type: 'window',
-        target: 'reference',
-        icon: 'computerSmall',
-        hasSubmenu: true,
-        group: 'primary',
-    },
-    {
-        label: 'Find',
-        type: 'window',
-        target: 'reference',
-        icon: 'windowExplorerIcon',
-        hasSubmenu: true,
-        group: 'primary',
-    },
-    // Secondary group — utilities
-    {
-        label: 'Help',
-        type: 'window',
-        target: 'reference',
-        icon: 'windowGameIcon',
-        group: 'secondary',
-    },
-    {
-        label: 'Run...',
-        type: 'window',
-        target: 'reference',
-        icon: 'windowExplorerIcon',
+        target: 'doom',
+        icon: 'doomIcon',
         group: 'secondary',
     },
     // Terminal group — system operations
