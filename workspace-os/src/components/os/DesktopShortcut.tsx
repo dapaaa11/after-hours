@@ -105,10 +105,17 @@ const DesktopShortcut: React.FC<DesktopShortcutProps> = ({
                         isSelected && styles.checkerboard,
                         isSelected && {
                             WebkitMask: `url(${requiredIcon})`,
+                            WebkitMaskSize: '32px 32px',
+                            WebkitMaskRepeat: 'no-repeat',
+                            WebkitMaskPosition: 'center',
+                            maskImage: `url(${requiredIcon})`,
+                            maskSize: '32px 32px',
+                            maskRepeat: 'no-repeat',
+                            maskPosition: 'center',
                         }
                     )}
                 />
-                <Icon icon={icon} style={styles.icon} />
+                <Icon icon={icon} size={32} style={styles.icon} />
             </div>
             <div
                 className={

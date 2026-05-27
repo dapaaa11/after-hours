@@ -22,7 +22,7 @@ const ShowcaseExplorer: React.FC<ShowcaseExplorerProps> = (props) => {
             width={initWidth}
             height={initHeight}
             windowTitle="Reference"
-            windowBarIcon="windowExplorerIcon"
+            windowBarIcon="showcaseIcon"
             closeWindow={props.onClose}
             onInteract={props.onInteract}
             minimizeWindow={props.onMinimize}

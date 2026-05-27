@@ -48,7 +48,7 @@ const ReferenceApp: React.FC<ReferenceAppProps> = (props) => {
             left={80}
             width={840}
             height={600}
-            windowBarIcon="windowExplorerIcon"
+            windowBarIcon="showcaseIcon"
             windowTitle="Reference — Workspace"
             closeWindow={props.onClose}
             onInteract={props.onInteract}
