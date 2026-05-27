@@ -94,6 +94,9 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                     .archive-scrollbar::-webkit-scrollbar-thumb:hover {
                         background-color: #3e9697;
                     }
+                    .archive-scrollbar::-webkit-scrollbar-corner {
+                        background-color: transparent;
+                    }
                     .archive-hover-row:hover {
                         background-color: #1a3a3d !important;
                         color: #d0d4d6 !important;
@@ -460,6 +463,7 @@ const styles: StyleSheetCSS = {
     listContainer: {
         flex: 1,
         overflowY: 'auto',
+        overflowX: 'hidden',
         boxSizing: 'border-box',
     },
     gatewayRow: {
