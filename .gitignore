@@ -1,0 +1,5 @@
+# Playwright MCP temporary browser testing files
+.playwright-mcp/
+
+# Temporary development scratch directory
+workspace-os/scratch/
