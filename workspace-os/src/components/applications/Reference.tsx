@@ -124,7 +124,7 @@ const ReferenceApp: React.FC<ReferenceAppProps> = (props) => {
                     {selectedTopic ? (
                         <div style={styles.contentContainer}>
                             <h2 style={styles.topicTitle}>{selectedTopic.title}</h2>
-                            <p style={styles.topicContent}>{selectedTopic.content.en}</p>
+                            <p style={styles.topicContent}>{selectedTopic.content}</p>
                             {(selectedTopic as any).code && (
                                 <pre style={styles.codeBlock}>
                                     <code style={styles.codeText}>{(selectedTopic as any).code}</code>

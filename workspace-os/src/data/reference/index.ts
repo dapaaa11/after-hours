@@ -6,10 +6,7 @@ import { toolingCategory } from './tooling';
 export type Topic = {
     id: string;
     title: string;
-    content: {
-        en: string;
-        id: string;
-    };
+    content: string;
     keywords: string[];
 };
 
