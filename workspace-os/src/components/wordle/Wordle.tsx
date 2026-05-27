@@ -10,6 +10,7 @@ export interface KeyboardLetterProps {
     currentGuess: string;
     setGuesses: React.Dispatch<React.SetStateAction<string[]>>;
     setCurrentGuess: React.Dispatch<React.SetStateAction<string>>;
+    isSmall?: boolean;
 }
 
 const KeyboardLetter: React.FC<KeyboardLetterProps> = ({
@@ -19,6 +20,7 @@ const KeyboardLetter: React.FC<KeyboardLetterProps> = ({
     currentGuess,
     setGuesses,
     setCurrentGuess,
+    isSmall,
 }) => {
     const [isInWord, setIsInWord] = useState(false);
     const [isInPlace, setIsInPlace] = useState(false);
@@ -65,6 +67,13 @@ const KeyboardLetter: React.FC<KeyboardLetterProps> = ({
             style={Object.assign(
                 {},
                 styles.letterBox,
+                isSmall && {
+                    padding: '8px 8px',
+                    paddingTop: '10px',
+                    paddingBottom: '10px',
+                    minWidth: '32px',
+                    margin: '3px',
+                },
                 isInWord && { backgroundColor: 'yellow' },
                 isInPlace && { backgroundColor: 'lightgreen' },
                 notInWord && { backgroundColor: 'gray' }
@@ -80,6 +89,7 @@ export interface GuessLetterProps {
     word: string;
     guess: string;
     guessed: boolean;
+    isSmall?: boolean;
 }
 
 const GuessLetter: React.FC<GuessLetterProps> = ({
@@ -87,6 +97,7 @@ const GuessLetter: React.FC<GuessLetterProps> = ({
     letter,
     guess,
     word,
+    isSmall,
 }) => {
     const [isInWord, setIsInWord] = useState(false);
     const [isInPlace, setIsInPlace] = useState(false);
@@ -108,13 +119,18 @@ const GuessLetter: React.FC<GuessLetterProps> = ({
             style={Object.assign(
                 {},
                 styles.guessLetterBox,
+                isSmall && {
+                    width: '45px',
+                    height: '45px',
+                    margin: '3px',
+                },
                 isInWord && { backgroundColor: 'yellow' },
                 isInPlace && { backgroundColor: 'lightgreen' },
                 !guessed && { backgroundColor: 'white' },
                 letter === ' ' && styles.emptyBox
             )}
         >
-            <h3>
+            <h3 style={isSmall ? { fontSize: '18px' } : {}}>
                 <b>{letter.toUpperCase()}</b>
             </h3>
         </div>
@@ -127,6 +143,7 @@ export interface GuessWordProps {
     word: string;
     active: boolean;
     noClear?: boolean;
+    isSmall?: boolean;
 }
 
 const GuessWord: React.FC<GuessWordProps> = ({
@@ -135,6 +152,7 @@ const GuessWord: React.FC<GuessWordProps> = ({
     word,
     active,
     noClear,
+    isSmall,
 }) => {
     const [savedGuess, setSavedGuess] = useState(guess);
     const controls = useAnimation();
@@ -190,6 +208,7 @@ const GuessWord: React.FC<GuessWordProps> = ({
                     letter={letter}
                     guess={savedGuess}
                     word={word}
+                    isSmall={isSmall}
                 />
             ))}
             {[...Array(word.length - savedGuess.length)].map((e, i) => (
@@ -199,13 +218,16 @@ const GuessWord: React.FC<GuessWordProps> = ({
                     letter={' '}
                     guess={savedGuess}
                     word={word}
+                    isSmall={isSmall}
                 />
             ))}
         </motion.div>
     );
 };
 
-export interface WordleProps {}
+export interface WordleProps {
+    windowHeight?: number;
+}
 
 const TOP_ROW = ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'];
 const MIDDLE_ROW = ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'];
@@ -213,12 +235,14 @@ const BOTTOM_ROW = ['RET', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'DEL'];
 const ROWS = [TOP_ROW, MIDDLE_ROW, BOTTOM_ROW];
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-const Wordle: React.FC<WordleProps> = () => {
+const Wordle: React.FC<WordleProps> = ({ windowHeight }) => {
     const word = 'AFTER';
     const [guesses, setGuesses] = useState<string[]>([]);
     const [gameOver, setGameOver] = useState(false);
     const [won, setWon] = useState(false);
     const [currentGuess, setCurrentGuess] = useState('');
+
+    const isSmall = windowHeight !== undefined && windowHeight < 800;
 
     const restart = () => {
         setGuesses([]);
@@ -272,7 +296,7 @@ const Wordle: React.FC<WordleProps> = () => {
 
     return (
         <div style={styles.container}>
-            <div style={styles.header}>
+            <div style={Object.assign({}, styles.header, isSmall && { paddingTop: 12 })}>
                 <h2>Henordle</h2>
                 <p>Wordle but with an AFTER-HOURS twist.</p>
             </div>
@@ -296,6 +320,7 @@ const Wordle: React.FC<WordleProps> = () => {
                     guesses={guesses}
                     active={false}
                     noClear={true}
+                    isSmall={isSmall}
                 />
                 <br />
                 <div className="site-button" onMouseDown={restart}>
@@ -308,7 +333,7 @@ const Wordle: React.FC<WordleProps> = () => {
                 initial={false}
                 style={styles.gameContainer}
             >
-                <div style={styles.playArea}>
+                <div style={Object.assign({}, styles.playArea, isSmall && { marginTop: 8, marginBottom: 8 })}>
                     {[...Array(6)].map((e, i) => (
                         <GuessWord
                             key={i}
@@ -316,10 +341,11 @@ const Wordle: React.FC<WordleProps> = () => {
                             word={word}
                             guesses={guesses}
                             active={i === guesses.length}
+                            isSmall={isSmall}
                         />
                     ))}
                 </div>
-                <div style={styles.keyboardContainer}>
+                <div style={Object.assign({}, styles.keyboardContainer, isSmall && { paddingBottom: 12 })}>
                     {ROWS.map((row) => (
                         <div style={styles.keyboardRow} key={`row-${row[0]}`}>
                             {row.map((letter) => (
@@ -331,6 +357,7 @@ const Wordle: React.FC<WordleProps> = () => {
                                     letter={letter}
                                     currentGuess={currentGuess}
                                     setCurrentGuess={setCurrentGuess}
+                                    isSmall={isSmall}
                                 />
                             ))}
                         </div>
@@ -382,7 +409,7 @@ const styles: StyleSheetCSS = {
     container: {
         flex: 1,
         flexDirection: 'column',
-        overflowY: 'scroll',
+        overflowY: 'auto',
     },
     gameContainer: {
         flex: 1,

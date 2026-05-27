@@ -5,12 +5,20 @@ import Wordle from '../wordle/Wordle';
 export interface HenordleAppProps extends WindowAppProps {}
 
 const HenordleApp: React.FC<HenordleAppProps> = (props) => {
+    // Calculate the height dynamically based on window.innerHeight to ensure it fits on smaller screens
+    const defaultHeight = 860;
+    const topOffset = 20;
+    const taskbarHeight = 32;
+    const safeMargin = 16;
+    const calculatedHeight = window.innerHeight - taskbarHeight - topOffset - safeMargin;
+    const height = Math.min(defaultHeight, Math.max(400, calculatedHeight));
+
     return (
         <Window
-            top={20}
+            top={topOffset}
             left={300}
             width={600}
-            height={860}
+            height={height}
             windowBarIcon="windowGameIcon"
             windowTitle="Henordle"
             closeWindow={props.onClose}
@@ -19,7 +27,7 @@ const HenordleApp: React.FC<HenordleAppProps> = (props) => {
             bottomLeftText={'© Copyright 2025 Dava Ardana'}
         >
             <div className="site-page">
-                <Wordle />
+                <Wordle windowHeight={height} />
             </div>
         </Window>
     );
