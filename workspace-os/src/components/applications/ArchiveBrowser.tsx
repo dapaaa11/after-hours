@@ -74,7 +74,7 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
             width={820}
             height={560}
             windowBarIcon="windowExplorerIcon"
-            windowTitle="archive.sys"
+            windowTitle="Knowledge Browser"
             closeWindow={props.onClose}
             onInteract={props.onInteract}
             minimizeWindow={props.onMinimize}
@@ -117,10 +117,10 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                 {/* 1. Header Bar (32px) */}
                 <div style={styles.headerBar}>
                     <div style={styles.pathDisplay}>
-                        <span style={styles.pathLabel}>RETRIEVING // </span>
+                        <span style={styles.pathLabel}>NAVIGATE // </span>
                         <span style={styles.pathValue}>{activePath}</span>
                     </div>
-                    <div style={styles.systemIdentifier}>archive.sys</div>
+                    <div style={styles.systemIdentifier}>Knowledge Browser</div>
                 </div>
 
                 {/* 2. Main Workspace Split Panel */}
@@ -131,7 +131,7 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                         <div style={styles.searchContainer}>
                             <input
                                 type="text"
-                                placeholder="Search Index..."
+                                placeholder="Search Knowledge..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 style={styles.searchInput}
@@ -154,7 +154,7 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                                         borderLeft: activePath === "after-hours://index" ? "2px solid #3e9697" : "none",
                                     }}
                                 >
-                                    NETWORK GATEWAY
+                                    KNOWLEDGE GATEWAY
                                 </div>
                             )}
 
@@ -164,6 +164,9 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
 
                                 const isCatExpanded = searchQuery ? true : (expandedCategory === cat);
                                 const isCatActive = isCatExpanded;
+
+                                // KNOWLEDGE category gets brighter label treatment for educational prominence
+                                const isKnowledgeCat = cat === 'knowledge';
 
                                 return (
                                     <div key={cat} style={styles.categoryBlock}>
@@ -178,7 +181,12 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                                             }}
                                             className={searchQuery ? "" : "archive-scrollbar-thumb"}
                                         >
-                                            <span style={styles.categoryLabel}>{CATEGORY_LABELS[cat]}</span>
+                                            <span style={{
+                                                ...styles.categoryLabel,
+                                                color: isKnowledgeCat
+                                                    ? (isCatActive ? '#5db8b9' : '#4a9fa0')
+                                                    : (isCatActive ? '#a0a4a6' : '#7a7e82'),
+                                            }}>{CATEGORY_LABELS[cat]}</span>
                                             {!searchQuery && (
                                                 <span style={styles.categoryIndicator}>
                                                     {isCatExpanded ? "▼" : "▶"}
@@ -358,12 +366,12 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                 {/* 3. Status Bar (24px) */}
                 <div style={styles.statusBar}>
                     <div style={styles.statusLeft}>
-                        SYS_STATUS // RETRIEVED_OK // {currentNode.path}
+                        KNOWLEDGE READY // {currentNode.path}
                     </div>
                     <div style={styles.statusRight}>
                         {searchQuery 
-                            ? `${totalFilteredCount} matching records found` 
-                            : `${archiveList.length} operational records filed`
+                            ? `${totalFilteredCount} records matched` 
+                            : `${archiveList.length} records in archive`
                         }
                     </div>
                 </div>
@@ -378,8 +386,8 @@ const styles: StyleSheetCSS = {
         flexDirection: 'column',
         width: '100%',
         height: '100%',
-        backgroundColor: '#2a2d2e', // BEVEL.surface
-        color: '#a0a4a6', // BEVEL.textDefault
+        backgroundColor: '#2d3031', // Slightly lifted surface — educational browser feel
+        color: '#b0b4b6', // Slightly brighter base text for readability
         overflow: 'hidden',
         boxSizing: 'border-box',
         fontFamily: 'MSSerif, sans-serif',
@@ -430,7 +438,7 @@ const styles: StyleSheetCSS = {
         minWidth: 240,
         maxWidth: 240,
         height: '100%',
-        backgroundColor: '#1a1c1d', // Darker panel background
+        backgroundColor: '#1c1f20', // Slightly lifted dark panel
         borderRight: '1px solid #151718', // InnerDark boundary
         display: 'flex',
         flexDirection: 'column',
@@ -471,17 +479,17 @@ const styles: StyleSheetCSS = {
         display: 'flex',
         alignItems: 'center',
         paddingLeft: 16,
-        color: '#a0a4a6',
+        color: '#5db8b9', // Teal — signals educational entry point
         fontSize: 12,
         fontWeight: 'bold',
         cursor: 'pointer',
-        borderBottom: '1px solid #151718',
+        borderBottom: '1px solid #1e2122',
         userSelect: 'none',
     },
     categoryBlock: {
         display: 'flex',
         flexDirection: 'column',
-        borderBottom: '1px solid #151718',
+        borderBottom: '1px solid #1e2122',
     },
     categoryRow: {
         height: 32,
@@ -489,13 +497,13 @@ const styles: StyleSheetCSS = {
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingRight: 12,
-        backgroundColor: '#17191a',
+        backgroundColor: '#191c1d',
         userSelect: 'none',
     },
     categoryLabel: {
         fontSize: 12,
         fontWeight: 'bold',
-        color: '#86898d', // Inactive warm grey
+        color: '#7a7e82', // Slightly brighter than before (#86898d was same lum, now distinct)
         letterSpacing: '1px',
     },
     categoryIndicator: {
@@ -512,14 +520,14 @@ const styles: StyleSheetCSS = {
         display: 'flex',
         alignItems: 'center',
         fontSize: 12,
-        color: '#a0a4a6',
+        color: '#b0b4b6', // Slightly brighter — improves index readability
         cursor: 'pointer',
         userSelect: 'none',
     },
     documentPanel: {
         flex: 1,
         height: '100%',
-        backgroundColor: '#2a2d2e', // BEVEL.surface
+        backgroundColor: '#2d3031', // Slightly lifted — clearer document reading surface
         padding: '20px 28px',
         overflowY: 'auto',
         position: 'relative',
@@ -577,10 +585,10 @@ const styles: StyleSheetCSS = {
         fontFamily: 'monospace',
     },
     cellLabel: {
-        color: '#424a4a', // muted inactive grey
+        color: '#5a6060', // Slightly brighter — improves metadata grid readability
     },
     cellValue: {
-        color: '#a0a4a6',
+        color: '#b8bcbf', // Brighter than before — better contrast for metadata values
     },
     divider: {
         border: 'none',
@@ -592,9 +600,9 @@ const styles: StyleSheetCSS = {
         display: 'flex',
         flexDirection: 'column',
         gap: '6px',
-        backgroundColor: '#202223',
+        backgroundColor: '#252829',
         padding: '12px 16px',
-        border: '1px solid #1c1e1f',
+        border: '1px solid #2a2d2e',
         boxSizing: 'border-box',
     },
     metaRow: {
@@ -640,7 +648,7 @@ const styles: StyleSheetCSS = {
         fontSize: 11,
         fontFamily: 'monospace',
         fontWeight: 'bold',
-        color: '#424a4a',
+        color: '#5a6060', // Slightly brighter — easier to scan section headers
     },
     relatedLinks: {
         display: 'flex',
@@ -670,7 +678,7 @@ const styles: StyleSheetCSS = {
         boxSizing: 'border-box',
         fontSize: 11,
         fontFamily: 'monospace',
-        color: '#424a4a',
+        color: '#546060', // Slightly brighter status bar text
     },
     statusLeft: {
         letterSpacing: '0.5px',
