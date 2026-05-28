@@ -6,7 +6,6 @@ import Doom from '../applications/Doom';
 import ShutdownSequence from './ShutdownSequence';
 // import ThisComputer from '../applications/ThisComputer';
 import Henordle from '../applications/Henordle';
-import Reference from '../applications/Reference';
 import ArchiveBrowser from '../applications/ArchiveBrowser';
 import Toolbar from './Toolbar';
 import StartMenu from './StartMenu';
@@ -46,12 +45,6 @@ const APPLICATIONS: {
         shortcutIcon: 'henordleIcon',
         component: Henordle,
     },
-    reference: {
-        key: 'reference',
-        name: 'Reference',
-        shortcutIcon: 'showcaseIcon',
-        component: Reference,
-    },
     archive: {
         key: 'archive',
         name: 'archive.sys',
@@ -79,7 +72,6 @@ const Desktop: React.FC<DesktopProps> = (props) => {
     useEffect(() => {
         const newShortcuts: DesktopShortcutProps[] = [];
         Object.keys(APPLICATIONS).forEach((key) => {
-            if (key === 'reference') return;
             const app = APPLICATIONS[key];
             newShortcuts.push({
                 shortcutName: app.name,
