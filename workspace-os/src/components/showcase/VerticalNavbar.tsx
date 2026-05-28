@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from '../general';
 import { useLocation } from 'react-router-dom';
+import { useLanguage } from './LanguageContext';
 
 export interface VerticalNavbarProps {}
 
 const VerticalNavbar: React.FC<VerticalNavbarProps> = (props) => {
     const location = useLocation();
     const [isHome, setIsHome] = useState(false);
+    const { language, setLanguage } = useLanguage();
 
     useEffect(() => {
         if (location.pathname === '/') {
@@ -42,11 +44,26 @@ const VerticalNavbar: React.FC<VerticalNavbarProps> = (props) => {
                 <Link
                     containerStyle={styles.link}
                     to="archive"
-                    text="ARCHIVE"
+                    text={language === 'id' ? 'ARSIP' : 'ARCHIVE'}
                 />
 
             </div>
             <div style={styles.spacer} />
+            <div style={styles.langToggle}>
+                <span
+                    style={Object.assign({}, styles.langOpt, language === 'en' && styles.langActive)}
+                    onMouseDown={() => setLanguage('en')}
+                >
+                    EN
+                </span>
+                <span style={styles.langSep}>/</span>
+                <span
+                    style={Object.assign({}, styles.langOpt, language === 'id' && styles.langActive)}
+                    onMouseDown={() => setLanguage('id')}
+                >
+                    ID
+                </span>
+            </div>
         </div>
     ) : (
         <></>
@@ -88,6 +105,29 @@ const styles: StyleSheetCSS = {
     },
     spacer: {
         flex: 1,
+    },
+    langToggle: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+        marginTop: 32,
+    },
+    langOpt: {
+        fontFamily: 'Terminal, Courier New, monospace',
+        fontSize: 12,
+        color: '#888',
+        cursor: 'pointer',
+        letterSpacing: 1,
+    },
+    langActive: {
+        color: '#222',
+        fontWeight: 'bold',
+    },
+    langSep: {
+        fontFamily: 'Terminal, Courier New, monospace',
+        fontSize: 12,
+        color: '#ccc',
     },
 };
 

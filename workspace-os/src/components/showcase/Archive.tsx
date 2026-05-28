@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLanguage } from './LanguageContext';
 
 export interface ArchiveProps {}
 
@@ -394,6 +395,7 @@ const RecordEntry: React.FC<RecordEntryProps> = ({ record }) => {
 };
 
 const Archive: React.FC<ArchiveProps> = () => {
+    const { language } = useLanguage();
     const byStatus = (s: ArchiveStatus) =>
         RECORDS.filter((r) => r.status === s).length;
 
@@ -402,7 +404,7 @@ const Archive: React.FC<ArchiveProps> = () => {
             <div style={styles.pageHeader}>
                 <h1 style={styles.title}>Archive</h1>
                 <p style={styles.subtitle}>
-                    AFTER-HOURS / project & artifact registry
+                    AFTER-HOURS / {language === 'id' ? 'registrasi proyek & artefak' : 'project & artifact registry'}
                 </p>
             </div>
 
@@ -449,7 +451,7 @@ const Archive: React.FC<ArchiveProps> = () => {
             {/* Build Diary Section */}
             <div style={{ marginTop: 40, marginBottom: 20 }}>
                 <div style={styles.logDivider} />
-                <p style={styles.subtitle}>— build diary</p>
+                <p style={styles.subtitle}>— {language === 'id' ? 'buku harian pembangunan' : 'build diary'}</p>
             </div>
 
             <div style={styles.recordList}>
@@ -464,8 +466,9 @@ const Archive: React.FC<ArchiveProps> = () => {
 
             <div style={styles.footer}>
                 <p style={styles.footerText}>
-                    — {RECORDS.length} records. some finished. some not.
-                    all here.
+                    {language === 'id'
+                        ? `— ${RECORDS.length} catatan. beberapa selesai. beberapa tidak. semuanya di sini.`
+                        : `— ${RECORDS.length} records. some finished. some not. all here.`}
                 </p>
             </div>
         </div>

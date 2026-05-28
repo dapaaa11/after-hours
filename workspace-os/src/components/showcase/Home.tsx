@@ -1,14 +1,20 @@
 import React from 'react';
 import { Link } from '../general';
+import { useLanguage } from './LanguageContext';
 
 export interface HomeProps {}
 
 const Home: React.FC<HomeProps> = (props) => {
+    const { language } = useLanguage();
     return (
         <div style={styles.page}>
             <div style={styles.header}>
                 <h1 style={styles.name}>after-hours</h1>
-                <h2>digital workspace / two operators</h2>
+                <h2>
+                    {language === 'id'
+                        ? 'ruang kerja digital / dua operator'
+                        : 'digital workspace / two operators'}
+                </h2>
             </div>
             <div style={styles.buttons}>
                 <Link containerStyle={styles.link} to="operators" text="OPERATORS" />
@@ -20,7 +26,7 @@ const Home: React.FC<HomeProps> = (props) => {
                 <Link
                     containerStyle={styles.link}
                     to="archive"
-                    text="ARCHIVE"
+                    text={language === 'id' ? 'ARSIP' : 'ARCHIVE'}
                 />
                 <Link
                     containerStyle={styles.link}

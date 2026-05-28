@@ -9,6 +9,7 @@ import Systems from '../showcase/Systems';
 import Archive from '../showcase/Archive';
 import VerticalNavbar from '../showcase/VerticalNavbar';
 import useInitialWindowSize from '../../hooks/useInitialWindowSize';
+import { LanguageProvider } from '../showcase/LanguageContext';
 
 export interface ShowcaseExplorerProps extends WindowAppProps {}
 
@@ -29,16 +30,18 @@ const ShowcaseExplorer: React.FC<ShowcaseExplorerProps> = (props) => {
             bottomLeftText={'© 2025 after-hours collective'}
         >
             <Router>
-                <div className="site-page">
-                    <VerticalNavbar />
-                    <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/operators" element={<Operators />} />
-                        <Route path="/channel" element={<Channel />} />
-                        <Route path="/systems" element={<Systems />} />
-                        <Route path="/archive" element={<Archive />} />
-                    </Routes>
-                </div>
+                <LanguageProvider>
+                    <div className="site-page">
+                        <VerticalNavbar />
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/operators" element={<Operators />} />
+                            <Route path="/channel" element={<Channel />} />
+                            <Route path="/systems" element={<Systems />} />
+                            <Route path="/archive" element={<Archive />} />
+                        </Routes>
+                    </div>
+                </LanguageProvider>
             </Router>
         </Window>
     );

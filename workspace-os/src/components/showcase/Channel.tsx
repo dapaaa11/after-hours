@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLanguage } from './LanguageContext';
 
 export interface ChannelProps {}
 
@@ -10,6 +11,7 @@ const API_ENDPOINT = '/api/send-email';
 type TransmitState = 'idle' | 'sending' | 'sent' | 'error';
 
 const Channel: React.FC<ChannelProps> = () => {
+    const { language } = useLanguage();
     const [handle, setHandle] = useState('');
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
@@ -39,17 +41,17 @@ const Channel: React.FC<ChannelProps> = () => {
 
             if (res.ok) {
                 setState('sent');
-                setStatusText('transmission received.');
+                setStatusText(language === 'id' ? 'transmisi diterima.' : 'transmission received.');
                 setHandle('');
                 setEmail('');
                 setMessage('');
             } else {
                 setState('error');
-                setStatusText('transmission failed. try again.');
+                setStatusText(language === 'id' ? 'transmisi gagal. coba lagi.' : 'transmission failed. try again.');
             }
         } catch {
             setState('error');
-            setStatusText('signal lost. check connection.');
+            setStatusText(language === 'id' ? 'sinyal hilang. periksa koneksi.' : 'signal lost. check connection.');
         }
     }
 
@@ -69,21 +71,26 @@ const Channel: React.FC<ChannelProps> = () => {
             {/* Page header */}
             <div style={styles.pageHeader}>
                 <h1 style={styles.title}>Channel</h1>
-                <p style={styles.subtitle}>AFTER-HOURS / transmission layer</p>
+                <p style={styles.subtitle}>AFTER-HOURS / {language === 'id' ? 'lapisan transmisi' : 'transmission layer'}</p>
             </div>
 
             {/* Intro */}
             <div style={styles.intro}>
-                <p style={styles.introLine}>
-                    You've reached the end of the workspace.
-                </p>
-                <p style={styles.introLine}>
-                    If something here resonated —
-                </p>
-                <p style={styles.introLine}>
-                    or you want to build something together —
-                </p>
-                <p style={styles.introLine}>open a channel.</p>
+                {language === 'id' ? (
+                    <>
+                        <p style={styles.introLine}>Anda telah mencapai akhir dari ruang kerja.</p>
+                        <p style={styles.introLine}>Jika sesuatu di sini beresonansi —</p>
+                        <p style={styles.introLine}>atau Anda ingin membangun sesuatu bersama —</p>
+                        <p style={styles.introLine}>buka sebuah saluran.</p>
+                    </>
+                ) : (
+                    <>
+                        <p style={styles.introLine}>You've reached the end of the workspace.</p>
+                        <p style={styles.introLine}>If something here resonated —</p>
+                        <p style={styles.introLine}>or you want to build something together —</p>
+                        <p style={styles.introLine}>open a channel.</p>
+                    </>
+                )}
             </div>
 
             {/* Terminal divider */}
@@ -116,12 +123,12 @@ const Channel: React.FC<ChannelProps> = () => {
                     <label style={styles.fieldLabel}>
                         <span style={styles.labelKey}>IDENT</span>
                         <span style={styles.labelSep}>::</span>
-                        <span style={styles.labelHint}>name or handle</span>
+                        <span style={styles.labelHint}>{language === 'id' ? 'nama atau identitas' : 'name or handle'}</span>
                     </label>
                     <input
                         style={styles.fieldInput}
                         type="text"
-                        placeholder="who's transmitting"
+                        placeholder={language === 'id' ? 'siapa yang mentransmisi' : "who's transmitting"}
                         value={handle}
                         onChange={(e) => setHandle(e.target.value)}
                         disabled={state === 'sending' || state === 'sent'}
@@ -136,13 +143,13 @@ const Channel: React.FC<ChannelProps> = () => {
                         <span style={styles.labelKey}>ADDR</span>
                         <span style={styles.labelSep}>::</span>
                         <span style={styles.labelHint}>
-                            email — optional, for a reply
+                            {language === 'id' ? 'email — opsional, untuk balasan' : 'email — optional, for a reply'}
                         </span>
                     </label>
                     <input
                         style={styles.fieldInput}
                         type="email"
-                        placeholder="return address"
+                        placeholder={language === 'id' ? 'alamat balasan' : 'return address'}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         disabled={state === 'sending' || state === 'sent'}
@@ -156,11 +163,11 @@ const Channel: React.FC<ChannelProps> = () => {
                     <label style={styles.fieldLabel}>
                         <span style={styles.labelKey}>MSG</span>
                         <span style={styles.labelSep}>::</span>
-                        <span style={styles.labelHint}>transmission body</span>
+                        <span style={styles.labelHint}>{language === 'id' ? 'isi transmisi' : 'transmission body'}</span>
                     </label>
                     <textarea
                         style={styles.fieldTextarea}
-                        placeholder="leave a message in the workspace..."
+                        placeholder={language === 'id' ? 'tinggalkan pesan di ruang kerja...' : 'leave a message in the workspace...'}
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         disabled={state === 'sending' || state === 'sent'}
@@ -181,11 +188,11 @@ const Channel: React.FC<ChannelProps> = () => {
                         disabled={!canTransmit || state === 'sending' || state === 'sent'}
                     >
                         {state === 'sending' ? (
-                            <span className="loading">transmitting</span>
+                            <span className="loading">{language === 'id' ? 'mentransmisi' : 'transmitting'}</span>
                         ) : state === 'sent' ? (
-                            'transmitted.'
+                            language === 'id' ? 'tertransmisi.' : 'transmitted.'
                         ) : (
-                            'send transmission'
+                            language === 'id' ? 'kirim transmisi' : 'send transmission'
                         )}
                     </button>
 
@@ -207,7 +214,7 @@ const Channel: React.FC<ChannelProps> = () => {
             {/* Footer */}
             <div style={styles.footer}>
                 <p style={styles.footerText}>
-                    — all transmissions routed to the operators. after hours.
+                    {language === 'id' ? '— semua transmisi diarahkan ke operator. setelah jam kerja.' : '— all transmissions routed to the operators. after hours.'}
                 </p>
             </div>
         </div>

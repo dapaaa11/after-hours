@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLanguage } from './LanguageContext';
 
 export interface SystemsProps {}
 
@@ -357,6 +358,7 @@ const ModuleEntry: React.FC<ModuleEntryProps> = ({ module }) => {
 };
 
 const Systems: React.FC<SystemsProps> = () => {
+    const { language } = useLanguage();
     const activeCount = MODULES.filter((m) => m.status === 'active').length;
     const expCount = MODULES.filter(
         (m) => m.status === 'experimental'
@@ -367,24 +369,24 @@ const Systems: React.FC<SystemsProps> = () => {
             {/* Page header */}
             <div style={styles.pageHeader}>
                 <h1 style={styles.title}>Systems</h1>
-                <p style={styles.subtitle}>AFTER-HOURS / active module registry</p>
+                <p style={styles.subtitle}>AFTER-HOURS / {language === 'id' ? 'registrasi modul aktif' : 'active module registry'}</p>
             </div>
 
             {/* System stats row */}
             <div style={styles.statsRow}>
                 <div style={styles.stat}>
                     <span style={styles.statValue}>{MODULES.length}</span>
-                    <span style={styles.statLabel}>modules</span>
+                    <span style={styles.statLabel}>{language === 'id' ? 'modul' : 'modules'}</span>
                 </div>
                 <div style={styles.statSep} />
                 <div style={styles.stat}>
                     <span style={styles.statValue}>{activeCount}</span>
-                    <span style={styles.statLabel}>active</span>
+                    <span style={styles.statLabel}>{language === 'id' ? 'aktif' : 'active'}</span>
                 </div>
                 <div style={styles.statSep} />
                 <div style={styles.stat}>
                     <span style={styles.statValue}>{expCount}</span>
-                    <span style={styles.statLabel}>experimental</span>
+                    <span style={styles.statLabel}>{language === 'id' ? 'eksperimental' : 'experimental'}</span>
                 </div>
             </div>
 
@@ -406,7 +408,7 @@ const Systems: React.FC<SystemsProps> = () => {
             {/* Experimental Changelog Section */}
             <div style={{ marginTop: 40, marginBottom: 20 }}>
                 <div style={styles.logDivider} />
-                <p style={styles.subtitle}>— experimental changelog</p>
+                <p style={styles.subtitle}>— {language === 'id' ? 'catatan eksperimental' : 'experimental changelog'}</p>
             </div>
 
             <div style={styles.moduleList}>
@@ -418,7 +420,9 @@ const Systems: React.FC<SystemsProps> = () => {
             {/* Footer */}
             <div style={styles.footer}>
                 <p style={styles.footerText}>
-                    — registry last updated: 2025. systems running after hours.
+                    {language === 'id'
+                        ? '— registrasi terakhir diperbarui: 2025. sistem berjalan setelah jam kerja.'
+                        : '— registry last updated: 2025. systems running after hours.'}
                 </p>
             </div>
         </div>

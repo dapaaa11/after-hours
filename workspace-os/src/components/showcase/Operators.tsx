@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLanguage } from './LanguageContext';
 
 export interface OperatorsProps {}
 
@@ -13,27 +14,31 @@ interface OperatorData {
     status: string;
 }
 
-const OPERATORS: OperatorData[] = [
+const getOperators = (lang: string): OperatorData[] => [
     {
         id: 'OPR-01',
         handle: 'dava',
         name: 'M. Dava Ardana',
-        role: 'Fullstack Developer',
-        bio: 'Fullstack developer with a pull toward backend systems and immersive interfaces.\nBuilds things that feel as good as they work.\nOperates mostly after hours.',
+        role: lang === 'id' ? 'Pengembang Fullstack' : 'Fullstack Developer',
+        bio: lang === 'id'
+            ? 'Pengembang fullstack dengan ketertarikan pada sistem backend dan antarmuka imersif.\nMembangun hal-hal yang terasa sebaik fungsinya.\nBeroperasi kebanyakan setelah jam kerja.'
+            : 'Fullstack developer with a pull toward backend systems and immersive interfaces.\nBuilds things that feel as good as they work.\nOperates mostly after hours.',
         github: 'https://github.com/dapaaa11',
         linkedin: 'https://linkedin.com/in/m-dava-ardana',
-        status: 'active',
+        status: lang === 'id' ? 'aktif' : 'active',
     },
     {
         id: 'OPR-02',
         handle: 'dias',
         name: 'Dias Novri Pratama',
-        role: 'Systems & Infrastructure',
-        bio: 'Builds quiet systems behind the interface.\nFocused on tooling, backend architecture, and stability.\nUsually operating somewhere behind the scenes.',
+        role: lang === 'id' ? 'Sistem & Infrastruktur' : 'Systems & Infrastructure',
+        bio: lang === 'id'
+            ? 'Membangun sistem tenang di balik antarmuka.\nFokus pada perkakas, arsitektur backend, dan stabilitas.\nBiasanya beroperasi di balik layar.'
+            : 'Builds quiet systems behind the interface.\nFocused on tooling, backend architecture, and stability.\nUsually operating somewhere behind the scenes.',
         github: 'https://github.com/dias-git',
         linkedin:
             'https://www.linkedin.com/in/dias-novri-bb5b35357',
-        status: 'active',
+        status: lang === 'id' ? 'aktif' : 'active',
     },
 ];
 
@@ -43,6 +48,7 @@ interface OperatorEntryProps {
 }
 
 const OperatorEntry: React.FC<OperatorEntryProps> = ({ operator, index }) => {
+    const { language } = useLanguage();
     const [expanded, setExpanded] = useState(false);
     const [hovered, setHovered] = useState(false);
 
@@ -76,12 +82,12 @@ const OperatorEntry: React.FC<OperatorEntryProps> = ({ operator, index }) => {
             {expanded && (
                 <div style={styles.entryBody}>
                     <div style={styles.logLine}>
-                        <span style={styles.logKey}>NAME</span>
+                        <span style={styles.logKey}>{language === 'id' ? 'NAMA' : 'NAME'}</span>
                         <span style={styles.logSep}>::</span>
                         <span style={styles.logValue}>{operator.name}</span>
                     </div>
                     <div style={styles.logLine}>
-                        <span style={styles.logKey}>ROLE</span>
+                        <span style={styles.logKey}>{language === 'id' ? 'PERAN' : 'ROLE'}</span>
                         <span style={styles.logSep}>::</span>
                         <span style={styles.logValue}>{operator.role}</span>
                     </div>
@@ -123,20 +129,23 @@ const OperatorEntry: React.FC<OperatorEntryProps> = ({ operator, index }) => {
 };
 
 const Operators: React.FC<OperatorsProps> = () => {
+    const { language } = useLanguage();
+    const operatorsData = getOperators(language);
+
     return (
         <div className="site-page-content">
             {/* Page header */}
             <div style={styles.pageHeader}>
                 <h1 style={styles.title}>Operators</h1>
-                <p style={styles.subtitle}>AFTER-HOURS / collective</p>
+                <p style={styles.subtitle}>AFTER-HOURS / {language === 'id' ? 'kolektif' : 'collective'}</p>
             </div>
 
             {/* Preamble */}
             <div className="text-block" style={styles.preamble}>
                 <p style={styles.preambleText}>
-                    Two people. One quiet system.
+                    {language === 'id' ? 'Dua orang. Satu sistem yang sunyi.' : 'Two people. One quiet system.'}
                     <br />
-                    Built after hours.
+                    {language === 'id' ? 'Dibangun setelah jam kerja.' : 'Built after hours.'}
                 </p>
             </div>
 
@@ -148,7 +157,7 @@ const Operators: React.FC<OperatorsProps> = () => {
 
             {/* Operator entries */}
             <div style={styles.entriesContainer}>
-                {OPERATORS.map((op, i) => (
+                {operatorsData.map((op, i) => (
                     <OperatorEntry key={op.id} operator={op} index={i} />
                 ))}
             </div>
@@ -156,7 +165,9 @@ const Operators: React.FC<OperatorsProps> = () => {
             {/* Footer note */}
             <div style={styles.footer}>
                 <p style={styles.footerText}>
-                    — operating since 2025. somewhere after midnight.
+                    {language === 'id'
+                        ? '— beroperasi sejak 2025. di suatu tempat setelah tengah malam.'
+                        : '— operating since 2025. somewhere after midnight.'}
                 </p>
             </div>
         </div>
