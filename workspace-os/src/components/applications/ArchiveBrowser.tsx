@@ -83,34 +83,34 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
             <div style={styles.container}>
                 {/* CSS rules for manual styling of scrollbars and hover snaps */}
                 <style>{`
-                    .archive-scrollbar::-webkit-scrollbar {
+                    .kb-scrollbar::-webkit-scrollbar {
                         width: 14px;
                         background-color: #1a1c1d;
                     }
-                    .archive-scrollbar::-webkit-scrollbar-thumb {
+                    .kb-scrollbar::-webkit-scrollbar-thumb {
                         background-color: #2a2d2e;
                         border: 2px solid #1a1c1d;
                     }
-                    .archive-scrollbar::-webkit-scrollbar-thumb:hover {
+                    .kb-scrollbar::-webkit-scrollbar-thumb:hover {
                         background-color: #3e9697;
                     }
-                    .archive-scrollbar::-webkit-scrollbar-corner {
+                    .kb-scrollbar::-webkit-scrollbar-corner {
                         background-color: transparent;
                     }
-                    .archive-hover-row:hover {
+                    .kb-hover-row:hover {
                         background-color: #1a3a3d !important;
                         color: #d0d4d6 !important;
                     }
-                    .archive-active-row {
+                    .kb-active-row {
                         background-color: #1a3a3d !important;
                         color: #d0d4d6 !important;
                     }
-                    .archive-related-link {
-                        color: #3e9697 !important;
+                    .kb-related-link {
+                        color: #2a6e6f !important;
                         transition: color 0.1s ease !important;
                     }
-                    .archive-related-link:hover {
-                        color: #d0d4d6 !important;
+                    .kb-related-link:hover {
+                        color: #1a1c1d !important;
                     }
                 `}</style>
 
@@ -143,12 +143,12 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                         </div>
 
                         {/* Category and Node List */}
-                        <div className="archive-scrollbar" style={styles.listContainer}>
+                        <div className="kb-scrollbar" style={styles.listContainer}>
                             {/* Always allow accessing the gateway root */}
                             {rootMatches && (
                                 <div
                                     onClick={() => handleTopicClick("after-hours://index")}
-                                    className={`archive-hover-row ${activePath === "after-hours://index" ? "archive-active-row" : ""}`}
+                                    className={`kb-hover-row ${activePath === "after-hours://index" ? "kb-active-row" : ""}`}
                                     style={{
                                         ...styles.gatewayRow,
                                         borderLeft: activePath === "after-hours://index" ? "2px solid #3e9697" : "none",
@@ -179,12 +179,13 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                                                 paddingLeft: isCatActive ? 14 : 16,
                                                 cursor: searchQuery ? "default" : "pointer",
                                             }}
-                                            className={searchQuery ? "" : "archive-scrollbar-thumb"}
+                                            className={searchQuery ? "" : "kb-scrollbar-thumb"}
                                         >
                                             <span style={{
                                                 ...styles.categoryLabel,
+                                                // Task C: KNOWLEDGE prominently brighter than other categories
                                                 color: isKnowledgeCat
-                                                    ? (isCatActive ? '#5db8b9' : '#4a9fa0')
+                                                    ? (isCatActive ? '#6ecacb' : '#5db8b9')
                                                     : (isCatActive ? '#a0a4a6' : '#7a7e82'),
                                             }}>{CATEGORY_LABELS[cat]}</span>
                                             {!searchQuery && (
@@ -203,7 +204,7 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                                                         <div
                                                             key={topic.path}
                                                             onClick={() => handleTopicClick(topic.path)}
-                                                            className={`archive-hover-row ${isTopicActive ? "archive-active-row" : ""}`}
+                                                            className={`kb-hover-row ${isTopicActive ? "kb-active-row" : ""}`}
                                                             style={{
                                                                 ...styles.topicRow,
                                                                 borderLeft: isTopicActive ? "2px solid #3e9697" : "none",
@@ -223,15 +224,15 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                     </div>
 
                     {/* Right Document Panel (Flexible) */}
-                    <div className="archive-scrollbar" style={styles.documentPanel}>
-                        {/* Language Toggle in top-right */}
+                    <div className="kb-scrollbar" style={styles.documentPanel}>
+                        {/* Language Toggle in top-right — Task B: colors adapted for light surface */}
                         <div style={styles.langToggleContainer}>
                             <span
                                 onClick={() => setLanguage("en")}
                                 style={{
                                     ...styles.langLabel,
                                     textDecoration: language === "en" ? "underline" : "none",
-                                    color: language === "en" ? "#d0d4d6" : "#424a4a",
+                                    color: language === "en" ? "#1a1c1d" : "#9a9e9e",
                                 }}
                             >
                                 EN
@@ -242,7 +243,7 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                                 style={{
                                     ...styles.langLabel,
                                     textDecoration: language === "id" ? "underline" : "none",
-                                    color: language === "id" ? "#d0d4d6" : "#424a4a",
+                                    color: language === "id" ? "#1a1c1d" : "#9a9e9e",
                                 }}
                             >
                                 ID
@@ -253,7 +254,7 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                         <div style={styles.contentWrapper}>
                             {/* ZONE 1: Page Header */}
                             <div style={styles.docHeader}>
-                                <div style={styles.docPath}>RECORD // {currentNode.path}</div>
+                                <div style={styles.docPath}>PAGE // {currentNode.path}</div>
                                 <h1 style={styles.docTitle}>{currentNode.title}</h1>
                                 
                                 <div style={styles.docGrid}>
@@ -337,17 +338,17 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
 
                             {/* ZONE 4: Related Nodes */}
                             <div style={styles.relatedBlock}>
-                                <div style={styles.relatedHeader}>RELATED RECORDS:</div>
+                                <div style={styles.relatedHeader}>SEE ALSO:</div>
                                 <div style={styles.relatedLinks}>
                                     {currentNode.related.length > 0 ? (
                                         currentNode.related.map(relPath => {
-                                            const relNode = archiveNodes[relPath];
+                                            const relNode = archiveNodes[relPath]; // internal data lookup
                                             const title = relNode ? relNode.title : relPath;
                                             return (
                                                 <div
                                                     key={relPath}
                                                     onClick={() => handleTopicClick(relPath)}
-                                                    className="archive-related-link"
+                                                    className="kb-related-link"
                                                     style={styles.relatedLink}
                                                 >
                                                     [ {title} ]
@@ -371,7 +372,7 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                     <div style={styles.statusRight}>
                         {searchQuery 
                             ? `${totalFilteredCount} records matched` 
-                            : `${archiveList.length} records in archive`
+                            : `${archiveList.length} records indexed`
                         }
                     </div>
                 </div>
@@ -386,8 +387,8 @@ const styles: StyleSheetCSS = {
         flexDirection: 'column',
         width: '100%',
         height: '100%',
-        backgroundColor: '#2d3031', // Slightly lifted surface — educational browser feel
-        color: '#b0b4b6', // Slightly brighter base text for readability
+        backgroundColor: '#2d3031',
+        color: '#b0b4b6',
         overflow: 'hidden',
         boxSizing: 'border-box',
         fontFamily: 'MSSerif, sans-serif',
@@ -438,8 +439,9 @@ const styles: StyleSheetCSS = {
         minWidth: 240,
         maxWidth: 240,
         height: '100%',
-        backgroundColor: '#1c1f20', // Slightly lifted dark panel
-        borderRight: '1px solid #151718', // InnerDark boundary
+        backgroundColor: '#1c1f20',
+        // Task C: sharper border edge against light document panel
+        borderRight: '1px solid #0d0f10',
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
@@ -527,7 +529,8 @@ const styles: StyleSheetCSS = {
     documentPanel: {
         flex: 1,
         height: '100%',
-        backgroundColor: '#2d3031', // Slightly lifted — clearer document reading surface
+        // Task B: aged paper surface — remembered browser document under CRT glass
+        backgroundColor: '#d6cdb8',
         padding: '20px 28px',
         overflowY: 'auto',
         position: 'relative',
@@ -546,11 +549,13 @@ const styles: StyleSheetCSS = {
         fontFamily: 'monospace',
         cursor: 'pointer',
         fontWeight: 'bold',
+        // Task B: active/inactive colors inverted for light surface
     },
     langSeparator: {
         fontSize: 11,
         fontFamily: 'monospace',
-        color: '#424a4a',
+        // Task B: separator on light surface
+        color: '#9a9e9e',
         margin: '0 6px',
     },
     contentWrapper: {
@@ -565,13 +570,15 @@ const styles: StyleSheetCSS = {
     docPath: {
         fontFamily: 'monospace',
         fontSize: 11,
-        color: '#3e9697', // teal
+        // Task B: darker teal readable on light surface
+        color: '#2a6e6f',
     },
     docTitle: {
         fontFamily: 'MSSerif',
         fontSize: 22,
         fontWeight: 'bold',
-        color: '#d0d4d6', // selectFg
+        // Task B: near-black on aged paper
+        color: '#1a1c1d',
         margin: '4px 0 12px 0',
     },
     docGrid: {
@@ -585,14 +592,17 @@ const styles: StyleSheetCSS = {
         fontFamily: 'monospace',
     },
     cellLabel: {
-        color: '#5a6060', // Slightly brighter — improves metadata grid readability
+        // Task B: dark label on light surface
+        color: '#4a5050',
     },
     cellValue: {
-        color: '#b8bcbf', // Brighter than before — better contrast for metadata values
+        // Task B: dark value on light surface
+        color: '#1e2122',
     },
     divider: {
         border: 'none',
-        borderTop: '1px dashed #3a3d3f',
+        // Task B: muted warm-toned divider on aged paper
+        borderTop: '1px dashed #b0a898',
         margin: '16px 0',
         width: '100%',
     },
@@ -600,9 +610,10 @@ const styles: StyleSheetCSS = {
         display: 'flex',
         flexDirection: 'column',
         gap: '6px',
-        backgroundColor: '#252829',
+        // Task B: slightly darker aged paper for inset metadata block
+        backgroundColor: '#c8bfa8',
         padding: '12px 16px',
-        border: '1px solid #2a2d2e',
+        border: '1px solid #b8ae98',
         boxSizing: 'border-box',
     },
     metaRow: {
@@ -612,12 +623,14 @@ const styles: StyleSheetCSS = {
     metaLabel: {
         fontFamily: 'monospace',
         fontWeight: 'bold',
-        color: '#3e9697',
+        // Task B: darker teal for light surface
+        color: '#2a6e6f',
         display: 'inline-block',
         width: 70,
     },
     metaValue: {
-        color: '#d0d4d6',
+        // Task B: near-black on light surface
+        color: '#1a1c1d',
     },
     tagsContainer: {
         display: 'inline-flex',
@@ -626,7 +639,8 @@ const styles: StyleSheetCSS = {
     },
     tagItem: {
         fontFamily: 'monospace',
-        color: '#86898d',
+        // Task B: readable tag color on light surface
+        color: '#5a6060',
     },
     bodyBlock: {
         padding: '4px 0',
@@ -634,7 +648,8 @@ const styles: StyleSheetCSS = {
     bodyText: {
         fontSize: 13,
         lineHeight: '1.6',
-        color: '#d0d4d6',
+        // Task B: dark text on light document surface
+        color: '#1a1c1d',
         margin: 0,
         textAlign: 'justify',
         whiteSpace: 'pre-wrap',
@@ -648,7 +663,8 @@ const styles: StyleSheetCSS = {
         fontSize: 11,
         fontFamily: 'monospace',
         fontWeight: 'bold',
-        color: '#5a6060', // Slightly brighter — easier to scan section headers
+        // Task B: dark section header on light surface
+        color: '#4a5050',
     },
     relatedLinks: {
         display: 'flex',
@@ -665,7 +681,8 @@ const styles: StyleSheetCSS = {
     noRelated: {
         fontSize: 12,
         fontFamily: 'monospace',
-        color: '#424a4a',
+        // Task B: muted text on light surface
+        color: '#8a8e8e',
     },
     statusBar: {
         height: 24,
