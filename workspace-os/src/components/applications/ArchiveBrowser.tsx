@@ -85,32 +85,32 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                 <style>{`
                     .kb-scrollbar::-webkit-scrollbar {
                         width: 14px;
-                        background-color: #1a1c1d;
+                        background-color: #e4e4e4;
                     }
                     .kb-scrollbar::-webkit-scrollbar-thumb {
-                        background-color: #2a2d2e;
-                        border: 2px solid #1a1c1d;
+                        background-color: #c0c0c0;
+                        border: 2px solid #e4e4e4;
                     }
                     .kb-scrollbar::-webkit-scrollbar-thumb:hover {
-                        background-color: #3e9697;
+                        background-color: #a0a0a0;
                     }
                     .kb-scrollbar::-webkit-scrollbar-corner {
                         background-color: transparent;
                     }
                     .kb-hover-row:hover {
-                        background-color: #1a3a3d !important;
-                        color: #d0d4d6 !important;
+                        background-color: #000080 !important;
+                        color: #ffffff !important;
                     }
                     .kb-active-row {
-                        background-color: #1a3a3d !important;
-                        color: #d0d4d6 !important;
+                        background-color: #000080 !important;
+                        color: #ffffff !important;
                     }
                     .kb-related-link {
-                        color: #2a6e6f !important;
+                        color: #0000ee !important;
                         transition: color 0.1s ease !important;
                     }
                     .kb-related-link:hover {
-                        color: #1a1c1d !important;
+                        color: #551a8b !important;
                     }
                 `}</style>
 
@@ -154,7 +154,7 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                                     className={`kb-hover-row ${activePath === "after-hours://index" ? "kb-active-row" : ""}`}
                                     style={{
                                         ...styles.gatewayRow,
-                                        borderLeft: activePath === "after-hours://index" ? "2px solid #3e9697" : "none",
+                                        borderLeft: activePath === "after-hours://index" ? "2px solid #000080" : "none",
                                     }}
                                 >
                                     LOCAL DIRECTORY
@@ -186,10 +186,9 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                                         >
                                             <span style={{
                                                 ...styles.categoryLabel,
-                                                // Task C: KNOWLEDGE prominently brighter than other categories
                                                 color: isKnowledgeCat
-                                                    ? (isCatActive ? '#6ecacb' : '#5db8b9')
-                                                    : (isCatActive ? '#a0a4a6' : '#7a7e82'),
+                                                    ? (isCatActive ? '#1a1c1d' : '#2a2a2a')
+                                                    : (isCatActive ? '#1a1c1d' : '#4a4a4a'),
                                             }}>{CATEGORY_LABELS[cat]}</span>
                                             {!searchQuery && (
                                                 <span style={styles.categoryIndicator}>
@@ -210,7 +209,7 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                                                             className={`kb-hover-row ${isTopicActive ? "kb-active-row" : ""}`}
                                                             style={{
                                                                 ...styles.topicRow,
-                                                                borderLeft: isTopicActive ? "2px solid #3e9697" : "none",
+                                                                borderLeft: isTopicActive ? "2px solid #000080" : "none",
                                                                 paddingLeft: isTopicActive ? 30 : 32,
                                                             }}
                                                         >
@@ -236,7 +235,7 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                                 style={{
                                     ...styles.langLabel,
                                     textDecoration: language === "en" ? "underline" : "none",
-                                    color: language === "en" ? "#1a1c1d" : "#9a9e9e",
+                                    color: language === "en" ? "#0000ee" : "#5a6060",
                                 }}
                             >
                                 EN
@@ -247,7 +246,7 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                                 style={{
                                     ...styles.langLabel,
                                     textDecoration: language === "id" ? "underline" : "none",
-                                    color: language === "id" ? "#1a1c1d" : "#9a9e9e",
+                                    color: language === "id" ? "#0000ee" : "#5a6060",
                                 }}
                             >
                                 ID
@@ -313,49 +312,53 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                                         </div>
                                     </div>
                                     
-                                    <div style={styles.portalTilesGrid}>
-                                        <div style={styles.portalTile} onClick={() => setSearchQuery('web')}>
-                                            <div style={styles.portalTileTitle}>WEB / FRONTEND</div>
-                                            <div style={styles.portalTileDesc}>
-                                                {language === "en" ? "Web Technologies" : "Teknologi Web"}
+                                    <div style={styles.portalBody}>
+                                        <div style={styles.portalTilesSection}>
+                                            <div style={styles.portalTilesGrid}>
+                                                <div style={styles.portalTile} onClick={() => setSearchQuery('web')}>
+                                                    <div style={styles.portalTileTitle}>WEB / FRONTEND</div>
+                                                    <div style={styles.portalTileDesc}>
+                                                        {language === "en" ? "Web Technologies" : "Teknologi Web"}
+                                                    </div>
+                                                </div>
+                                                <div style={styles.portalTile} onClick={() => setSearchQuery('system')}>
+                                                    <div style={styles.portalTileTitle}>SYSTEMS</div>
+                                                    <div style={styles.portalTileDesc}>
+                                                        {language === "en" ? "Internal OS logic" : "Logika OS internal"}
+                                                    </div>
+                                                </div>
+                                                <div style={styles.portalTile} onClick={() => setSearchQuery('knowledge')}>
+                                                    <div style={styles.portalTileTitle}>KNOWLEDGE</div>
+                                                    <div style={styles.portalTileDesc}>
+                                                        {language === "en" ? "General IT records" : "Catatan IT umum"}
+                                                    </div>
+                                                </div>
+                                                <div style={styles.portalTile} onClick={() => setSearchQuery('stack')}>
+                                                    <div style={styles.portalTileTitle}>STACK</div>
+                                                    <div style={styles.portalTileDesc}>
+                                                        {language === "en" ? "Installed tools" : "Alat terinstal"}
+                                                    </div>
+                                                </div>
+                                                <div style={styles.portalTile} onClick={() => setSearchQuery('deployment')}>
+                                                    <div style={styles.portalTileTitle}>TOOLS / DEPLOY</div>
+                                                    <div style={styles.portalTileDesc}>
+                                                        {language === "en" ? "Build & Deploy" : "Build & Deploy"}
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div style={styles.portalTile} onClick={() => setSearchQuery('system')}>
-                                            <div style={styles.portalTileTitle}>SYSTEMS</div>
-                                            <div style={styles.portalTileDesc}>
-                                                {language === "en" ? "Internal OS logic" : "Logika OS internal"}
+                                        
+                                        <div style={styles.portalWelcomeBox}>
+                                            <div style={styles.portalWelcomeHeader}>
+                                                {language === "en" ? "Welcome to the Knowledge Browser" : "Selamat datang di Knowledge Browser"}
                                             </div>
-                                        </div>
-                                        <div style={styles.portalTile} onClick={() => setSearchQuery('knowledge')}>
-                                            <div style={styles.portalTileTitle}>KNOWLEDGE</div>
-                                            <div style={styles.portalTileDesc}>
-                                                {language === "en" ? "General IT records" : "Catatan IT umum"}
+                                            <div style={styles.portalIntro}>
+                                                {language === "en" ? (
+                                                    `AFTER-HOURS Knowledge Browser — knowledge.sys v1.1.0\n\nThis system provides access to three reference categories:\n\n— STACK: Technologies actively installed and running in this environment.\n— SYSTEM: Internal workstation systems, display layers, and project logs.\n— KNOWLEDGE: General IT education and reference pages.\n\nAll pages are stored locally. No network requests are made. Language toggle switches content between EN and ID. Search queries are filtered synchronously.\n\nUse the tiles to the left or the search bar above to browse.`
+                                                ) : (
+                                                    `Portal Pengetahuan AFTER-HOURS — knowledge.sys v1.1.0\n\nSistem ini menyediakan akses ke tiga kategori referensi:\n\n— STACK: Teknologi yang aktif diinstal dan berjalan di lingkungan ini.\n— SYSTEM: Sistem workstation internal, lapisan tampilan, dan log proyek.\n— KNOWLEDGE: Halaman edukasi IT umum dan referensi.\n\nSemua halaman disimpan secara lokal. Tidak ada permintaan jaringan. Toggle bahasa mengalihkan konten antara EN dan ID. Kueri pencarian disaring secara sinkron.\n\nGunakan ubin di sebelah kiri atau bilah pencarian di atas untuk menelusuri.`
+                                                )}
                                             </div>
-                                        </div>
-                                        <div style={styles.portalTile} onClick={() => setSearchQuery('stack')}>
-                                            <div style={styles.portalTileTitle}>STACK</div>
-                                            <div style={styles.portalTileDesc}>
-                                                {language === "en" ? "Installed tools" : "Alat terinstal"}
-                                            </div>
-                                        </div>
-                                        <div style={styles.portalTile} onClick={() => setSearchQuery('deployment')}>
-                                            <div style={styles.portalTileTitle}>TOOLS / DEPLOY</div>
-                                            <div style={styles.portalTileDesc}>
-                                                {language === "en" ? "Build & Deploy" : "Build & Deploy"}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div style={styles.portalWelcomeBox}>
-                                        <div style={styles.portalWelcomeHeader}>
-                                            {language === "en" ? "Welcome to the Knowledge Browser" : "Selamat datang di Knowledge Browser"}
-                                        </div>
-                                        <div style={styles.portalIntro}>
-                                            {language === "en" ? (
-                                                `AFTER-HOURS Knowledge Browser — knowledge.sys v1.1.0\n\nThis system provides access to three reference categories:\n\n— STACK: Technologies actively installed and running in this workstation environment.\n— SYSTEM: Internal workstation systems, design grammar rules, display layer configuration, and project logs.\n— KNOWLEDGE: General IT education pages. These are reference materials and do not indicate installed or active usage in this workstation.\n\nAll pages are stored locally. No network requests are made. Language toggle switches content between English and Indonesian. Search queries are filtered synchronously against the local database.\n\nUse the tiles above or the search bar to browse.`
-                                            ) : (
-                                                `Portal Pengetahuan AFTER-HOURS — knowledge.sys v1.1.0\n\nSistem ini menyediakan akses ke tiga kategori referensi:\n\n— STACK: Teknologi yang aktif diinstal dan berjalan di lingkungan workstation ini.\n— SYSTEM: Sistem workstation internal, aturan tata bahasa desain, konfigurasi lapisan tampilan, dan log proyek.\n— KNOWLEDGE: Halaman edukasi IT umum. Ini adalah materi referensi dan tidak menunjukkan penggunaan aktif di workstation ini.\n\nSemua halaman disimpan secara lokal. Tidak ada permintaan jaringan yang dibuat. Toggle bahasa mengalihkan konten antara Bahasa Inggris dan Indonesia. Kueri pencarian disaring secara sinkron terhadap basis data lokal.\n\nGunakan ubin di atas atau bilah pencarian untuk menelusuri.`
-                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -508,12 +511,12 @@ const styles: StyleSheetCSS = {
     },
     headerBar: {
         height: 40,
-        backgroundColor: '#111314', // BEVEL.spineColor
+        backgroundColor: '#2b2d2f',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         padding: '0 12px',
-        borderBottom: '1px solid #0a0b0b',
+        borderBottom: '1px solid #1a1c1d',
         boxSizing: 'border-box',
     },
     toolbarRow: {
@@ -539,10 +542,23 @@ const styles: StyleSheetCSS = {
         color: '#1a1c1d',
         outline: 'none',
     },
+    addressInputContainer: {
+        flex: 2,
+        display: 'flex',
+        alignItems: 'center',
+        overflow: 'hidden',
+    },
+    addressLabel: {
+        fontFamily: 'MSSans',
+        fontSize: 12,
+        fontWeight: 'bold',
+        color: '#b0b4b6',
+        marginRight: 12,
+    },
     addressValue: {
         fontFamily: 'monospace',
         fontSize: 12,
-        color: '#3e9697',
+        color: '#ffffff',
         whiteSpace: 'nowrap',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
@@ -559,9 +575,8 @@ const styles: StyleSheetCSS = {
         minWidth: 160,
         maxWidth: 160,
         height: '100%',
-        backgroundColor: '#1c1f20',
-        // Task C: sharper border edge against light document panel
-        borderRight: '1px solid #0d0f10',
+        backgroundColor: '#f0f0f0',
+        borderRight: '1px solid #cccccc',
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
@@ -578,17 +593,17 @@ const styles: StyleSheetCSS = {
         display: 'flex',
         alignItems: 'center',
         paddingLeft: 16,
-        color: '#5db8b9', // Teal — signals educational entry point
+        color: '#0000ee',
         fontSize: 12,
         fontWeight: 'bold',
         cursor: 'pointer',
-        borderBottom: '1px solid #1e2122',
+        borderBottom: '1px solid #e4e4e4',
         userSelect: 'none',
     },
     categoryBlock: {
         display: 'flex',
         flexDirection: 'column',
-        borderBottom: '1px solid #1e2122',
+        borderBottom: '1px solid #e4e4e4',
     },
     categoryRow: {
         height: 32,
@@ -596,38 +611,37 @@ const styles: StyleSheetCSS = {
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingRight: 12,
-        backgroundColor: '#191c1d',
+        backgroundColor: '#e4e4e4',
         userSelect: 'none',
     },
     categoryLabel: {
         fontSize: 12,
         fontWeight: 'bold',
-        color: '#7a7e82', // Slightly brighter than before (#86898d was same lum, now distinct)
+        color: '#1a1c1d',
         letterSpacing: '1px',
     },
     categoryIndicator: {
         fontSize: 9,
-        color: '#424a4a',
+        color: '#888888',
     },
     topicsBlock: {
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: '#141516',
+        backgroundColor: '#f8f8f8',
     },
     topicRow: {
         height: 28,
         display: 'flex',
         alignItems: 'center',
         fontSize: 12,
-        color: '#b0b4b6', // Slightly brighter — improves index readability
+        color: '#1a1c1d',
         cursor: 'pointer',
         userSelect: 'none',
     },
     documentPanel: {
         flex: 1,
         height: '100%',
-        // Task B: aged paper surface — remembered browser document under CRT glass
-        backgroundColor: '#d6cdb8',
+        backgroundColor: '#ffffff',
         padding: '20px 28px',
         overflowY: 'auto',
         position: 'relative',
@@ -646,13 +660,11 @@ const styles: StyleSheetCSS = {
         fontFamily: 'monospace',
         cursor: 'pointer',
         fontWeight: 'bold',
-        // Task B: active/inactive colors inverted for light surface
     },
     langSeparator: {
         fontSize: 11,
         fontFamily: 'monospace',
-        // Task B: separator on light surface
-        color: '#9a9e9e',
+        color: '#888888',
         margin: '0 6px',
     },
     contentWrapper: {
@@ -667,14 +679,12 @@ const styles: StyleSheetCSS = {
     docPath: {
         fontFamily: 'monospace',
         fontSize: 11,
-        // Task B: darker teal readable on light surface
-        color: '#2a6e6f',
+        color: '#006600',
     },
     docTitle: {
         fontFamily: 'MSSerif',
         fontSize: 22,
         fontWeight: 'bold',
-        // Task B: near-black on aged paper
         color: '#1a1c1d',
         margin: '4px 0 12px 0',
     },
@@ -689,16 +699,13 @@ const styles: StyleSheetCSS = {
         fontFamily: 'monospace',
     },
     cellLabel: {
-        // Task B: dark label on light surface
         color: '#4a5050',
     },
     cellValue: {
-        // Task B: dark value on light surface
         color: '#1e2122',
     },
     divider: {
         border: 'none',
-        // Task B: muted warm-toned divider on aged paper
         borderTop: '1px dashed #b0a898',
         margin: '16px 0',
         width: '100%',
@@ -707,7 +714,6 @@ const styles: StyleSheetCSS = {
         display: 'flex',
         flexDirection: 'column',
         gap: '6px',
-        // Task B: slightly darker aged paper for inset metadata block
         backgroundColor: '#c8bfa8',
         padding: '12px 16px',
         border: '1px solid #b8ae98',
@@ -720,13 +726,11 @@ const styles: StyleSheetCSS = {
     metaLabel: {
         fontFamily: 'monospace',
         fontWeight: 'bold',
-        // Task B: darker teal for light surface
         color: '#2a6e6f',
         display: 'inline-block',
         width: 70,
     },
     metaValue: {
-        // Task B: near-black on light surface
         color: '#1a1c1d',
     },
     tagsContainer: {
@@ -736,7 +740,6 @@ const styles: StyleSheetCSS = {
     },
     tagItem: {
         fontFamily: 'monospace',
-        // Task B: readable tag color on light surface
         color: '#5a6060',
     },
     bodyBlock: {
@@ -745,7 +748,6 @@ const styles: StyleSheetCSS = {
     bodyText: {
         fontSize: 13,
         lineHeight: '1.6',
-        // Task B: dark text on light document surface
         color: '#1a1c1d',
         margin: 0,
         textAlign: 'justify',
@@ -760,7 +762,6 @@ const styles: StyleSheetCSS = {
         fontSize: 11,
         fontFamily: 'monospace',
         fontWeight: 'bold',
-        // Task B: dark section header on light surface
         color: '#4a5050',
     },
     relatedLinks: {
@@ -778,12 +779,11 @@ const styles: StyleSheetCSS = {
     noRelated: {
         fontSize: 12,
         fontFamily: 'monospace',
-        // Task B: muted text on light surface
         color: '#8a8e8e',
     },
     statusBar: {
         height: 24,
-        backgroundColor: '#111314', // BEVEL.spineColor
+        backgroundColor: '#111314',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -792,7 +792,7 @@ const styles: StyleSheetCSS = {
         boxSizing: 'border-box',
         fontSize: 11,
         fontFamily: 'monospace',
-        color: '#546060', // Slightly brighter status bar text
+        color: '#546060',
     },
     statusLeft: {
         letterSpacing: '0.5px',
@@ -800,110 +800,110 @@ const styles: StyleSheetCSS = {
     statusRight: {
         letterSpacing: '0.5px',
     },
-    addressLabel: {
-        fontFamily: 'MSSerif',
-        fontSize: 12,
-        fontWeight: 'bold',
-        color: '#86898d', // darkGray
-        marginRight: 8,
-    },
-    addressInputContainer: {
-        flex: 2,
-        display: 'flex',
-        alignItems: 'center',
-        overflow: 'hidden',
-    },
     portalContainer: {
         width: '100%',
-        height: '100%',
+        minHeight: '100%',
         padding: '24px 32px',
         boxSizing: 'border-box',
-        backgroundColor: '#d6cdb8',
+        backgroundColor: '#ffffff',
         display: 'flex',
         flexDirection: 'column',
         gap: '24px',
         alignItems: 'center',
-        overflowY: 'auto',
     },
     portalHeaderArea: {
-        marginBottom: '40px',
         textAlign: 'center',
     },
     portalTitle: {
         fontFamily: 'MSSerif',
-        fontSize: 38,
-        fontWeight: 'bold',
+        fontSize: 28,
         color: '#1a1c1d',
-        margin: '0 0 12px 0',
-        textShadow: '1px 1px 0px #fff',
+        margin: '0 0 4px 0',
     },
     portalSubtitle: {
-        fontFamily: 'monospace',
+        fontFamily: 'MSSans',
         fontSize: 14,
         color: '#5a6060',
+        letterSpacing: '1px',
     },
-    portalTilesGrid: {
+    portalBody: {
         display: 'flex',
-        flexWrap: 'wrap',
-        gap: '16px',
+        flexDirection: 'row',
+        gap: '32px',
         width: '100%',
-        maxWidth: '800px',
+        maxWidth: '1000px',
+        alignItems: 'flex-start',
         justifyContent: 'center',
-        marginBottom: '40px',
     },
-    portalTile: {
-        width: '140px',
-        backgroundColor: '#c8bfa8',
-        border: '2px outset #d6cdb8',
-        padding: '16px 12px',
-        cursor: 'pointer',
+    portalTilesSection: {
+        flex: 1,
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
+    },
+    portalTilesGrid: {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(2, 1fr)',
+        gap: '16px',
+        width: '100%',
+    },
+    portalTile: {
+        backgroundColor: '#f0f0f0',
+        border: '2px outset #dfdfdf',
+        padding: '16px',
+        cursor: 'pointer',
+        boxShadow: '1px 1px 0px rgba(0,0,0,0.1)',
+        display: 'flex',
+        flexDirection: 'column',
     },
     portalTileTitle: {
         fontFamily: 'MSSerif',
         fontSize: 14,
         fontWeight: 'bold',
-        color: '#1a1c1d',
+        color: '#0000ee',
         marginBottom: '8px',
-        textAlign: 'center',
+        textDecoration: 'underline',
     },
     portalTileDesc: {
+        fontFamily: 'MSSans',
         fontSize: 11,
-        fontFamily: 'monospace',
-        color: '#4a5050',
-        textAlign: 'center',
+        color: '#1a1c1d',
+        lineHeight: '1.5',
     },
     portalWelcomeBox: {
-        maxWidth: '700px',
-        width: '100%',
-        backgroundColor: '#c8bfa8',
-        border: '1px solid #b8ae98',
+        flex: 1,
         padding: '24px',
-        boxSizing: 'border-box',
+        backgroundColor: '#f8f8f8',
+        border: '1px solid #cccccc',
     },
     portalWelcomeHeader: {
-        fontFamily: 'monospace',
+        fontFamily: 'MSSerif',
+        fontSize: 18,
         fontWeight: 'bold',
-        color: '#2a6e6f',
-        marginBottom: '12px',
-        fontSize: 14,
-        borderBottom: '1px solid #b8ae98',
-        paddingBottom: '8px',
+        color: '#0000ee',
+        marginBottom: '16px',
+        borderBottom: '1px solid #dfdfdf',
+        paddingBottom: '12px',
+    },
+    docSubtitle: {
+        fontFamily: 'MSSerif',
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#1a1c1d',
+        marginTop: 24,
+        marginBottom: 12,
+        borderBottom: '1px solid #cccccc',
+        paddingBottom: 4,
     },
     portalIntro: {
-        fontSize: 13,
+        fontSize: 12,
         lineHeight: '1.6',
         color: '#1a1c1d',
-        textAlign: 'justify',
         whiteSpace: 'pre-wrap',
         margin: 0,
     },
     serpContainer: {
         padding: '24px 40px',
-        backgroundColor: '#d6cdb8',
+        backgroundColor: '#ffffff',
         width: '100%',
         boxSizing: 'border-box',
     },
@@ -918,7 +918,7 @@ const styles: StyleSheetCSS = {
         fontSize: 12,
         color: '#5a6060',
         marginBottom: '24px',
-        borderBottom: '1px solid #b8ae98',
+        borderBottom: '1px solid #cccccc',
         paddingBottom: '8px',
     },
     serpList: {
@@ -959,6 +959,15 @@ const styles: StyleSheetCSS = {
     serpDesc: {
         fontFamily: 'MSSerif',
         fontSize: 13,
+        color: '#1a1c1d',
+    },
+    docMetaLabel: {
+        fontSize: 11,
+        color: '#5a6060',
+        fontWeight: 'bold',
+    },
+    docMetaValue: {
+        fontSize: 11,
         color: '#1a1c1d',
     },
 };
