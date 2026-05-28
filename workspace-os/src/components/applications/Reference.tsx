@@ -9,6 +9,7 @@ const ReferenceApp: React.FC<ReferenceAppProps> = (props) => {
     const [activeCategory, setActiveCategory] = useState<string | null>(null);
     const [activeTopic, setActiveTopic] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState<string>('');
+    const [language, setLanguage] = useState<'en' | 'id'>('en');
 
     const handleCategoryClick = (categoryId: string) => {
         setActiveCategory(activeCategory === categoryId ? null : categoryId);
@@ -33,6 +34,7 @@ const ReferenceApp: React.FC<ReferenceAppProps> = (props) => {
             const matchedTopics = category.topics.filter(
                 (topic) =>
                     topic.title.toLowerCase().includes(query) ||
+                    (topic.titleId && topic.titleId.toLowerCase().includes(query)) ||
                     topic.keywords.some((keyword) => keyword.toLowerCase().includes(query))
             );
             return {
@@ -49,11 +51,11 @@ const ReferenceApp: React.FC<ReferenceAppProps> = (props) => {
             width={840}
             height={600}
             windowBarIcon="showcaseIcon"
-            windowTitle="Reference — Workspace"
+            windowTitle={language === 'id' ? 'Referensi — Workspace' : 'Reference — Workspace'}
             closeWindow={props.onClose}
             onInteract={props.onInteract}
             minimizeWindow={props.onMinimize}
-            bottomLeftText={'Reference Environment'}
+            bottomLeftText={language === 'id' ? 'Referensi Lingkungan' : 'Reference Environment'}
         >
             <div style={styles.container}>
                 <style>{`
@@ -69,14 +71,20 @@ const ReferenceApp: React.FC<ReferenceAppProps> = (props) => {
                     <div style={styles.searchContainer}>
                         <input
                             type="text"
+                            placeholder={language === 'id' ? 'Cari...' : 'Search...'}
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            style={styles.searchInput}
+                            style={{ ...styles.searchInput, flex: 1 }}
                             autoComplete="off"
                             autoCorrect="off"
                             autoCapitalize="off"
                             spellCheck="false"
                         />
+                        <div style={{ display: 'flex', marginLeft: 8, fontSize: 11, fontFamily: 'MSSerif', color: Colors.darkGray, cursor: 'pointer', userSelect: 'none' }}>
+                            <span onClick={() => setLanguage('en')} style={{ fontWeight: language === 'en' ? 'bold' : 'normal', color: language === 'en' ? Colors.black : Colors.darkGray }}>EN</span>
+                            <span style={{ margin: '0 4px' }}>/</span>
+                            <span onClick={() => setLanguage('id')} style={{ fontWeight: language === 'id' ? 'bold' : 'normal', color: language === 'id' ? Colors.black : Colors.darkGray }}>ID</span>
+                        </div>
                     </div>
                     <div style={styles.listContainer}>
                         {filteredCategories.map((category) => {
@@ -89,7 +97,7 @@ const ReferenceApp: React.FC<ReferenceAppProps> = (props) => {
                                         className="ref-row"
                                         style={styles.categoryRow}
                                     >
-                                        <span style={styles.categoryLabel}>{category.label}</span>
+                                        <span style={styles.categoryLabel}>{language === 'id' ? (category.labelId || category.label) : category.label}</span>
                                     </div>
 
                                     {/* Expandable Topic Rows */}
@@ -106,7 +114,7 @@ const ReferenceApp: React.FC<ReferenceAppProps> = (props) => {
                                                         backgroundColor: isActive ? '#b0b3b7' : 'transparent',
                                                     }}
                                                 >
-                                                    <span style={styles.topicLabel}>{topic.title}</span>
+                                                    <span style={styles.topicLabel}>{language === 'id' ? (topic.titleId || topic.title) : topic.title}</span>
                                                 </div>
                                             );
                                         })}
@@ -123,8 +131,8 @@ const ReferenceApp: React.FC<ReferenceAppProps> = (props) => {
                 <div style={styles.rightPanel}>
                     {selectedTopic ? (
                         <div style={styles.contentContainer}>
-                            <h2 style={styles.topicTitle}>{selectedTopic.title}</h2>
-                            <p style={styles.topicContent}>{selectedTopic.content}</p>
+                            <h2 style={styles.topicTitle}>{language === 'id' ? (selectedTopic.titleId || selectedTopic.title) : selectedTopic.title}</h2>
+                            <p style={styles.topicContent}>{language === 'id' ? (selectedTopic.contentId || selectedTopic.content) : selectedTopic.content}</p>
                             {(selectedTopic as any).code && (
                                 <pre style={styles.codeBlock}>
                                     <code style={styles.codeText}>{(selectedTopic as any).code}</code>
