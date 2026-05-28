@@ -114,36 +114,39 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                     }
                 `}</style>
 
-                {/* 1. Header Bar (32px) */}
+                {/* 1. Browser Toolbar */}
                 <div style={styles.headerBar}>
-                    <div style={styles.pathDisplay}>
-                        <span style={styles.pathLabel}>NAVIGATE // </span>
-                        <span style={styles.pathValue}>{activePath}</span>
-                    </div>
-                    <div style={styles.systemIdentifier}>Knowledge Browser</div>
-                </div>
-
-                {/* 2. Main Workspace Split Panel */}
-                <div style={styles.mainSplit}>
-                    {/* Left Index Panel (240px fixed) */}
-                    <div style={styles.indexPanel}>
-                        {/* Search Input Box */}
-                        <div style={styles.searchContainer}>
+                    <div style={styles.toolbarRow}>
+                        <div style={styles.addressInputContainer}>
+                            <div style={styles.addressLabel}>Address</div>
+                            <div style={styles.addressValue}>
+                                {searchQuery ? `after-hours://search?q=${searchQuery}` : activePath}
+                            </div>
+                        </div>
+                        <div style={styles.searchBarContainer}>
+                            <div style={styles.addressLabel}>Search</div>
                             <input
                                 type="text"
-                                placeholder="Search Knowledge..."
+                                placeholder="Search..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                style={styles.searchInput}
+                                style={styles.headerSearchInput}
                                 autoComplete="off"
                                 autoCorrect="off"
                                 autoCapitalize="off"
                                 spellCheck="false"
                             />
                         </div>
+                    </div>
+                </div>
 
-                        {/* Category and Node List */}
-                        <div className="kb-scrollbar" style={styles.listContainer}>
+                {/* 2. Main Workspace Split Panel */}
+                <div style={styles.mainSplit}>
+                    {/* Left Index Panel - Visible only on Topic Pages */}
+                    {!searchQuery && activePath !== "after-hours://index" && (
+                        <div style={styles.indexPanel}>
+                            {/* Category and Node List */}
+                            <div className="kb-scrollbar" style={styles.listContainer}>
                             {/* Always allow accessing the gateway root */}
                             {rootMatches && (
                                 <div
@@ -154,7 +157,7 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                                         borderLeft: activePath === "after-hours://index" ? "2px solid #3e9697" : "none",
                                     }}
                                 >
-                                    KNOWLEDGE GATEWAY
+                                    LOCAL DIRECTORY
                                 </div>
                             )}
 
@@ -220,8 +223,9 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                                     </div>
                                 );
                             })}
+                            </div>
                         </div>
-                    </div>
+                    )}
 
                     {/* Right Document Panel (Flexible) */}
                     <div className="kb-scrollbar" style={styles.documentPanel}>
@@ -252,114 +256,222 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
 
                         {/* Content Area */}
                         <div style={styles.contentWrapper}>
-                            {/* ZONE 1: Page Header */}
-                            <div style={styles.docHeader}>
-                                <div style={styles.docPath}>PAGE // {currentNode.path}</div>
-                                <h1 style={styles.docTitle}>{currentNode.title}</h1>
-                                
-                                <div style={styles.docGrid}>
-                                    <div style={styles.gridCell}>
-                                        <span style={styles.cellLabel}>CATEGORY:</span>{" "}
-                                        <span style={styles.cellValue}>{currentNode.category.toUpperCase()}</span>
+                            {searchQuery ? (
+                                /* SEARCH ENGINE RESULTS PAGE (SERP) */
+                                <div style={styles.serpContainer}>
+                                    <h2 style={styles.serpTitle}>
+                                        {language === "en" ? `Search Results for "${searchQuery}"` : `Hasil Pencarian untuk "${searchQuery}"`}
+                                    </h2>
+                                    <div style={styles.serpMeta}>
+                                        {totalFilteredCount === 0 
+                                            ? (language === "en" ? "No pages found." : "Tidak ada halaman ditemukan.")
+                                            : `${totalFilteredCount} ${language === "en" ? "pages found" : "halaman ditemukan"}`
+                                        }
                                     </div>
-                                    <div style={styles.gridCell}>
-                                        <span style={styles.cellLabel}>STATUS:</span>{" "}
-                                        <span style={styles.cellValue}>
-                                            {currentNode.status} [v{currentNode.version}]
-                                        </span>
-                                    </div>
-                                    <div style={styles.gridCell}>
-                                        <span style={styles.cellLabel}>FILED:</span>{" "}
-                                        <span style={styles.cellValue}>{currentNode.filed}</span>
-                                    </div>
-                                    {currentNode.language && (
-                                        <div style={styles.gridCell}>
-                                            <span style={styles.cellLabel}>LANG:</span>{" "}
-                                            <span style={styles.cellValue}>{currentNode.language}</span>
+                                    
+                                    {totalFilteredCount > 0 && (
+                                        <div style={styles.serpList}>
+                                            {CATEGORIES.map(cat => {
+                                                const topics = filteredGrouped[cat] || [];
+                                                if (topics.length === 0) return null;
+                                                return (
+                                                    <div key={cat} style={styles.serpCategoryGroup}>
+                                                        <h3 style={styles.serpCategoryTitle}>{CATEGORY_LABELS[cat]}</h3>
+                                                        {topics.map(topic => (
+                                                            <div key={topic.path} style={styles.serpItem}>
+                                                                <div 
+                                                                    style={styles.serpLink}
+                                                                    onClick={() => {
+                                                                        setSearchQuery('');
+                                                                        handleTopicClick(topic.path);
+                                                                    }}
+                                                                >
+                                                                    {topic.title}
+                                                                </div>
+                                                                <div style={styles.serpPath}>{topic.path}</div>
+                                                                <div style={styles.serpDesc}>
+                                                                    {language === "en" 
+                                                                        ? topic.role 
+                                                                        : (topic.content.id.split('\n')[0].substring(0, 100) + '...')
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                );
+                                            })}
                                         </div>
                                     )}
-                                    {currentNode.environment && (
-                                        <div style={styles.gridCell}>
-                                            <span style={styles.cellLabel}>ENV:</span>{" "}
-                                            <span style={styles.cellValue}>{currentNode.environment}</span>
+                                </div>
+                            ) : activePath === "after-hours://index" ? (
+                                /* PORTAL HOMEPAGE VIEW */
+                                <div style={styles.portalContainer}>
+                                    <div style={styles.portalHeaderArea}>
+                                        <h1 style={styles.portalTitle}>Knowledge Browser</h1>
+                                        <div style={styles.portalSubtitle}>
+                                            {language === "en" ? "Local Educational Portal" : "Portal Edukasi Lokal"}
                                         </div>
-                                    )}
-                                    {currentNode.category === "knowledge" && (
-                                        <div style={styles.gridCell}>
-                                            <span style={styles.cellLabel}>INSTALLED:</span>{" "}
-                                            <span style={{
-                                                ...styles.cellValue,
-                                                color: currentNode.installedInProject ? '#3e9697' : '#5c6060',
-                                                fontWeight: 'bold',
-                                            }}>
-                                                {currentNode.installedInProject ? 'YES (IN PROJECT)' : 'NO (REFERENCE)'}
+                                    </div>
+                                    
+                                    <div style={styles.portalTilesGrid}>
+                                        <div style={styles.portalTile} onClick={() => setSearchQuery('web')}>
+                                            <div style={styles.portalTileTitle}>WEB / FRONTEND</div>
+                                            <div style={styles.portalTileDesc}>
+                                                {language === "en" ? "Web Technologies" : "Teknologi Web"}
+                                            </div>
+                                        </div>
+                                        <div style={styles.portalTile} onClick={() => setSearchQuery('system')}>
+                                            <div style={styles.portalTileTitle}>SYSTEMS</div>
+                                            <div style={styles.portalTileDesc}>
+                                                {language === "en" ? "Internal OS logic" : "Logika OS internal"}
+                                            </div>
+                                        </div>
+                                        <div style={styles.portalTile} onClick={() => setSearchQuery('knowledge')}>
+                                            <div style={styles.portalTileTitle}>KNOWLEDGE</div>
+                                            <div style={styles.portalTileDesc}>
+                                                {language === "en" ? "General IT records" : "Catatan IT umum"}
+                                            </div>
+                                        </div>
+                                        <div style={styles.portalTile} onClick={() => setSearchQuery('stack')}>
+                                            <div style={styles.portalTileTitle}>STACK</div>
+                                            <div style={styles.portalTileDesc}>
+                                                {language === "en" ? "Installed tools" : "Alat terinstal"}
+                                            </div>
+                                        </div>
+                                        <div style={styles.portalTile} onClick={() => setSearchQuery('deployment')}>
+                                            <div style={styles.portalTileTitle}>TOOLS / DEPLOY</div>
+                                            <div style={styles.portalTileDesc}>
+                                                {language === "en" ? "Build & Deploy" : "Build & Deploy"}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style={styles.portalWelcomeBox}>
+                                        <div style={styles.portalWelcomeHeader}>
+                                            {language === "en" ? "Welcome to the Knowledge Browser" : "Selamat datang di Knowledge Browser"}
+                                        </div>
+                                        <div style={styles.portalIntro}>
+                                            {language === "en" ? (
+                                                `AFTER-HOURS Knowledge Browser — knowledge.sys v1.1.0\n\nThis system provides access to three reference categories:\n\n— STACK: Technologies actively installed and running in this workstation environment.\n— SYSTEM: Internal workstation systems, design grammar rules, display layer configuration, and project logs.\n— KNOWLEDGE: General IT education pages. These are reference materials and do not indicate installed or active usage in this workstation.\n\nAll pages are stored locally. No network requests are made. Language toggle switches content between English and Indonesian. Search queries are filtered synchronously against the local database.\n\nUse the tiles above or the search bar to browse.`
+                                            ) : (
+                                                `Portal Pengetahuan AFTER-HOURS — knowledge.sys v1.1.0\n\nSistem ini menyediakan akses ke tiga kategori referensi:\n\n— STACK: Teknologi yang aktif diinstal dan berjalan di lingkungan workstation ini.\n— SYSTEM: Sistem workstation internal, aturan tata bahasa desain, konfigurasi lapisan tampilan, dan log proyek.\n— KNOWLEDGE: Halaman edukasi IT umum. Ini adalah materi referensi dan tidak menunjukkan penggunaan aktif di workstation ini.\n\nSemua halaman disimpan secara lokal. Tidak ada permintaan jaringan yang dibuat. Toggle bahasa mengalihkan konten antara Bahasa Inggris dan Indonesia. Kueri pencarian disaring secara sinkron terhadap basis data lokal.\n\nGunakan ubin di atas atau bilah pencarian untuk menelusuri.`
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : (
+                                /* TOPIC PAGE VIEW */
+                                <>
+                                    {/* ZONE 1: Page Header */}
+                                    <div style={styles.docHeader}>
+                                        <div style={styles.docPath}>PAGE // {currentNode.path}</div>
+                                        <h1 style={styles.docTitle}>{currentNode.title}</h1>
+                                        
+                                        <div style={styles.docGrid}>
+                                            <div style={styles.gridCell}>
+                                                <span style={styles.cellLabel}>CATEGORY:</span>{" "}
+                                                <span style={styles.cellValue}>{currentNode.category.toUpperCase()}</span>
+                                            </div>
+                                            <div style={styles.gridCell}>
+                                                <span style={styles.cellLabel}>STATUS:</span>{" "}
+                                                <span style={styles.cellValue}>
+                                                    {currentNode.status} [v{currentNode.version}]
+                                                </span>
+                                            </div>
+                                            <div style={styles.gridCell}>
+                                                <span style={styles.cellLabel}>FILED:</span>{" "}
+                                                <span style={styles.cellValue}>{currentNode.filed}</span>
+                                            </div>
+                                            {currentNode.language && (
+                                                <div style={styles.gridCell}>
+                                                    <span style={styles.cellLabel}>LANG:</span>{" "}
+                                                    <span style={styles.cellValue}>{currentNode.language}</span>
+                                                </div>
+                                            )}
+                                            {currentNode.environment && (
+                                                <div style={styles.gridCell}>
+                                                    <span style={styles.cellLabel}>ENV:</span>{" "}
+                                                    <span style={styles.cellValue}>{currentNode.environment}</span>
+                                                </div>
+                                            )}
+                                            {currentNode.category === "knowledge" && (
+                                                <div style={styles.gridCell}>
+                                                    <span style={styles.cellLabel}>INSTALLED:</span>{" "}
+                                                    <span style={{
+                                                        ...styles.cellValue,
+                                                        color: currentNode.installedInProject ? '#3e9697' : '#5c6060',
+                                                        fontWeight: 'bold',
+                                                    }}>
+                                                        {currentNode.installedInProject ? 'YES (IN PROJECT)' : 'NO (REFERENCE)'}
+                                                    </span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    <hr style={styles.divider} />
+
+                                    {/* ZONE 2: Metadata Block */}
+                                    <div style={styles.metadataBlock}>
+                                        <div style={styles.metaRow}>
+                                            <span style={styles.metaLabel}>ROLE:</span>{" "}
+                                            <span style={styles.metaValue}>{currentNode.role}</span>
+                                        </div>
+                                        <div style={styles.metaRow}>
+                                            <span style={styles.metaLabel}>DEPENDS:</span>{" "}
+                                            <span style={styles.metaValue}>
+                                                {currentNode.dependencies.length > 0
+                                                    ? currentNode.dependencies.join(", ")
+                                                    : "NONE (SYSTEM CORE)"}
                                             </span>
                                         </div>
-                                    )}
-                                </div>
-                            </div>
+                                        <div style={styles.metaRow}>
+                                            <span style={styles.metaLabel}>TAGS:</span>{" "}
+                                            <span style={styles.tagsContainer}>
+                                                {currentNode.tags.map(tag => (
+                                                    <span key={tag} style={styles.tagItem}>[{tag}]</span>
+                                                ))}
+                                            </span>
+                                        </div>
+                                    </div>
 
-                            <hr style={styles.divider} />
+                                    <hr style={styles.divider} />
 
-                            {/* ZONE 2: Metadata Block */}
-                            <div style={styles.metadataBlock}>
-                                <div style={styles.metaRow}>
-                                    <span style={styles.metaLabel}>ROLE:</span>{" "}
-                                    <span style={styles.metaValue}>{currentNode.role}</span>
-                                </div>
-                                <div style={styles.metaRow}>
-                                    <span style={styles.metaLabel}>DEPENDS:</span>{" "}
-                                    <span style={styles.metaValue}>
-                                        {currentNode.dependencies.length > 0
-                                            ? currentNode.dependencies.join(", ")
-                                            : "NONE (SYSTEM CORE)"}
-                                    </span>
-                                </div>
-                                <div style={styles.metaRow}>
-                                    <span style={styles.metaLabel}>TAGS:</span>{" "}
-                                    <span style={styles.tagsContainer}>
-                                        {currentNode.tags.map(tag => (
-                                            <span key={tag} style={styles.tagItem}>[{tag}]</span>
-                                        ))}
-                                    </span>
-                                </div>
-                            </div>
+                                    {/* ZONE 3: Body Content */}
+                                    <div style={styles.bodyBlock}>
+                                        <p style={styles.bodyText}>
+                                            {language === "en" ? currentNode.content.en : currentNode.content.id}
+                                        </p>
+                                    </div>
 
-                            <hr style={styles.divider} />
+                                    <hr style={styles.divider} />
 
-                            {/* ZONE 3: Body Content */}
-                            <div style={styles.bodyBlock}>
-                                <p style={styles.bodyText}>
-                                    {language === "en" ? currentNode.content.en : currentNode.content.id}
-                                </p>
-                            </div>
-
-                            <hr style={styles.divider} />
-
-                            {/* ZONE 4: Related Nodes */}
-                            <div style={styles.relatedBlock}>
-                                <div style={styles.relatedHeader}>SEE ALSO:</div>
-                                <div style={styles.relatedLinks}>
-                                    {currentNode.related.length > 0 ? (
-                                        currentNode.related.map(relPath => {
-                                            const relNode = archiveNodes[relPath]; // internal data lookup
-                                            const title = relNode ? relNode.title : relPath;
-                                            return (
-                                                <div
-                                                    key={relPath}
-                                                    onClick={() => handleTopicClick(relPath)}
-                                                    className="kb-related-link"
-                                                    style={styles.relatedLink}
-                                                >
-                                                    [ {title} ]
-                                                </div>
-                                            );
-                                        })
-                                    ) : (
-                                        <span style={styles.noRelated}>NONE DETECTED</span>
-                                    )}
-                                </div>
-                            </div>
+                                    {/* ZONE 4: Related Nodes */}
+                                    <div style={styles.relatedBlock}>
+                                        <div style={styles.relatedHeader}>RELATED PAGES:</div>
+                                        <div style={styles.relatedLinks}>
+                                            {currentNode.related.length > 0 ? (
+                                                currentNode.related.map(relPath => {
+                                                    const relNode = archiveNodes[relPath]; // internal data lookup
+                                                    const title = relNode ? relNode.title : relPath;
+                                                    return (
+                                                        <div
+                                                            key={relPath}
+                                                            onClick={() => handleTopicClick(relPath)}
+                                                            className="kb-related-link"
+                                                            style={styles.relatedLink}
+                                                        >
+                                                            [ {title} ]
+                                                        </div>
+                                                    );
+                                                })
+                                            ) : (
+                                                <span style={styles.noRelated}>NONE DETECTED</span>
+                                            )}
+                                        </div>
+                                    </div>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -367,12 +479,12 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                 {/* 3. Status Bar (24px) */}
                 <div style={styles.statusBar}>
                     <div style={styles.statusLeft}>
-                        KNOWLEDGE READY // {currentNode.path}
+                        PAGES READY // {currentNode.path}
                     </div>
                     <div style={styles.statusRight}>
                         {searchQuery 
-                            ? `${totalFilteredCount} records matched` 
-                            : `${archiveList.length} records indexed`
+                            ? `${totalFilteredCount} pages found` 
+                            : `${archiveList.length} local pages`
                         }
                     </div>
                 </div>
@@ -395,37 +507,45 @@ const styles: StyleSheetCSS = {
         fontSize: 13,
     },
     headerBar: {
-        height: 32,
+        height: 40,
         backgroundColor: '#111314', // BEVEL.spineColor
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
+        flexDirection: 'column',
+        justifyContent: 'center',
         padding: '0 12px',
         borderBottom: '1px solid #0a0b0b',
         boxSizing: 'border-box',
     },
-    pathDisplay: {
+    toolbarRow: {
         display: 'flex',
         alignItems: 'center',
+        justifyContent: 'space-between',
+        width: '100%',
+        gap: '20px',
     },
-    pathLabel: {
-        fontFamily: 'monospace',
-        fontSize: 11,
-        color: '#424a4a', // Inactive text
-        letterSpacing: '1px',
+    searchBarContainer: {
+        flex: 1,
+        display: 'flex',
+        alignItems: 'center',
+        maxWidth: '300px',
     },
-    pathValue: {
+    headerSearchInput: {
+        width: '100%',
+        padding: '2px 6px',
+        backgroundColor: '#fff',
+        border: '2px inset #d0d4d6',
         fontFamily: 'monospace',
         fontSize: 12,
-        color: '#3e9697', // Muted teal accent
-        letterSpacing: '0.5px',
+        color: '#1a1c1d',
+        outline: 'none',
     },
-    systemIdentifier: {
-        fontFamily: 'MSSerif',
+    addressValue: {
+        fontFamily: 'monospace',
         fontSize: 12,
-        fontWeight: 'bold',
-        color: '#86898d', // darkGray
-        letterSpacing: '0.5px',
+        color: '#3e9697',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
     },
     mainSplit: {
         flex: 1,
@@ -435,9 +555,9 @@ const styles: StyleSheetCSS = {
         boxSizing: 'border-box',
     },
     indexPanel: {
-        width: 240,
-        minWidth: 240,
-        maxWidth: 240,
+        width: 160,
+        minWidth: 160,
+        maxWidth: 160,
         height: '100%',
         backgroundColor: '#1c1f20',
         // Task C: sharper border edge against light document panel
@@ -446,29 +566,6 @@ const styles: StyleSheetCSS = {
         flexDirection: 'column',
         overflow: 'hidden',
         boxSizing: 'border-box',
-    },
-    searchContainer: {
-        height: 42,
-        padding: '0 12px',
-        display: 'flex',
-        alignItems: 'center',
-        borderBottom: '1px solid #151718',
-        boxSizing: 'border-box',
-    },
-    searchInput: {
-        width: '100%',
-        padding: '6px 8px',
-        boxSizing: 'border-box',
-        border: '1px solid #0a0b0b',
-        borderRightColor: '#484b4d',
-        borderBottomColor: '#484b4d',
-        backgroundColor: '#111314',
-        fontFamily: 'MSSerif',
-        fontSize: 12,
-        color: '#d0d4d6',
-        outline: 'none',
-        borderRadius: 0,
-        boxShadow: 'none',
     },
     listContainer: {
         flex: 1,
@@ -702,6 +799,167 @@ const styles: StyleSheetCSS = {
     },
     statusRight: {
         letterSpacing: '0.5px',
+    },
+    addressLabel: {
+        fontFamily: 'MSSerif',
+        fontSize: 12,
+        fontWeight: 'bold',
+        color: '#86898d', // darkGray
+        marginRight: 8,
+    },
+    addressInputContainer: {
+        flex: 2,
+        display: 'flex',
+        alignItems: 'center',
+        overflow: 'hidden',
+    },
+    portalContainer: {
+        width: '100%',
+        height: '100%',
+        padding: '24px 32px',
+        boxSizing: 'border-box',
+        backgroundColor: '#d6cdb8',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '24px',
+        alignItems: 'center',
+        overflowY: 'auto',
+    },
+    portalHeaderArea: {
+        marginBottom: '40px',
+        textAlign: 'center',
+    },
+    portalTitle: {
+        fontFamily: 'MSSerif',
+        fontSize: 38,
+        fontWeight: 'bold',
+        color: '#1a1c1d',
+        margin: '0 0 12px 0',
+        textShadow: '1px 1px 0px #fff',
+    },
+    portalSubtitle: {
+        fontFamily: 'monospace',
+        fontSize: 14,
+        color: '#5a6060',
+    },
+    portalTilesGrid: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: '16px',
+        width: '100%',
+        maxWidth: '800px',
+        justifyContent: 'center',
+        marginBottom: '40px',
+    },
+    portalTile: {
+        width: '140px',
+        backgroundColor: '#c8bfa8',
+        border: '2px outset #d6cdb8',
+        padding: '16px 12px',
+        cursor: 'pointer',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    portalTileTitle: {
+        fontFamily: 'MSSerif',
+        fontSize: 14,
+        fontWeight: 'bold',
+        color: '#1a1c1d',
+        marginBottom: '8px',
+        textAlign: 'center',
+    },
+    portalTileDesc: {
+        fontSize: 11,
+        fontFamily: 'monospace',
+        color: '#4a5050',
+        textAlign: 'center',
+    },
+    portalWelcomeBox: {
+        maxWidth: '700px',
+        width: '100%',
+        backgroundColor: '#c8bfa8',
+        border: '1px solid #b8ae98',
+        padding: '24px',
+        boxSizing: 'border-box',
+    },
+    portalWelcomeHeader: {
+        fontFamily: 'monospace',
+        fontWeight: 'bold',
+        color: '#2a6e6f',
+        marginBottom: '12px',
+        fontSize: 14,
+        borderBottom: '1px solid #b8ae98',
+        paddingBottom: '8px',
+    },
+    portalIntro: {
+        fontSize: 13,
+        lineHeight: '1.6',
+        color: '#1a1c1d',
+        textAlign: 'justify',
+        whiteSpace: 'pre-wrap',
+        margin: 0,
+    },
+    serpContainer: {
+        padding: '24px 40px',
+        backgroundColor: '#d6cdb8',
+        width: '100%',
+        boxSizing: 'border-box',
+    },
+    serpTitle: {
+        fontFamily: 'MSSerif',
+        fontSize: 24,
+        color: '#1a1c1d',
+        margin: '0 0 8px 0',
+    },
+    serpMeta: {
+        fontFamily: 'monospace',
+        fontSize: 12,
+        color: '#5a6060',
+        marginBottom: '24px',
+        borderBottom: '1px solid #b8ae98',
+        paddingBottom: '8px',
+    },
+    serpList: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '24px',
+    },
+    serpCategoryGroup: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '12px',
+    },
+    serpCategoryTitle: {
+        fontFamily: 'monospace',
+        fontSize: 14,
+        color: '#4a5050',
+        margin: 0,
+        textDecoration: 'underline',
+    },
+    serpItem: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '4px',
+        marginBottom: '8px',
+    },
+    serpLink: {
+        fontFamily: 'MSSerif',
+        fontSize: 18,
+        color: '#0000ee',
+        textDecoration: 'underline',
+        cursor: 'pointer',
+    },
+    serpPath: {
+        fontFamily: 'monospace',
+        fontSize: 11,
+        color: '#006600',
+    },
+    serpDesc: {
+        fontFamily: 'MSSerif',
+        fontSize: 13,
+        color: '#1a1c1d',
     },
 };
 
