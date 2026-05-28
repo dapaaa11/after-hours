@@ -78,7 +78,7 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
             closeWindow={props.onClose}
             onInteract={props.onInteract}
             minimizeWindow={props.onMinimize}
-            bottomLeftText="archive.sys"
+            bottomLeftText="knowledge.sys"
         >
             <div style={styles.container}>
                 {/* CSS rules for manual styling of scrollbars and hover snaps */}
