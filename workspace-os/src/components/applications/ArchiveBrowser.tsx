@@ -119,9 +119,12 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                     <div style={styles.toolbarRow}>
                         <div style={styles.addressInputContainer}>
                             <div style={styles.addressLabel}>Address</div>
-                            <div style={styles.addressValue}>
-                                {searchQuery ? `after-hours://search?q=${searchQuery}` : activePath}
-                            </div>
+                            <input
+                                type="text"
+                                readOnly
+                                value={searchQuery ? `after-hours://search?q=${searchQuery}` : activePath}
+                                style={styles.headerSearchInput}
+                            />
                         </div>
                         <div style={styles.searchBarContainer}>
                             <div style={styles.addressLabel}>Search</div>
@@ -354,9 +357,9 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                                             </div>
                                             <div style={styles.portalIntro}>
                                                 {language === "en" ? (
-                                                    `AFTER-HOURS Knowledge Browser — knowledge.sys v1.1.0\n\nThis system provides access to three reference categories:\n\n— STACK: Technologies actively installed and running in this environment.\n— SYSTEM: Internal workstation systems, display layers, and project logs.\n— KNOWLEDGE: General IT education and reference pages.\n\nAll pages are stored locally. No network requests are made. Language toggle switches content between EN and ID. Search queries are filtered synchronously.\n\nUse the tiles to the left or the search bar above to browse.`
+                                                    `AFTER-HOURS Knowledge Browser v1.1\n\nThis system provides access to three reference categories:\n— STACK: Active local workstation technologies.\n— SYSTEM: Internal layers and project logs.\n— KNOWLEDGE: General IT reference pages.\n\nAll pages are stored locally. No external requests are made. Search queries are filtered synchronously.\n\nUse the tiles to the left or the search bar above to browse.`
                                                 ) : (
-                                                    `Portal Pengetahuan AFTER-HOURS — knowledge.sys v1.1.0\n\nSistem ini menyediakan akses ke tiga kategori referensi:\n\n— STACK: Teknologi yang aktif diinstal dan berjalan di lingkungan ini.\n— SYSTEM: Sistem workstation internal, lapisan tampilan, dan log proyek.\n— KNOWLEDGE: Halaman edukasi IT umum dan referensi.\n\nSemua halaman disimpan secara lokal. Tidak ada permintaan jaringan. Toggle bahasa mengalihkan konten antara EN dan ID. Kueri pencarian disaring secara sinkron.\n\nGunakan ubin di sebelah kiri atau bilah pencarian di atas untuk menelusuri.`
+                                                    `Portal Pengetahuan AFTER-HOURS v1.1\n\nSistem ini menyediakan akses ke tiga kategori:\n— STACK: Teknologi lokal yang aktif berjalan.\n— SYSTEM: Lapisan internal dan log proyek.\n— KNOWLEDGE: Halaman referensi IT umum.\n\nSemua halaman disimpan secara lokal. Tidak ada permintaan eksternal. Kueri pencarian disaring secara sinkron.\n\nGunakan ubin di sebelah kiri atau bilah pencarian untuk menelusuri.`
                                                 )}
                                             </div>
                                         </div>
@@ -511,12 +514,12 @@ const styles: StyleSheetCSS = {
     },
     headerBar: {
         height: 40,
-        backgroundColor: '#2b2d2f',
+        backgroundColor: '#0a246a',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         padding: '0 12px',
-        borderBottom: '1px solid #1a1c1d',
+        borderBottom: '1px solid #000000',
         boxSizing: 'border-box',
     },
     toolbarRow: {
@@ -534,9 +537,9 @@ const styles: StyleSheetCSS = {
     },
     headerSearchInput: {
         width: '100%',
-        padding: '2px 6px',
-        backgroundColor: '#fff',
-        border: '2px inset #d0d4d6',
+        padding: '3px 6px',
+        backgroundColor: '#ffffff',
+        border: '2px inset #dfdfdf',
         fontFamily: 'monospace',
         fontSize: 12,
         color: '#1a1c1d',
@@ -552,7 +555,7 @@ const styles: StyleSheetCSS = {
         fontFamily: 'MSSans',
         fontSize: 12,
         fontWeight: 'bold',
-        color: '#b0b4b6',
+        color: '#e4e4e4',
         marginRight: 12,
     },
     addressValue: {
@@ -783,16 +786,16 @@ const styles: StyleSheetCSS = {
     },
     statusBar: {
         height: 24,
-        backgroundColor: '#111314',
+        backgroundColor: '#1a2639',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: '0 12px',
-        borderTop: '1px solid #0a0b0b',
+        borderTop: '1px solid #0a121e',
         boxSizing: 'border-box',
         fontSize: 11,
         fontFamily: 'monospace',
-        color: '#546060',
+        color: '#7a8e9e',
     },
     statusLeft: {
         letterSpacing: '0.5px',
@@ -871,7 +874,7 @@ const styles: StyleSheetCSS = {
     },
     portalWelcomeBox: {
         flex: 1,
-        padding: '24px',
+        padding: '20px',
         backgroundColor: '#f8f8f8',
         border: '1px solid #cccccc',
     },
@@ -880,9 +883,9 @@ const styles: StyleSheetCSS = {
         fontSize: 18,
         fontWeight: 'bold',
         color: '#0000ee',
-        marginBottom: '16px',
+        marginBottom: '12px',
         borderBottom: '1px solid #dfdfdf',
-        paddingBottom: '12px',
+        paddingBottom: '8px',
     },
     docSubtitle: {
         fontFamily: 'MSSerif',
@@ -896,7 +899,7 @@ const styles: StyleSheetCSS = {
     },
     portalIntro: {
         fontSize: 12,
-        lineHeight: '1.6',
+        lineHeight: '1.5',
         color: '#1a1c1d',
         whiteSpace: 'pre-wrap',
         margin: 0,

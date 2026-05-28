@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 // Colors are defined in the BEVEL constants below — no external import needed
 import { START_MENU_ENTRIES, StartMenuEntry } from './startMenuConfig';
+import { BEVEL } from './windowBevel';
 import { Icon } from '../general';
 
 export interface StartMenuProps {
@@ -8,35 +9,6 @@ export interface StartMenuProps {
     onSelect: (entry: StartMenuEntry) => void;
 }
 
-/* ─────────────────────────────────────────────
-   AFTER-HOURS Bevel Constants
-   Dark atmospheric palette — warm charcoal surface
-   with restrained bevel contrast (~15-20% luminance)
-   for dusty-industrial Z-depth.
-   ───────────────────────────────────────────── */
-const BEVEL = {
-    // Outer bevel — physical boundary (subdued ridges)
-    outerLight: '#484b4d',
-    outerDark: '#0a0b0b',
-    // Inner bevel — surface edge (barely-there luminance)
-    innerLight: '#3a3d3f',
-    innerDark: '#151718',
-    // Spine tonal value — deepest element, structural back
-    spineColor: '#111314',
-    spineFaceColor: '#1a1c1d',
-    // Surface — warm charcoal (not cool gray)
-    surface: '#2a2d2e',
-    // Selection — atmospheric teal (from shutdown palette)
-    selectBg: '#1a3a3d',
-    selectFg: '#d0d4d6',
-    // Default text — warm muted gray
-    textDefault: '#a0a4a6',
-    // Groove separator — low-contrast etched lines
-    grooveDark: '#1a1c1d',
-    grooveLight: '#383b3d',
-    // Spine border
-    spineBorder: '#151718',
-};
 
 const SPINE_WIDTH = 24;
 
@@ -136,7 +108,7 @@ const BevelGroove: React.FC = () => (
                 left: 0,
                 right: 0,
                 height: 1,
-                backgroundColor: BEVEL.grooveDark,
+                backgroundColor: BEVEL.innerDark,
             }}
         />
         <div
@@ -146,7 +118,7 @@ const BevelGroove: React.FC = () => (
                 left: 0,
                 right: 0,
                 height: 1,
-                backgroundColor: BEVEL.grooveLight,
+                backgroundColor: BEVEL.innerLight,
             }}
         />
     </div>
@@ -229,13 +201,13 @@ const StartMenu: React.FC<StartMenuProps> = ({ onClose, onSelect }) => {
                     style={{
                         width: SPINE_WIDTH,
                         flexShrink: 0,
-                        background: `linear-gradient(to right, ${BEVEL.spineColor}, ${BEVEL.spineFaceColor})`,
+                        backgroundColor: '#808080', // Classic Windows spine
                         display: 'flex',
                         alignItems: 'flex-end',
                         justifyContent: 'center',
                         overflow: 'hidden',
                         position: 'relative',
-                        borderRight: `1px solid ${BEVEL.spineBorder}`,
+                        borderRight: `1px solid ${BEVEL.innerDark}`,
                     }}
                 >
                     {/* ─── Step 10: Spine Vertical Text ───

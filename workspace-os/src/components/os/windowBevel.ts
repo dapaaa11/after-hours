@@ -5,20 +5,20 @@
    for dusty-industrial Z-depth.
    ───────────────────────────────────────────── */
 export const BEVEL = {
-    // Outer bevel — physical boundary (subdued ridges)
-    outerLight: '#484b4d',
-    outerDark: '#0a0b0b',
-    // Inner bevel — surface edge (barely-there luminance)
-    innerLight: '#3a3d3f',
-    innerDark: '#151718',
-    // Spine tonal value — deepest element, structural back (Inactive titlebar)
-    spineColor: '#111314',
-    // Surface — warm charcoal (not cool gray)
-    surface: '#2a2d2e',
-    // Selection — atmospheric teal (Active titlebar)
-    selectBg: '#1a3a3d',
-    selectFg: '#d0d4d6',
-    // Default text — warm muted gray
-    textDefault: '#a0a4a6',
-    inactiveText: '#424a4a', // Matched to Start Menu spine readability
+    // Outer bevel — physical boundary (classic windows inset/outset)
+    outerLight: '#dfdfdf',
+    outerDark: '#000000',
+    // Inner bevel — surface edge
+    innerLight: '#ffffff',
+    innerDark: '#808080',
+    // Spine tonal value (Inactive titlebar)
+    spineColor: '#808080',
+    // Surface — classic Windows gray
+    surface: '#c0c0c0',
+    // Selection — classic navy (Active titlebar)
+    selectBg: '#0a246a',
+    selectFg: '#ffffff',
+    // Default text — black on light gray
+    textDefault: '#000000',
+    inactiveText: '#dfdfdf',
 };
