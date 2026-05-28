@@ -16,7 +16,7 @@ interface Experiment {
     findings: string[];
 }
 
-const EXPERIMENTS: Experiment[] = [
+const getExperiments = (lang: string): Experiment[] => [
     {
         id: 'EXP-001',
         date: '2025.04',
@@ -24,8 +24,15 @@ const EXPERIMENTS: Experiment[] = [
         name: 'CRT Phosphor Decay',
         status: 'concluded',
         domain: 'GLSL / post-processing',
-        log: 'Simulated phosphor persistence and scanline decay typical of CRT monitors. Used as the primary screen atmosphere layer in the workspace render pipeline.',
-        findings: [
+        log: lang === 'id' ?
+            'Mensimulasikan persistensi fosfor dan peluruhan garis pindai khas monitor CRT. Digunakan sebagai lapisan suasana layar utama dalam alur render ruang kerja.' :
+            'Simulated phosphor persistence and scanline decay typical of CRT monitors. Used as the primary screen atmosphere layer in the workspace render pipeline.',
+        findings: lang === 'id' ? [
+            'Peluruhan fosfor paling baik dicapai melalui pencampuran framebuffer, bukan murni shader',
+            'Frekuensi garis pindai bergantung pada resolusi viewport — memerlukan perhitungan dinamis',
+            'Dikombinasikan dengan butiran film: mempertahankan nuansa retro tanpa mengganggu',
+            'Diintegrasikan ke dalam tumpukan pasca-pemrosesan workspace-3d',
+        ] : [
             'Phosphor decay best achieved via framebuffer blending, not pure shader',
             'Scanline frequency depends on viewport resolution — needs dynamic calculation',
             'Combined with film grain: maintains retro feel without being distracting',
@@ -39,8 +46,15 @@ const EXPERIMENTS: Experiment[] = [
         name: 'Windowed OS Drag Inertia',
         status: 'shelved',
         domain: 'interface behavior',
-        log: 'Experimented with adding inertia/momentum to window dragging in the OS layer. Windows would slide and settle rather than stopping immediately.',
-        findings: [
+        log: lang === 'id' ?
+            'Bereksperimen dengan menambahkan inersia/momentum pada penyeretan jendela di lapisan OS. Jendela akan meluncur dan menetap alih-alih berhenti seketika.' :
+            'Experimented with adding inertia/momentum to window dragging in the OS layer. Windows would slide and settle rather than stopping immediately.',
+        findings: lang === 'id' ? [
+            'Inersia terasa tidak konsisten dengan estetika OS retro — terlalu cair',
+            'Meningkatkan kompleksitas yang dirasakan tanpa peningkatan suasana',
+            'Dikesampingkan: Kecepatan OS lebih sesuai dengan nuansa retro',
+            'Perilaku Lerp dicadangkan untuk kamera 3D saja',
+        ] : [
             'Inertia felt inconsistent with retro OS aesthetic — too fluid',
             'Increased perceived complexity without atmosphere gain',
             'Shelved: OS snappiness better suits the retro feel',
@@ -54,8 +68,15 @@ const EXPERIMENTS: Experiment[] = [
         name: 'Ambient Score Reactivity',
         status: 'prototype',
         domain: 'Web Audio API / Three.js',
-        log: 'Prototype for having the ambient audio score subtly affect scene properties — room lighting, shader uniforms, camera depth of field. Never fully implemented.',
-        findings: [
+        log: lang === 'id' ?
+            'Prototipe untuk membuat skor audio ambien memengaruhi properti adegan secara halus — pencahayaan ruangan, seragam shader, kedalaman bidang kamera. Tidak pernah sepenuhnya diimplementasikan.' :
+            'Prototype for having the ambient audio score subtly affect scene properties — room lighting, shader uniforms, camera depth of field. Never fully implemented.',
+        findings: lang === 'id' ? [
+            'AnalyserNode Web Audio API menyediakan data frekuensi waktu nyata',
+            'Memetakan frekuensi bass ke kepadatan kabut adegan',
+            'Frekuensi tinggi memengaruhi intensitas butiran dalam pasca-pemrosesan',
+            'Prototipe tetap ada — integrasi memerlukan pembuatan profil performa',
+        ] : [
             'Web Audio API AnalyserNode provides real-time frequency data',
             'Mapped bass frequencies to scene fog density',
             'High frequencies affected grain intensity in post-processing',
@@ -69,8 +90,16 @@ const EXPERIMENTS: Experiment[] = [
         name: 'Terminal Log UI Language',
         status: 'concluded',
         domain: 'interface design',
-        log: 'Developed the visual language for the OS showcase layer. Terminal prompts, monospace hierarchies, log-style entries, and :: separator syntax.',
-        findings: [
+        log: lang === 'id' ?
+            'Mengembangkan bahasa visual untuk lapisan pameran OS. Prompt terminal, hierarki monospace, entri gaya log, dan sintaks pemisah ::.' :
+            'Developed the visual language for the OS showcase layer. Terminal prompts, monospace hierarchies, log-style entries, and :: separator syntax.',
+        findings: lang === 'id' ? [
+            'Pasangan monospace + serif: Font Terminal untuk kunci, Millennium untuk isi',
+            'Pemisah :: membawa bobot lebih dari - atau / dalam konteks ini',
+            'Poin › lebih mudah dibaca daripada • dalam lingkungan monospace',
+            'Tata letak rata kiri bertebaran kontras rendah terasa seperti dikarang daripada dihasilkan',
+            'Menjadi sistem desain untuk bagian Operators, Systems, Channel, Archive',
+        ] : [
             'Monospace + serif pairing: Terminal font for keys, Millennium for body',
             ':: separator carries more weight than - or / in this context',
             '› bullet reads better than • in monospace environments',
@@ -85,8 +114,15 @@ const EXPERIMENTS: Experiment[] = [
         name: 'Procedural Room Texture',
         status: 'concluded',
         domain: 'GLSL / Three.js materials',
-        log: 'Replaced static texture maps on room surfaces with procedural noise-based materials. Allowed for more atmospheric imperfection in the workspace surfaces.',
-        findings: [
+        log: lang === 'id' ?
+            'Mengganti peta tekstur statis pada permukaan ruangan dengan material berbasis noise prosedural. Memungkinkan lebih banyak ketidaksempurnaan atmosfer pada permukaan ruang kerja.' :
+            'Replaced static texture maps on room surfaces with procedural noise-based materials. Allowed for more atmospheric imperfection in the workspace surfaces.',
+        findings: lang === 'id' ? [
+            'Noise Simplex di atas koordinat UV memberikan variasi permukaan yang halus',
+            'Oktaf noise berlapis menyimulasikan nuansa material tua',
+            'Performa dapat diterima pada resolusi menengah — berat pada 4K',
+            'Material dinding dan lantai menggunakan pendekatan ini di workspace-3d',
+        ] : [
             'Simplex noise over UV coordinates provides subtle surface variation',
             'Layered noise octaves simulate aged material feel',
             'Performance acceptable at moderate resolution — heavy at 4K',
@@ -100,8 +136,15 @@ const EXPERIMENTS: Experiment[] = [
         name: 'Cursor–Scene Parallax',
         status: 'ongoing',
         domain: 'Three.js / mouse events',
-        log: 'Mouse cursor position subtly affects camera rotation and scene objects — creating a parallax sensation that makes the workspace feel alive and reactive.',
-        findings: [
+        log: lang === 'id' ?
+            'Posisi kursor mouse secara halus memengaruhi rotasi kamera dan objek adegan — menciptakan sensasi paralaks yang membuat ruang kerja terasa hidup dan reaktif.' :
+            'Mouse cursor position subtly affects camera rotation and scene objects — creating a parallax sensation that makes the workspace feel alive and reactive.',
+        findings: lang === 'id' ? [
+            'Delta kursor dipetakan ke quaternion kamera melalui lerp teredam',
+            'Rentang rotasi kecil (±3°) cukup untuk sensasi kedalaman',
+            'Interaksi terasa hidup tanpa merusak keheningan sinematik',
+            'Saat ini aktif di workspace-3d — penyempurnaan berkelanjutan',
+        ] : [
             'Cursor delta mapped to camera quaternion via damped lerp',
             'Small rotation range (±3°) sufficient for depth sensation',
             'Interaction feels alive without breaking cinematic stillness',
@@ -115,8 +158,15 @@ const EXPERIMENTS: Experiment[] = [
         name: 'iframe Bridge Protocol',
         status: 'concluded',
         domain: 'postMessage / DOM',
-        log: 'Explored embedding the React OS layer inside the Three.js scene via an iframe. Needed a reliable message-passing protocol between the 3D context and the 2D OS.',
-        findings: [
+        log: lang === 'id' ?
+            'Menjelajahi penyematan lapisan OS React di dalam adegan Three.js melalui iframe. Membutuhkan protokol pengiriman pesan yang andal antara konteks 3D dan OS 2D.' :
+            'Explored embedding the React OS layer inside the Three.js scene via an iframe. Needed a reliable message-passing protocol between the 3D context and the 2D OS.',
+        findings: lang === 'id' ? [
+            'API postMessage menangani komunikasi lintas bingkai dengan bersih',
+            'OS merender secara independen — tidak ada penggabungan performa ke centang Three.js',
+            'Manajemen pointer-events CSS memerlukan penanganan z-index yang cermat',
+            'Menjadi arsitektur fondasi untuk ruang kerja',
+        ] : [
             'postMessage API handles cross-frame communication cleanly',
             'OS renders independently — no performance coupling to Three.js tick',
             'CSS pointer-events management required careful z-index handling',
@@ -199,15 +249,23 @@ interface SystemModule {
     entries: string[];
 }
 
-const MODULES: SystemModule[] = [
+const getModules = (lang: string): SystemModule[] => [
     {
         id: 'SYS-01',
         tag: 'immersive-web',
         name: 'Immersive Web Systems',
         status: 'active',
-        description:
+        description: lang === 'id' ?
+            'Lingkungan 3D waktu nyata yang berjalan di dalam browser. Alur WebGL, grafik adegan, dan konstruksi ruang kerja sinematik.' :
             'Real-time 3D environments running inside the browser. WebGL pipelines, scene graphs, and cinematic workspace construction.',
-        entries: [
+        entries: lang === 'id' ? [
+            'Arsitektur adegan Three.js',
+            'Sistem kamera kustom dan kontrol sinematik',
+            'Integrasi shader GLSL',
+            'Alur pasca-pemrosesan (bloom, kedalaman, butiran)',
+            'Jembatan iframe untuk lapisan OS tersemat',
+            'Pemuatan aset dan manajemen tekstur',
+        ] : [
             'Three.js scene architecture',
             'Custom camera systems and cinematic controls',
             'GLSL shader integration',
@@ -221,9 +279,17 @@ const MODULES: SystemModule[] = [
         tag: 'interactive-interfaces',
         name: 'Interactive Interfaces',
         status: 'active',
-        description:
+        description: lang === 'id' ?
+            'UI taktil dan atmosferik yang dibangun dengan presisi. Estetika OS retro, lingkungan berjendela, dan lapisan interaksi imersif.' :
             'Atmospheric, tactile UIs built with precision. Retro OS aesthetics, windowed environments, and immersive interaction layers.',
-        entries: [
+        entries: lang === 'id' ? [
+            'Sistem jendela OS retro (seret, ubah ukuran, minimalkan)',
+            'Arsitektur komponen React',
+            'Sistem font dan tipografi kustom',
+            'Interaksi berbasis keyboard dan kursor',
+            'Mesin status untuk perilaku UI',
+            'Tata letak responsif dalam kanvas terbatas',
+        ] : [
             'Retro OS windowing system (drag, resize, minimize)',
             'React component architecture',
             'Custom typography and font systems',
@@ -237,9 +303,16 @@ const MODULES: SystemModule[] = [
         tag: 'backend-systems',
         name: 'Backend Systems',
         status: 'active',
-        description:
+        description: lang === 'id' ?
+            'Infrastruktur server yang tetap tenang dan tidak menghalangi. API REST, layanan pengirim surat, dan alur penerapan.' :
             'Server infrastructure that stays quiet and out of the way. REST APIs, mailer services, and deployment pipelines.',
-        entries: [
+        entries: lang === 'id' ? [
+            'Node.js + Express API REST',
+            'Perutean email transaksional Nodemailer',
+            'Konfigurasi berbasis lingkungan',
+            'Penyajian dan kompresi aset statis',
+            'CORS dan middleware penguraian isi',
+        ] : [
             'Node.js + Express REST API',
             'Nodemailer transactional email routing',
             'Environment-based configuration',
@@ -252,9 +325,16 @@ const MODULES: SystemModule[] = [
         tag: 'shader-workflows',
         name: 'Shader Workflows',
         status: 'active',
-        description:
+        description: lang === 'id' ?
+            'Pemrograman visual tingkat rendah untuk suasana. GLSL kustom ditulis untuk membentuk cahaya, noise, dan nuansa permukaan.' :
             'Low-level visual programming for atmosphere. Custom GLSL written to shape light, noise, and surface feel.',
-        entries: [
+        entries: lang === 'id' ? [
+            'Pembuatan shader vertex dan fragmen (GLSL)',
+            'Tekstur prosedural berbasis noise',
+            'Efek ruang layar (garis pindai, vignette, CRT)',
+            'Sistem material kustom di Three.js',
+            'Kontrol parameter waktu nyata berbasis seragam',
+        ] : [
             'Vertex and fragment shader authoring (GLSL)',
             'Noise-based procedural textures',
             'Screen-space effects (scanlines, vignette, CRT)',
@@ -267,9 +347,17 @@ const MODULES: SystemModule[] = [
         tag: 'workspace-tooling',
         name: 'Workspace Tooling',
         status: 'active',
-        description:
+        description: lang === 'id' ?
+            'Perancah yang menyatukan proyek. Membangun sistem, keamanan tipe, dan konfigurasi lingkungan pengembang.' :
             'The scaffolding that holds the project together. Build systems, type safety, and developer environment configuration.',
-        entries: [
+        entries: lang === 'id' ? [
+            'TypeScript di seluruh full stack',
+            'Alur pembuatan React + CRA / Vite',
+            'Kontrol versi berbasis Git dengan komit terstruktur',
+            'ESLint dan analisis statis',
+            'Aliasing jalur dan resolusi modul',
+            'Manajemen variabel lingkungan',
+        ] : [
             'TypeScript across full stack',
             'React + CRA / Vite build pipelines',
             'Git-based version control with structured commits',
@@ -283,9 +371,16 @@ const MODULES: SystemModule[] = [
         tag: 'realtime-environments',
         name: 'Realtime Environments',
         status: 'experimental',
-        description:
+        description: lang === 'id' ?
+            'Ruang reaktif langsung yang merespons waktu, masukan, dan status. Wilayah eksperimental — selalu after hours.' :
             'Live, reactive spaces that respond to time, input, and state. Experimental territory — always after hours.',
-        entries: [
+        entries: lang === 'id' ? [
+            'Mutasi adegan berbasis jam dan waktu',
+            'Integrasi audio ambien',
+            'Interaksi 3D reaktif kursor',
+            'Pencahayaan dinamis berdasarkan waktu sistem',
+            'Arsitektur siap WebSocket untuk kehadiran langsung',
+        ] : [
             'Clock-driven and time-based scene mutations',
             'Ambient audio integration',
             'Cursor-reactive 3D interaction',
@@ -359,8 +454,8 @@ const ModuleEntry: React.FC<ModuleEntryProps> = ({ module }) => {
 
 const Systems: React.FC<SystemsProps> = () => {
     const { language } = useLanguage();
-    const activeCount = MODULES.filter((m) => m.status === 'active').length;
-    const expCount = MODULES.filter(
+    const activeCount = getModules(language).filter((m) => m.status === 'active').length;
+    const expCount = getModules(language).filter(
         (m) => m.status === 'experimental'
     ).length;
 
@@ -375,7 +470,7 @@ const Systems: React.FC<SystemsProps> = () => {
             {/* System stats row */}
             <div style={styles.statsRow}>
                 <div style={styles.stat}>
-                    <span style={styles.statValue}>{MODULES.length}</span>
+                    <span style={styles.statValue}>{getModules(language).length}</span>
                     <span style={styles.statLabel}>{language === 'id' ? 'modul' : 'modules'}</span>
                 </div>
                 <div style={styles.statSep} />
@@ -400,7 +495,7 @@ const Systems: React.FC<SystemsProps> = () => {
 
             {/* Module list */}
             <div style={styles.moduleList}>
-                {MODULES.map((mod, i) => (
+                {getModules(language).map((mod, i) => (
                     <ModuleEntry key={mod.id} module={mod} />
                 ))}
             </div>
@@ -412,7 +507,7 @@ const Systems: React.FC<SystemsProps> = () => {
             </div>
 
             <div style={styles.moduleList}>
-                {EXPERIMENTS.map((exp) => (
+                {getExperiments(language).map((exp) => (
                     <ExpEntry key={exp.id} exp={exp} />
                 ))}
             </div>

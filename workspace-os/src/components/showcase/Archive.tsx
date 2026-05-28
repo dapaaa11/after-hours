@@ -19,13 +19,18 @@ interface LabNote {
     body: string[];
 }
 
-const NOTES: LabNote[] = [
+const getNotes = (lang: string): LabNote[] => [
     {
         id: 'LN-009',
         timestamp: '2025.05.21',
         tag: 'build',
-        title: 'workspace-os section expansion',
-        body: [
+        title: lang === 'id' ? 'perluasan bagian workspace-os' : 'workspace-os section expansion',
+        body: lang === 'id' ? [
+            'Menambahkan struktur dunia baru ke lapisan OS: Operators, Channel, Systems, Archive, Experiments, Lab Notes.',
+            'Setiap bagian mengikuti estetika log terminal yang sama seperti pada versi awal.',
+            'Mempertahankan rute ABOUT / EXPERIENCE / PROJECTS / CONTACT yang lama tetap aktif selama masa transisi.',
+            'Navigasi menjadi semakin panjang — perlu memikirkan pengorganisasian sebelum pembersihan akhir.',
+        ] : [
             'Adding new world structure to the OS layer: Operators, Channel, Systems, Archive, Experiments, Lab Notes.',
             'Each section follows the same terminal log aesthetic established in the initial build.',
             'Keeping the old ABOUT / EXPERIENCE / PROJECTS / CONTACT routes live during transition.',
@@ -36,8 +41,13 @@ const NOTES: LabNote[] = [
         id: 'LN-008',
         timestamp: '2025.04.18',
         tag: 'decision',
-        title: 'iframe bridge over component embedding',
-        body: [
+        title: lang === 'id' ? 'jembatan iframe dibanding penyematan komponen' : 'iframe bridge over component embedding',
+        body: lang === 'id' ? [
+            'Memutuskan untuk menjalankan lapisan OS di dalam iframe daripada menyematkannya langsung sebagai overlay DOM pada kanvas Three.js.',
+            'Pemisahan ini berarti OS bisa crash atau dimuat ulang tanpa mempengaruhi scene 3D.',
+            'Protokol postMessage menangani komunikasi antar-konteks yang diperlukan.',
+            'Isolasi performa adalah alasan utamanya. Loop centang 3D tidak peduli dengan render React.',
+        ] : [
             'Decided to keep the OS layer running inside an iframe rather than embedding it directly as a DOM overlay on the Three.js canvas.',
             'The decoupling means the OS can crash or reload without affecting the 3D scene.',
             'postMessage protocol handles any necessary cross-context communication.',
@@ -48,8 +58,14 @@ const NOTES: LabNote[] = [
         id: 'LN-007',
         timestamp: '2025.04.02',
         tag: 'observation',
-        title: 'on designing for atmosphere vs usability',
-        body: [
+        title: lang === 'id' ? 'tentang mendesain untuk atmosfer vs fungsionalitas' : 'on designing for atmosphere vs usability',
+        body: lang === 'id' ? [
+            'Ada ketegangan antara membuat sesuatu terasa pas dan membuatnya mudah digunakan.',
+            'Estetika OS retro memaksakan batasan — segala sesuatu harus terasa sedikit lambat, disengaja, dan tidak sempurna.',
+            'Konvensi UX modern (umpan balik instan, animasi halus, keterjangkauan yang jelas) dapat merusak suasana.',
+            'Tujuannya bukan untuk memaksimalkan kegunaan. Melainkan memaksimalkan imersi.',
+            'Pengguna yang sejalan dengan ini akan menemukannya. Pengguna yang tidak akan pergi. Tidak apa-apa.',
+        ] : [
             'There is a tension between making things feel right and making them easy to use.',
             'The retro OS aesthetic imposes constraints — things should feel slightly slow, deliberate, and imperfect.',
             'Modern UX conventions (instant feedback, smooth animations, obvious affordances) can break the atmosphere.',
@@ -61,8 +77,14 @@ const NOTES: LabNote[] = [
         id: 'LN-006',
         timestamp: '2025.03.15',
         tag: 'build',
-        title: 'font system: Terminal + Millennium pairing',
-        body: [
+        title: lang === 'id' ? 'sistem font: pasangan Terminal + Millennium' : 'font system: Terminal + Millennium pairing',
+        body: lang === 'id' ? [
+            'Memilih Terminal (monospace, nuansa bitmap retro) untuk label, metadata, kunci, dan krom UI.',
+            'Millennium (serif, sedikit bernuansa tajuk rencana) untuk teks isi dan prosa.',
+            'Kontras antara keduanya membawa sebagian besar hierarki tanpa memerlukan perubahan ukuran.',
+            'h1 menggunakan gastromond — bobot besar dan tajuk untuk judul halaman saja.',
+            'Pasangan ini sekarang menjadi sistem desain di seluruh bagian workspace-os.',
+        ] : [
             'Settled on Terminal (monospace, retro bitmap feel) for labels, metadata, keys, and UI chrome.',
             'Millennium (serif, slightly editorial) for body text and prose.',
             'The contrast between the two carries most of the hierarchy without needing size changes.',
@@ -74,8 +96,14 @@ const NOTES: LabNote[] = [
         id: 'LN-005',
         timestamp: '2025.02.28',
         tag: 'process',
-        title: 'building the windowing system from scratch',
-        body: [
+        title: lang === 'id' ? 'membangun sistem jendela dari awal' : 'building the windowing system from scratch',
+        body: lang === 'id' ? [
+            'Tanpa pustaka jendela pihak ketiga — membangun fungsionalitas seret, ubah ukuran, minimalkan, dan fokus z-index dari prinsip dasar.',
+            'Seret diimplementasikan melalui pendengar mousedown/mousemove/mouseup pada dokumen, bukan elemen.',
+            'Ubah ukuran menggunakan pendekatan serupa dengan deteksi sudut pegangan.',
+            'Z-index dikelola melalui tumpukan fokus — jendela yang paling baru berinteraksi naik ke atas.',
+            'Batasan dari pendekatan ini menjaga perilakunya tetap konsisten dengan konvensi OS retro.',
+        ] : [
             'No third-party windowing library — built drag, resize, minimize, and z-index focus from first principles.',
             'Drag implemented via mousedown/mousemove/mouseup listeners on document rather than element.',
             'Resize uses a similar approach with resize handle corner detection.',
@@ -87,8 +115,14 @@ const NOTES: LabNote[] = [
         id: 'LN-004',
         timestamp: '2025.02.10',
         tag: 'reflection',
-        title: 'why the 3D workspace',
-        body: [
+        title: lang === 'id' ? 'mengapa ruang kerja 3D' : 'why the 3D workspace',
+        body: lang === 'id' ? [
+            'Portofolio yang terlihat seperti portofolio selalu terasa seperti sebuah pertunjukan.',
+            'Ruang kerja 3D adalah upaya untuk membuat karya tersebut terasa seperti ditemukan daripada disajikan.',
+            'Jika seseorang menjelajahinya dan menemukan lapisan OS serta membuka jendela — itulah pengalaman yang dimaksudkan.',
+            'Suasana harus berbicara lebih dulu sebelum konten apa pun.',
+            'Atmosfer sebagai argumen.',
+        ] : [
             'A portfolio that looks like a portfolio always feels like a performance.',
             'The 3D workspace is an attempt to make the work feel found rather than presented.',
             'If someone explores it and discovers the OS layer and opens a window — that is the intended experience.',
@@ -100,8 +134,14 @@ const NOTES: LabNote[] = [
         id: 'LN-003',
         timestamp: '2025.01.22',
         tag: 'build',
-        title: 'post-processing stack decisions',
-        body: [
+        title: lang === 'id' ? 'keputusan tumpukan pasca-pemrosesan' : 'post-processing stack decisions',
+        body: lang === 'id' ? [
+            'Menggunakan EffectComposer Three.js dengan urutan lintasan kustom.',
+            'Urutan: RenderPass → UnrealBloomPass → FilmPass kustom (butiran + garis pindai) → ShaderPass (vignette).',
+            'Ambang batas mekar dijaga tinggi — hanya elemen paling terang yang mekar. Mencegah kekeruhan.',
+            'Intensitas butiran film diatur rendah — tekstur tanpa gangguan.',
+            'Vignette menggelapkan sudut dan menambatkan adegan. Membantu fokus pada interior ruang kerja.',
+        ] : [
             'Using Three.js EffectComposer with a custom pass sequence.',
             'Order: RenderPass → UnrealBloomPass → custom FilmPass (grain + scanlines) → ShaderPass (vignette).',
             'Bloom threshold kept high — only the brightest elements bloom. Prevents muddiness.',
@@ -113,8 +153,15 @@ const NOTES: LabNote[] = [
         id: 'LN-002',
         timestamp: '2024.12.05',
         tag: 'todo',
-        title: 'things to finish eventually',
-        body: [
+        title: lang === 'id' ? 'hal-hal yang pada akhirnya harus diselesaikan' : 'things to finish eventually',
+        body: lang === 'id' ? [
+            'Visualisasi cakupan audio di monitor dalam ruangan 3D.',
+            'Pencahayaan ambien berbasis jam — ruangan menjadi lebih gelap lewat tengah malam.',
+            'Partikel debu reaktif kursor mengambang di cahaya adegan.',
+            'Indikator kehadiran WebSocket — tampilkan saat operator lain sedang online.',
+            'Efek suara mengetik pada peristiwa keyboard lapisan OS.',
+            'Pengalaman cadangan seluler — versi 2D dari ruang kerja untuk layar kecil.',
+        ] : [
             'Audio scope visualization on the monitor inside the 3D room.',
             'Clock-driven ambient lighting — room gets darker past midnight.',
             'Cursor-reactive dust particles floating in the scene light.',
@@ -127,8 +174,14 @@ const NOTES: LabNote[] = [
         id: 'LN-001',
         timestamp: '2024.11.01',
         tag: 'build',
-        title: 'first entry — project start',
-        body: [
+        title: lang === 'id' ? 'entri pertama — awal proyek' : 'first entry — project start',
+        body: lang === 'id' ? [
+            'Mulai membangun ruang kerja 3D. Idenya: portofolio yang terasa seperti sebuah tempat, bukan halaman.',
+            'Adegan awal: ruangan kosong. Monitor di atas meja. Jendela dengan pemandangan kota. Cahaya ambien.',
+            'Tantangan pertama: membuat kamera terasa sinematik tanpa dikendalikan oleh pengguna.',
+            'Memilih paralaks melayang perlahan berdasarkan posisi kursor — cukup halus untuk terasa hidup.',
+            'Ruangan itu harus terasa seperti tempat seseorang benar-benar bekerja. Larut malam.',
+        ] : [
             'Started building the 3D workspace. The idea: a portfolio that feels like a place, not a page.',
             'Initial scene: an empty room. Monitor on a desk. A window with a city view. Ambient light.',
             'First challenge: making the camera feel cinematic without being controlled by the user.',
@@ -213,17 +266,24 @@ interface ArchiveRecord {
     notes: string[];
 }
 
-const RECORDS: ArchiveRecord[] = [
+const getRecords = (lang: string): ArchiveRecord[] => [
     {
         id: 'ARC-001',
         year: '2025',
         tag: 'workspace-3d',
         name: 'AFTER-HOURS Workspace',
         status: 'complete',
-        type: 'immersive environment',
-        description:
+        type: lang === 'id' ? 'lingkungan imersif' : 'immersive environment',
+        description: lang === 'id' ?
+            'Ruang kerja 3D sinematik yang dibangun di dalam browser. Ruangan yang dirender WebGL, sistem kamera kustom, lapisan OS retro yang disematkan melalui iframe. Dibangun sebagai kolektif digital yang tenang.' :
             'A cinematic 3D workspace built inside the browser. WebGL-rendered room, custom camera system, retro OS layer embedded via iframe. Built as a quiet digital collective.',
-        notes: [
+        notes: lang === 'id' ? [
+            'Adegan Three.js dengan alur pasca-pemrosesan kustom',
+            'Sistem jendela OS retro (React) yang disematkan di dalam render 3D',
+            'Shader GLSL kustom — garis pindai, noise, vignette CRT',
+            'Nodemailer + Express backend untuk lapisan transmisi',
+            'Integrasi audio ambien dengan kontrol bungkam',
+        ] : [
             'Three.js scene with custom post-processing pipeline',
             'Retro OS windowing system (React) embedded inside 3D render',
             'Custom GLSL shaders — scanlines, noise, CRT vignette',
@@ -237,10 +297,17 @@ const RECORDS: ArchiveRecord[] = [
         tag: 'workspace-os',
         name: 'Retro OS Interface Layer',
         status: 'complete',
-        type: 'interface system',
-        description:
+        type: lang === 'id' ? 'sistem antarmuka' : 'interface system',
+        description: lang === 'id' ?
+            'Lapisan OS berjendela yang berjalan di dalam ruang 3D. Seret, ubah ukuran, minimalkan. Navigasi, etalase, transmisi — semuanya hidup di dalam lingkungan desktop retro.' :
             'The windowed OS layer running inside the 3D room. Drag, resize, minimize. Navigation, showcase, transmission — all living inside a retro desktop environment.',
-        notes: [
+        notes: lang === 'id' ? [
+            'Sistem jendela kustom dengan seret dan ubah ukuran',
+            'React Router untuk navigasi dalam jendela',
+            'Sistem font Millennium + Terminal',
+            'Bahasa batas bayangan kotak gaya Windows 95',
+            'Bagian Showcase, Systems, Operators, Channel',
+        ] : [
             'Custom windowing system with drag and resize',
             'React Router for in-window navigation',
             'Millennium + Terminal font system',
@@ -254,10 +321,15 @@ const RECORDS: ArchiveRecord[] = [
         tag: 'portfolio-v2',
         name: 'Portfolio Site v2',
         status: 'archived',
-        type: 'web project',
-        description:
+        type: lang === 'id' ? 'proyek web' : 'web project',
+        description: lang === 'id' ?
+            'Iterasi portofolio pribadi sebelumnya. SPA standar, berbasis React. Digantikan oleh pendekatan ruang kerja 3D.' :
             'Previous iteration of the personal portfolio. Standard SPA, React-based. Replaced by the 3D workspace approach.',
-        notes: [
+        notes: lang === 'id' ? [
+            'Aplikasi halaman tunggal React + TypeScript',
+            'Etalase proyek, pengalaman, formulir kontak',
+            'Basis kode dasar yang kemudian diadaptasi menjadi workspace-os',
+        ] : [
             'React + TypeScript single page application',
             'Showcase of projects, experience, contact form',
             'Foundation codebase later adapted into workspace-os',
@@ -269,10 +341,16 @@ const RECORDS: ArchiveRecord[] = [
         tag: 'shader-studies',
         name: 'GLSL Shader Studies',
         status: 'archived',
-        type: 'experiments / visual',
-        description:
+        type: lang === 'id' ? 'eksperimen / visual' : 'experiments / visual',
+        description: lang === 'id' ?
+            'Koleksi eksplorasi shader fragmen GLSL. Bidang noise, tekstur prosedural, distorsi ruang layar. Beberapa di antaranya masuk ke dalam alur ruang kerja.' :
             'Collection of GLSL fragment shader explorations. Noise fields, procedural textures, screen-space distortion. Some made it into the workspace pipeline.',
-        notes: [
+        notes: lang === 'id' ? [
+            'Bidang noise Simplex dan Perlin',
+            'Butiran beranimasi dan lapisan tekstur film',
+            'Garis pindai CRT dan simulasi cahaya fosfor',
+            'Distorsi UV dan uji aberasi kromatik',
+        ] : [
             'Simplex and Perlin noise fields',
             'Animated grain and film texture overlays',
             'CRT scanline and phosphor glow simulations',
@@ -285,10 +363,16 @@ const RECORDS: ArchiveRecord[] = [
         tag: 'audio-viz',
         name: 'Audio Visualizer Prototype',
         status: 'incomplete',
-        type: 'prototype / audio',
-        description:
+        type: lang === 'id' ? 'prototipe / audio' : 'prototype / audio',
+        description: lang === 'id' ?
+            'Visualizer audio waktu nyata menggunakan Web Audio API dan WebGL. Data frekuensi mendorong perpindahan titik pada mesh. Tidak pernah selesai, tetapi pendekatannya masuk akal.' :
             'Real-time audio visualizer using Web Audio API and WebGL. Frequency data driving vertex displacement on a mesh. Never finished, but the approach was sound.',
-        notes: [
+        notes: lang === 'id' ? [
+            'Analisis frekuensi Web Audio API',
+            'Data FFT dipetakan ke seragam shader titik',
+            'Eksperimen ambang batas deteksi ketukan',
+            'Dibiarkan tidak lengkap — konsep mungkin akan muncul kembali',
+        ] : [
             'Web Audio API frequency analysis',
             'FFT data mapped to vertex shader uniforms',
             'Beat detection threshold experiments',
@@ -301,10 +385,16 @@ const RECORDS: ArchiveRecord[] = [
         tag: 'cursor-system',
         name: 'Custom Cursor System',
         status: 'archived',
-        type: 'interface experiment',
-        description:
+        type: lang === 'id' ? 'eksperimen antarmuka' : 'interface experiment',
+        description: lang === 'id' ?
+            'Sistem kursor kustom untuk antarmuka web. Perilaku magnetik, riak klik, perubahan bentuk yang sadar konteks. Terasa terlalu mencolok untuk estetika ruang kerja.' :
             'A custom cursor system for web interfaces. Magnetic behavior, click ripples, context-aware shape shifting. Felt too loud for the workspace aesthetic.',
-        notes: [
+        notes: lang === 'id' ? [
+            'Pelacakan kursor halus berbasis Lerp',
+            'Daya tarik magnetik ke elemen interaktif',
+            'Riak klik dan status animasi diam',
+            'Dikesampingkan — ruang kerja lebih menyukai konvensi kursor OS',
+        ] : [
             'Lerp-based smooth cursor following',
             'Magnetic attraction to interactive elements',
             'Click ripple and idle animation states',
@@ -317,10 +407,15 @@ const RECORDS: ArchiveRecord[] = [
         tag: 'backend-tooling',
         name: 'Internal CLI Tools',
         status: 'abandoned',
-        type: 'tooling',
-        description:
+        type: lang === 'id' ? 'perkakas' : 'tooling',
+        description: lang === 'id' ?
+            'Serangkaian utilitas baris perintah Node.js untuk perancah proyek dan pembuatan file. Ditinggalkan demi perkakas ekosistem yang ada.' :
             'A set of Node.js command-line utilities for project scaffolding and file generation. Abandoned in favor of existing ecosystem tools.',
-        notes: [
+        notes: lang === 'id' ? [
+            'Pembuatan template dari skema JSON',
+            'Skrip perancah struktur file',
+            'Digantikan oleh perkakas standar (Vite, CRA)',
+        ] : [
             'Template generation from JSON schemas',
             'File structure scaffolding scripts',
             'Replaced by standard tooling (Vite, CRA)',
@@ -397,7 +492,7 @@ const RecordEntry: React.FC<RecordEntryProps> = ({ record }) => {
 const Archive: React.FC<ArchiveProps> = () => {
     const { language } = useLanguage();
     const byStatus = (s: ArchiveStatus) =>
-        RECORDS.filter((r) => r.status === s).length;
+        getRecords(language).filter((r) => r.status === s).length;
 
     return (
         <div className="site-page-content">
@@ -443,8 +538,8 @@ const Archive: React.FC<ArchiveProps> = () => {
             </div>
 
             <div style={styles.recordList}>
-                {RECORDS.map((r) => (
-                    <RecordEntry key={r.id} record={r} />
+                {getRecords(language).map((record) => (
+                    <RecordEntry key={record.id} record={record} />
                 ))}
             </div>
 
@@ -455,7 +550,7 @@ const Archive: React.FC<ArchiveProps> = () => {
             </div>
 
             <div style={styles.recordList}>
-                {NOTES.map((note, i) => (
+                {getNotes(language).map((note, i) => (
                     <NoteEntry
                         key={note.id}
                         note={note}
@@ -467,8 +562,8 @@ const Archive: React.FC<ArchiveProps> = () => {
             <div style={styles.footer}>
                 <p style={styles.footerText}>
                     {language === 'id'
-                        ? `— ${RECORDS.length} catatan. beberapa selesai. beberapa tidak. semuanya di sini.`
-                        : `— ${RECORDS.length} records. some finished. some not. all here.`}
+                        ? `— ${getRecords(language).length} catatan. beberapa selesai. beberapa tidak. semuanya di sini.`
+                        : `— ${getRecords(language).length} records. some finished. some not. all here.`}
                 </p>
             </div>
         </div>
