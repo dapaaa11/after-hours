@@ -15,7 +15,7 @@ import DesktopShortcut, { DesktopShortcutProps } from './DesktopShortcut';
 import { IconName } from '../../assets/icons';
 // import Credits from '../applications/Credits';
 
-export interface DesktopProps {}
+export interface DesktopProps { }
 
 type ExtendedWindowAppProps<T> = T & WindowAppProps;
 
@@ -47,7 +47,7 @@ const APPLICATIONS: {
     },
     archive: {
         key: 'archive',
-        name: 'archive.sys',
+        name: 'Knowledge Browser',
         shortcutIcon: 'windowExplorerIcon',
         component: ArchiveBrowser,
     },

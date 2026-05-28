@@ -26,7 +26,7 @@ export const START_MENU_ENTRIES: StartMenuEntry[] = [
         group: 'primary',
     },
     {
-        label: 'archive.sys',
+        label: 'Knowledge Browser',
         type: 'window',
         target: 'archive',
         icon: 'windowExplorerIcon',
