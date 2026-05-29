@@ -16,7 +16,7 @@ body {
 }
 
 .jitter {
-    animation-duration: 0.3s;
+    animation-duration: 0.45s;
     animation-timing-function: ease-in-out;
     animation-fill-mode: forwards;
     animation-iteration-count: infinite;
@@ -50,42 +50,42 @@ body {
 
 @keyframes jittery {
     10% {
-        transform: translate(-0.1px, -0.15px) scale(1, 1);
+        transform: translate(-0.04px, -0.06px) scale(1, 1);
     }
 
     20% {
-        transform: translate(0.15px, 0.1px) scale(1, 1);
+        transform: translate(0.06px, 0.04px) scale(1, 1);
     }
 
     30% {
-        transform: translate(-0.2px, -0.25px) scale(1, 1);
+        transform: translate(-0.08px, -0.1px) scale(1, 1);
     }
 
     40% {
-        transform: translate(0.05px, 0.1px) scale(1, 1);
+        transform: translate(0.02px, 0.04px) scale(1, 1);
     }
 
     50% {
-        transform: translate(-0.025px, -0.05px) scale(1, 1);
+        transform: translate(-0.01px, -0.02px) scale(1, 1);
     }
 
     60% {
-        transform: translate(0px, 0.075px) scale(1, 1);
+        transform: translate(0px, 0.03px) scale(1, 1);
     }
 
     70% {
-        transform: translate(-0.075px, -0.1px) scale(1, 1);
+        transform: translate(-0.03px, -0.04px) scale(1, 1);
     }
 
     80% {
-        transform: translate(0.075px, 0.125px) scale(1, 1);
+        transform: translate(0.03px, 0.05px) scale(1, 1);
     }
 
     90% {
-        transform: translate(-0.125px, -0.075px) scale(1, 1);
+        transform: translate(-0.05px, -0.03px) scale(1, 1);
     }
 
     100% {
-        transform: translate(0.075px, 0.025px) scale(1, 1);
+        transform: translate(0.03px, 0.01px) scale(1, 1);
     }
 }

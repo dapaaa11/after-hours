@@ -140,7 +140,7 @@ export default class MonitorScreen extends EventEmitter {
         container.style.width = this.screenSize.width + 'px';
         container.style.height = this.screenSize.height + 'px';
         container.style.opacity = '1';
-        container.style.background = '#1d2e2f';
+        container.style.background = '#151d1d';
 
         // Create iframe
         const iframe = document.createElement('iframe');
@@ -202,6 +202,8 @@ export default class MonitorScreen extends EventEmitter {
         iframe.style.padding = IFRAME_PADDING + 'px';
         iframe.style.boxSizing = 'border-box';
         iframe.style.opacity = '1';
+        iframe.style.filter =
+            'brightness(0.9) contrast(1.14) saturate(0.82) sepia(0.04)';
         iframe.className = 'jitter';
         iframe.id = 'computer-screen';
         iframe.frameBorder = '0';
@@ -273,7 +275,7 @@ export default class MonitorScreen extends EventEmitter {
             smudge: {
                 texture: textures.monitorSmudgeTexture,
                 blending: THREE.AdditiveBlending,
-                opacity: 0.06,
+                opacity: 0.035,
                 offset: 24,
             },
             innerShadow: {
@@ -285,13 +287,13 @@ export default class MonitorScreen extends EventEmitter {
             video: {
                 texture: this.videoTextures['video-1'],
                 blending: THREE.AdditiveBlending,
-                opacity: 0.12,
+                opacity: 0.025,
                 offset: 10,
             },
             video2: {
                 texture: this.videoTextures['video-2'],
                 blending: THREE.AdditiveBlending,
-                opacity: 0.04,
+                opacity: 0.01,
                 offset: 15,
             },
         };
@@ -516,9 +518,9 @@ export default class MonitorScreen extends EventEmitter {
      * Creates a soft blue point light emitting from the monitor to cast an OS glow on the desk
      */
     createMonitorGlow() {
-        const color = 0x0a246a; // Classic Navy Blue from OS Chrome
-        const intensity = 3.0; // Soft glow
-        const distance = 5000; // Falloff distance
+        const color = 0x17345a; // Subtle cool CRT spill
+        const intensity = 0.35;
+        const distance = 2500;
         
         const glowLight = new THREE.PointLight(color, intensity, distance);
         glowLight.castShadow = false;
