@@ -6,17 +6,21 @@ interface InfoOverlayProps {
     visible: boolean;
 }
 
-const NAME_TEXT = 'after-hours';
-const TITLE_TEXT = 'digital workspace / two operators';
+// System status panel lines — typed in sequence
+const LINE_1 = 'AFTER-HOURS NODE';
+const LINE_2 = 'LOCAL KNOWLEDGE OS';
+const LINE_3 = 'TWO OPERATORS';
+const LINE_4 = 'ID/EN READY';
+const LINE_5 = 'STATUS: ONLINE';
 const MULTIPLIER = 1;
 
 const InfoOverlay: React.FC<InfoOverlayProps> = ({ visible }) => {
     const visRef = useRef(visible);
-    const [nameText, setNameText] = useState('');
-    const [titleText, setTitleText] = useState('');
-    const [time, setTime] = useState(new Date().toLocaleTimeString());
-    const timeRef = useRef(time);
-    const [timeText, setTimeText] = useState('');
+    const [line1, setLine1] = useState('');
+    const [line2, setLine2] = useState('');
+    const [line3, setLine3] = useState('');
+    const [line4, setLine4] = useState('');
+    const [line5, setLine5] = useState('');
     const [textDone, setTextDone] = useState(false);
     const [volumeVisible, setVolumeVisible] = useState(false);
     const [freeCamVisible, setFreeCamVisible] = useState(false);
@@ -26,12 +30,8 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({ visible }) => {
         curText: string,
         text: string,
         setText: React.Dispatch<React.SetStateAction<string>>,
-        callback: () => void,
-        refOverride?: React.MutableRefObject<string>
+        callback: () => void
     ) => {
-        if (refOverride) {
-            text = refOverride.current;
-        }
         if (i < text.length) {
             setTimeout(() => {
                 if (visRef.current === true)
@@ -39,37 +39,26 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({ visible }) => {
                         { type: 'keydown', key: `_AUTO_${text[i]}` },
                         '*'
                     );
-
                 setText(curText + text[i]);
-                typeText(
-                    i + 1,
-                    curText + text[i],
-                    text,
-                    setText,
-                    callback,
-                    refOverride
-                );
-            }, Math.random() * 50 + 50 * MULTIPLIER);
+                typeText(i + 1, curText + text[i], text, setText, callback);
+            }, Math.random() * 40 + 35 * MULTIPLIER);
         } else {
             callback();
         }
     };
 
     useEffect(() => {
-        if (visible && nameText == '') {
+        if (visible && line1 === '') {
             setTimeout(() => {
-                typeText(0, '', NAME_TEXT, setNameText, () => {
-                    typeText(0, '', TITLE_TEXT, setTitleText, () => {
-                        typeText(
-                            0,
-                            '',
-                            time,
-                            setTimeText,
-                            () => {
-                                setTextDone(true);
-                            },
-                            timeRef
-                        );
+                typeText(0, '', LINE_1, setLine1, () => {
+                    typeText(0, '', LINE_2, setLine2, () => {
+                        typeText(0, '', LINE_3, setLine3, () => {
+                            typeText(0, '', LINE_4, setLine4, () => {
+                                typeText(0, '', LINE_5, setLine5, () => {
+                                    setTextDone(true);
+                                });
+                            });
+                        });
                     });
                 });
             }, 400);
@@ -92,31 +81,32 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({ visible }) => {
         window.postMessage({ type: 'keydown', key: `_AUTO_` }, '*');
     }, [freeCamVisible, volumeVisible]);
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setTime(new Date().toLocaleTimeString());
-        }, 1000);
-        return () => clearInterval(interval);
-    }, []);
-
-    useEffect(() => {
-        timeRef.current = time;
-        textDone && setTimeText(time);
-    }, [time]);
-
     return (
         <div style={styles.wrapper}>
-            {nameText !== '' && (
-                <div style={styles.container}>
-                    <p>{nameText}</p>
+            {/* Dim header label */}
+            {line1 !== '' && (
+                <div style={styles.headerContainer}>
+                    <p style={styles.headerText}>{line1}</p>
                 </div>
             )}
-            {titleText !== '' && (
+            {/* Body lines */}
+            {line2 !== '' && (
                 <div style={styles.container}>
-                    <p>{titleText}</p>
+                    <p style={styles.dimText}>{line2}</p>
                 </div>
             )}
-            {timeText !== '' && (
+            {line3 !== '' && (
+                <div style={styles.container}>
+                    <p style={styles.dimText}>{line3}</p>
+                </div>
+            )}
+            {line4 !== '' && (
+                <div style={styles.container}>
+                    <p style={styles.dimText}>{line4}</p>
+                </div>
+            )}
+            {/* Status line + controls row */}
+            {line5 !== '' && (
                 <div style={styles.lastRow}>
                     <div
                         style={Object.assign(
@@ -125,7 +115,7 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({ visible }) => {
                             styles.lastRowChild
                         )}
                     >
-                        <p>{timeText}</p>
+                        <p style={styles.statusText}>{line5}</p>
                     </div>
                     {volumeVisible && (
                         <div style={styles.lastRowChild}>
@@ -147,12 +137,38 @@ const styles: StyleSheetCSS = {
     container: {
         background: 'black',
         padding: 4,
-        paddingLeft: 16,
-        paddingRight: 16,
-        textAlign: 'center',
+        paddingLeft: 12,
+        paddingRight: 12,
+        textAlign: 'left',
         display: 'flex',
-        marginBottom: 4,
+        marginBottom: 2,
         boxSizing: 'border-box',
+    },
+    headerContainer: {
+        background: 'black',
+        padding: 4,
+        paddingLeft: 12,
+        paddingRight: 12,
+        textAlign: 'left',
+        display: 'flex',
+        marginBottom: 6,
+        boxSizing: 'border-box',
+        borderBottom: '1px solid rgba(255,255,255,0.12)',
+    },
+    headerText: {
+        margin: 0,
+        letterSpacing: '0.12em',
+        opacity: 1,
+    },
+    dimText: {
+        margin: 0,
+        opacity: 0.45,
+        letterSpacing: '0.08em',
+    },
+    statusText: {
+        margin: 0,
+        opacity: 0.75,
+        letterSpacing: '0.08em',
     },
     wrapper: {
         position: 'absolute',
@@ -162,16 +178,10 @@ const styles: StyleSheetCSS = {
         alignItems: 'flex-start',
         justifyContent: 'flex-start',
     },
-    blinkingContainer: {
-        // width: 100,
-        // height: 100,
-        marginLeft: 8,
-        paddingBottom: 2,
-        paddingRight: 4,
-    },
     lastRow: {
         display: 'flex',
         flexDirection: 'row',
+        marginTop: 4,
     },
     lastRowChild: {
         marginRight: 4,

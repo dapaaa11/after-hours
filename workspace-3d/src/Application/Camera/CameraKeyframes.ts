@@ -19,16 +19,19 @@ export class CameraKeyframeInstance {
 
 const keys: { [key in CameraKey]: CameraKeyframe } = {
     idle: {
-        position: new THREE.Vector3(-20000, 12000, 20000),
-        focalPoint: new THREE.Vector3(0, -1000, 0),
+        // Medium-wide shot: closer + offset left so desk is right-of-center.
+        // Avoids the symmetric centered portfolio framing of the reference.
+        position: new THREE.Vector3(-8000, 3800, 9500),
+        focalPoint: new THREE.Vector3(400, 300, 0),
     },
     monitor: {
         position: new THREE.Vector3(0, 950, 2000),
         focalPoint: new THREE.Vector3(0, 950, 0),
     },
     desk: {
-        position: new THREE.Vector3(0, 1800, 5500),
-        focalPoint: new THREE.Vector3(0, 500, 0),
+        // Slightly lower + closer — keyboard/monitor feel grounded and intimate
+        position: new THREE.Vector3(0, 1400, 5200),
+        focalPoint: new THREE.Vector3(0, 350, 0),
     },
     loading: {
         position: new THREE.Vector3(-35000, 35000, 35000),

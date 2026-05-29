@@ -55,6 +55,7 @@ export default class MonitorScreen extends EventEmitter {
         const maxOffset = this.createTextureLayers();
         this.createEnclosingPlanes(maxOffset);
         this.createPerspectiveDimmer(maxOffset);
+        this.createMonitorGlow();
     }
 
     initializeScreenEvents() {
@@ -506,9 +507,27 @@ export default class MonitorScreen extends EventEmitter {
 
             const DIM_FACTOR = 0.65;
 
-            // Physical falloff based on viewing angle, capped at 0.55 opacity to prevent total blackout
             // @ts-ignore
             this.dimmingPlane.material.opacity = Math.max(0.0, Math.min(0.55, (1.0 - dot) * DIM_FACTOR));
         }
+    }
+
+    /**
+     * Creates a soft blue point light emitting from the monitor to cast an OS glow on the desk
+     */
+    createMonitorGlow() {
+        const color = 0x0a246a; // Classic Navy Blue from OS Chrome
+        const intensity = 3.0; // Soft glow
+        const distance = 5000; // Falloff distance
+        
+        const glowLight = new THREE.PointLight(color, intensity, distance);
+        glowLight.castShadow = false;
+        
+        // Position it slightly in front of and below the screen center to wash the keyboard area
+        glowLight.position.copy(
+            this.offsetPosition(this.position, new THREE.Vector3(0, -200, 400))
+        );
+        
+        this.scene.add(glowLight);
     }
 }

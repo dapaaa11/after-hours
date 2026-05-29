@@ -4,6 +4,7 @@ import ComputerSetup from './Computer';
 import MonitorScreen from './MonitorScreen';
 import Environment from './Environment';
 import Decor from './Decor';
+import DeskDecals from './DeskDecals';
 import CoffeeSteam from './CoffeeSteam';
 import Cursor from './Cursor';
 import Hitboxes from './Hitboxes';
@@ -16,6 +17,7 @@ export default class World {
     // Objects in the scene
     environment: Environment;
     decor: Decor;
+    deskDecals: DeskDecals;
     computerSetup: ComputerSetup;
     monitorScreen: MonitorScreen;
     coffeeSteam: CoffeeSteam;
@@ -31,6 +33,7 @@ export default class World {
             // Setup
             this.environment = new Environment();
             this.decor = new Decor();
+            this.deskDecals = new DeskDecals();
             this.computerSetup = new ComputerSetup();
             this.monitorScreen = new MonitorScreen();
             this.coffeeSteam = new CoffeeSteam();
