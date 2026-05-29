@@ -17,6 +17,9 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
     const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [language, setLanguage] = useState<"en" | "id">("en");
+    const [inputValue, setInputValue] = useState<string>("");
+    const [hoverStatus, setHoverStatus] = useState<string | null>(null);
+    const [history, setHistory] = useState<{ path: string; search: string }[]>([]);
 
     // Retrieve active record
     const currentNode = archiveNodes[activePath] || indexNode;
@@ -32,8 +35,51 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
         setExpandedCategory(prev => (prev === catId ? null : catId));
     };
 
+    const pushState = () => {
+        setHistory(prev => [...prev, { path: activePath, search: searchQuery }]);
+    };
+
     const handleTopicClick = (path: string) => {
+        pushState();
         setActivePath(path);
+        setSearchQuery("");
+        setInputValue("");
+    };
+
+    const executeSearch = (query: string) => {
+        pushState();
+        setSearchQuery(query);
+        setInputValue(query);
+    };
+
+    const handleSearchEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            if (inputValue.trim() !== '') {
+                pushState();
+                setSearchQuery(inputValue);
+            }
+        }
+    };
+
+    const handleBack = () => {
+        if (history.length > 0) {
+            const prevState = history[history.length - 1];
+            setHistory(prev => prev.slice(0, -1));
+            setActivePath(prevState.path);
+            setSearchQuery(prevState.search);
+            setInputValue(prevState.search);
+        }
+    };
+
+    const handleHome = () => {
+        pushState();
+        setActivePath("after-hours://index");
+        setSearchQuery("");
+        setInputValue("");
+    };
+
+    const handleRefresh = () => {
+        setHoverStatus(null);
     };
 
     const matchesSearch = (node: ArchiveNode, query: string) => {
@@ -117,6 +163,21 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                 {/* 1. Browser Toolbar */}
                 <div style={styles.headerBar}>
                     <div style={styles.toolbarRow}>
+                        <div style={styles.browserControls}>
+                            <button 
+                                style={{
+                                    ...styles.browserBtn,
+                                    color: history.length === 0 ? '#888888' : '#000000',
+                                    borderColor: history.length === 0 ? '#c0c0c0' : '#ffffff #888888 #888888 #ffffff'
+                                }} 
+                                onClick={handleBack} 
+                                disabled={history.length === 0}
+                            >
+                                BACK
+                            </button>
+                            <button style={styles.browserBtn} onClick={handleHome}>HOME</button>
+                            <button style={styles.browserBtn} onClick={handleRefresh}>REFRESH</button>
+                        </div>
                         <div style={styles.addressInputContainer}>
                             <div style={styles.addressLabel}>Address</div>
                             <input
@@ -131,8 +192,9 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                             <input
                                 type="text"
                                 placeholder="Search..."
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
+                                value={inputValue}
+                                onChange={(e) => setInputValue(e.target.value)}
+                                onKeyDown={handleSearchEnter}
                                 style={styles.headerSearchInput}
                                 autoComplete="off"
                                 autoCorrect="off"
@@ -209,6 +271,8 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                                                         <div
                                                             key={topic.path}
                                                             onClick={() => handleTopicClick(topic.path)}
+                                                            onMouseEnter={() => setHoverStatus(`Open ${topic.path}`)}
+                                                            onMouseLeave={() => setHoverStatus(null)}
                                                             className={`kb-hover-row ${isTopicActive ? "kb-active-row" : ""}`}
                                                             style={{
                                                                 ...styles.topicRow,
@@ -283,10 +347,9 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                                                             <div key={topic.path} style={styles.serpItem}>
                                                                 <div 
                                                                     style={styles.serpLink}
-                                                                    onClick={() => {
-                                                                        setSearchQuery('');
-                                                                        handleTopicClick(topic.path);
-                                                                    }}
+                                                                    onClick={() => handleTopicClick(topic.path)}
+                                                                    onMouseEnter={() => setHoverStatus(`Open ${topic.path}`)}
+                                                                    onMouseLeave={() => setHoverStatus(null)}
                                                                 >
                                                                     {topic.title}
                                                                 </div>
@@ -318,31 +381,31 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                                     <div style={styles.portalBody}>
                                         <div style={styles.portalTilesSection}>
                                             <div style={styles.portalTilesGrid}>
-                                                <div style={styles.portalTile} onClick={() => setSearchQuery('web')}>
+                                                <div style={styles.portalTile} onClick={() => executeSearch('web')} onMouseEnter={() => setHoverStatus('Search local pages: web')} onMouseLeave={() => setHoverStatus(null)}>
                                                     <div style={styles.portalTileTitle}>WEB / FRONTEND</div>
                                                     <div style={styles.portalTileDesc}>
                                                         {language === "en" ? "Web Technologies" : "Teknologi Web"}
                                                     </div>
                                                 </div>
-                                                <div style={styles.portalTile} onClick={() => setSearchQuery('system')}>
+                                                <div style={styles.portalTile} onClick={() => executeSearch('system')} onMouseEnter={() => setHoverStatus('Search local pages: system')} onMouseLeave={() => setHoverStatus(null)}>
                                                     <div style={styles.portalTileTitle}>SYSTEMS</div>
                                                     <div style={styles.portalTileDesc}>
                                                         {language === "en" ? "Internal OS logic" : "Logika OS internal"}
                                                     </div>
                                                 </div>
-                                                <div style={styles.portalTile} onClick={() => setSearchQuery('knowledge')}>
+                                                <div style={styles.portalTile} onClick={() => executeSearch('knowledge')} onMouseEnter={() => setHoverStatus('Search local pages: knowledge')} onMouseLeave={() => setHoverStatus(null)}>
                                                     <div style={styles.portalTileTitle}>KNOWLEDGE</div>
                                                     <div style={styles.portalTileDesc}>
                                                         {language === "en" ? "General IT records" : "Catatan IT umum"}
                                                     </div>
                                                 </div>
-                                                <div style={styles.portalTile} onClick={() => setSearchQuery('stack')}>
+                                                <div style={styles.portalTile} onClick={() => executeSearch('stack')} onMouseEnter={() => setHoverStatus('Search local pages: stack')} onMouseLeave={() => setHoverStatus(null)}>
                                                     <div style={styles.portalTileTitle}>STACK</div>
                                                     <div style={styles.portalTileDesc}>
                                                         {language === "en" ? "Installed tools" : "Alat terinstal"}
                                                     </div>
                                                 </div>
-                                                <div style={styles.portalTile} onClick={() => setSearchQuery('deployment')}>
+                                                <div style={styles.portalTile} onClick={() => executeSearch('deployment')} onMouseEnter={() => setHoverStatus('Search local pages: deployment')} onMouseLeave={() => setHoverStatus(null)}>
                                                     <div style={styles.portalTileTitle}>TOOLS / DEPLOY</div>
                                                     <div style={styles.portalTileDesc}>
                                                         {language === "en" ? "Build & Deploy" : "Build & Deploy"}
@@ -464,6 +527,8 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                                                         <div
                                                             key={relPath}
                                                             onClick={() => handleTopicClick(relPath)}
+                                                            onMouseEnter={() => setHoverStatus(`Open ${relPath}`)}
+                                                            onMouseLeave={() => setHoverStatus(null)}
                                                             className="kb-related-link"
                                                             style={styles.relatedLink}
                                                         >
@@ -485,7 +550,7 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                 {/* 3. Status Bar (24px) */}
                 <div style={styles.statusBar}>
                     <div style={styles.statusLeft}>
-                        PAGES READY // {currentNode.path}
+                        {hoverStatus ? hoverStatus : `PAGES READY // ${currentNode.path}`}
                     </div>
                     <div style={styles.statusRight}>
                         {searchQuery 
@@ -534,6 +599,24 @@ const styles: StyleSheetCSS = {
         display: 'flex',
         alignItems: 'center',
         maxWidth: '300px',
+    },
+    browserControls: {
+        display: 'flex',
+        gap: '6px',
+        marginRight: '12px',
+    },
+    browserBtn: {
+        backgroundColor: '#e4e4e4',
+        border: '2px outset #ffffff',
+        borderBottomColor: '#888888',
+        borderRightColor: '#888888',
+        fontFamily: 'MSSans, sans-serif',
+        fontSize: '11px',
+        fontWeight: 'bold',
+        color: '#000000',
+        padding: '2px 8px',
+        cursor: 'pointer',
+        outline: 'none',
     },
     headerSearchInput: {
         width: '100%',
