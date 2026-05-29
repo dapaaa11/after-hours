@@ -20,18 +20,18 @@ const Home: React.FC<HomeProps> = (props) => {
                 <Link containerStyle={styles.link} to="operators" text="OPERATORS" />
                 <Link
                     containerStyle={styles.link}
+                    to="channel"
+                    text="CHANNEL"
+                />
+                <Link
+                    containerStyle={styles.link}
                     to="systems"
                     text="SYSTEMS"
                 />
                 <Link
                     containerStyle={styles.link}
                     to="archive"
-                    text={language === 'id' ? 'ARSIP' : 'ARCHIVE'}
-                />
-                <Link
-                    containerStyle={styles.link}
-                    to="channel"
-                    text="CHANNEL"
+                    text={language === 'id' ? 'BUKU HARIAN' : 'BUILD DIARY'}
                 />
             </div>
         </div>
