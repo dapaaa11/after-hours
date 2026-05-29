@@ -20,6 +20,7 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
     const [inputValue, setInputValue] = useState<string>("");
     const [hoverStatus, setHoverStatus] = useState<string | null>(null);
     const [history, setHistory] = useState<{ path: string; search: string }[]>([]);
+    const [isRefreshing, setIsRefreshing] = useState(false);
 
     // Retrieve active record
     const currentNode = archiveNodes[activePath] || indexNode;
@@ -79,7 +80,12 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
     };
 
     const handleRefresh = () => {
+        if (isRefreshing) return;
         setHoverStatus(null);
+        setIsRefreshing(true);
+        setTimeout(() => {
+            setIsRefreshing(false);
+        }, 800);
     };
 
     const matchesSearch = (node: ArchiveNode, query: string) => {
@@ -158,6 +164,11 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                     .kb-related-link:hover {
                         color: #551a8b !important;
                     }
+                    @keyframes kb-blink {
+                        0% { opacity: 1; }
+                        50% { opacity: 0; }
+                        100% { opacity: 1; }
+                    }
                 `}</style>
 
                 {/* 1. Browser Toolbar */}
@@ -173,13 +184,13 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                                 onClick={handleBack} 
                                 disabled={history.length === 0}
                             >
-                                BACK
+                                {language === 'en' ? 'BACK' : 'KEMBALI'}
                             </button>
-                            <button style={styles.browserBtn} onClick={handleHome}>HOME</button>
-                            <button style={styles.browserBtn} onClick={handleRefresh}>REFRESH</button>
+                            <button style={styles.browserBtn} onClick={handleHome}>{language === 'en' ? 'HOME' : 'BERANDA'}</button>
+                            <button style={styles.browserBtn} onClick={handleRefresh}>{language === 'en' ? 'REFRESH' : 'MUAT ULANG'}</button>
                         </div>
                         <div style={styles.addressInputContainer}>
-                            <div style={styles.addressLabel}>Address</div>
+                            <div style={styles.addressLabel}>{language === 'en' ? 'Address' : 'Alamat'}</div>
                             <input
                                 type="text"
                                 readOnly
@@ -188,10 +199,10 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                             />
                         </div>
                         <div style={styles.searchBarContainer}>
-                            <div style={styles.addressLabel}>Search</div>
+                            <div style={styles.addressLabel}>{language === 'en' ? 'Search' : 'Cari'}</div>
                             <input
                                 type="text"
-                                placeholder="Search..."
+                                placeholder={language === 'en' ? 'Search...' : 'Cari...'}
                                 value={inputValue}
                                 onChange={(e) => setInputValue(e.target.value)}
                                 onKeyDown={handleSearchEnter}
@@ -322,7 +333,16 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
 
                         {/* Content Area */}
                         <div style={styles.contentWrapper}>
-                            {searchQuery ? (
+                            {isRefreshing ? (
+                                <div style={{ padding: '40px 20px', fontFamily: 'monospace', color: '#1a1c1d', fontSize: '12px' }}>
+                                    <div style={{ marginBottom: '8px' }}>
+                                        {language === 'en' ? 'Reloading page...' : 'Memuat ulang halaman...'}
+                                    </div>
+                                    <div style={{ display: 'flex', gap: '4px' }}>
+                                        <div style={{ width: '8px', height: '12px', backgroundColor: '#000080', animation: 'kb-blink 0.5s infinite' }}></div>
+                                    </div>
+                                </div>
+                            ) : searchQuery ? (
                                 /* SEARCH ENGINE RESULTS PAGE (SERP) */
                                 <div style={styles.serpContainer}>
                                     <h2 style={styles.serpTitle}>
@@ -550,7 +570,7 @@ const ArchiveBrowser: React.FC<ArchiveBrowserProps> = (props) => {
                 {/* 3. Status Bar (24px) */}
                 <div style={styles.statusBar}>
                     <div style={styles.statusLeft}>
-                        {hoverStatus ? hoverStatus : `PAGES READY // ${currentNode.path}`}
+                        {isRefreshing ? (language === 'en' ? `Refreshing...` : `Memuat ulang...`) : (hoverStatus ? hoverStatus : `PAGES READY // ${currentNode.path}`)}
                     </div>
                     <div style={styles.statusRight}>
                         {searchQuery 
