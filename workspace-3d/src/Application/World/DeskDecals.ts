@@ -2,9 +2,14 @@ import * as THREE from 'three';
 import Application from '../Application';
 
 /**
- * DeskDecals — small identity labels on existing desk props.
- * Uses CanvasTexture planes so no new texture/model assets are needed.
- * Positions are in the same world-unit scale as the rest of the scene (900 = 1 unit).
+ * DeskDecals — nostalgic identity labels on existing desk props.
+ *
+ * Design intent: late-90s computer lab / local knowledge terminal.
+ * Labels are printed-label/sticker in feel — warm cream off-white, not
+ * pure glowing white. All planes are transparent with depthWrite:false
+ * so they layer cleanly over baked geometry.
+ *
+ * World unit scale matches the scene (900 = 1 metre approximately).
  */
 export default class DeskDecals {
     application: Application;
@@ -20,41 +25,39 @@ export default class DeskDecals {
         this.scene.add(this.group);
     }
 
-    /** Create a canvas texture with white monospace text on transparent background */
+    /**
+     * Render text onto a canvas and return a CanvasTexture.
+     * @param color  CSS color string — defaults to aged-cream '#d4c8a8'
+     *               for a printed-label / old-sticker feel.
+     */
     private makeLabel(
         text: string,
         width: number,
         height: number,
         fontSize: number = 28,
-        opacity: number = 0.55
+        opacity: number = 0.58,
+        color: string = '#d4c8a8'
     ): THREE.CanvasTexture {
         const canvas = document.createElement('canvas');
         canvas.width = width;
         canvas.height = height;
         const ctx = canvas.getContext('2d')!;
 
-        // transparent background
         ctx.clearRect(0, 0, width, height);
 
-        // text — add manual spacing between chars for monospace tracking feel
+        // Character-spaced text for that monospace terminal feel
         const spaced = text.split('').join(' ');
         ctx.globalAlpha = opacity;
-        ctx.fillStyle = '#ffffff';
+        ctx.fillStyle = color;
         ctx.font = `${fontSize}px monospace`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(spaced, width / 2, height / 2);
 
-        const texture = new THREE.CanvasTexture(canvas);
-        return texture;
+        return new THREE.CanvasTexture(canvas);
     }
 
-    /** Create a decal plane mesh */
-    private makePlane(
-        texture: THREE.CanvasTexture,
-        w: number,
-        h: number
-    ): THREE.Mesh {
+    private makePlane(texture: THREE.CanvasTexture, w: number, h: number): THREE.Mesh {
         const geo = new THREE.PlaneGeometry(w, h);
         const mat = new THREE.MeshBasicMaterial({
             map: texture,
@@ -66,33 +69,97 @@ export default class DeskDecals {
     }
 
     buildDecals() {
-        // ─── Monitor casing label: "AH-OS" ───────────────────────────────────
-        // Larger canvas + font for readability in medium-wide shot.
-        const monitorTex = this.makeLabel('AH-OS', 512, 96, 48, 0.72);
-        const monitorPlane = this.makePlane(monitorTex, 340, 68);
-        monitorPlane.position.set(0, 670, 1498);
-        monitorPlane.rotation.set(0, 0, 0);
-        this.group.add(monitorPlane);
 
-        // ─── Binder spine labels ──────────────────────────────────────────────
-        // Taller canvas and higher opacity so spines read from desk view.
-        const binderLabels = ['SYSTEM', 'REFERENCE', 'DEPLOY'];
-        const binderOffsets = [-1380, -1150, -950];
+        // ═══════════════════════════════════════════════════════════════════════
+        // MONITOR CASING — front bezel labels
+        // ═══════════════════════════════════════════════════════════════════════
 
-        binderLabels.forEach((label, i) => {
-            const tex = this.makeLabel(label, 320, 64, 28, 0.60);
-            const plane = this.makePlane(tex, 240, 48);
-            plane.position.set(binderOffsets[i], 445, -320);
-            plane.rotation.y = -Math.PI / 2;
-            this.group.add(plane);
+        // Primary sticker: AH-OS — slightly cooler white, like a system sticker
+        const monitorMainTex = this.makeLabel('AH-OS', 512, 96, 46, 0.70, '#dde0e0');
+        const monitorMain = this.makePlane(monitorMainTex, 320, 60);
+        monitorMain.position.set(0, 672, 1500);
+        this.group.add(monitorMain);
+
+        // Secondary label: knowledge.sys — smaller, warm cream, printed feel
+        const monitorSubTex = this.makeLabel('knowledge.sys', 512, 64, 22, 0.45, '#c8bfa8');
+        const monitorSub = this.makePlane(monitorSubTex, 300, 38);
+        monitorSub.position.set(0, 640, 1500);
+        this.group.add(monitorSub);
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // BINDER SPINES — right side of desk
+        // Both +X facing (visible from idle left-angle) and +Z facing
+        // (visible from straight-on desk view) via DoubleSide + two plane sets.
+        // ═══════════════════════════════════════════════════════════════════════
+
+        const binderData: { label: string; x: number }[] = [
+            { label: 'SYSTEM LOG',    x: -1390 },
+            { label: 'REF MANUAL',    x: -1155 },
+            { label: 'DEPLOY NOTES',  x:  -945 },
+        ];
+
+        binderData.forEach(({ label, x }) => {
+            // Spine face toward +Z (desk-camera-facing)
+            const texZ = this.makeLabel(label, 384, 64, 24, 0.62, '#c8bfa8');
+            const planeZ = this.makePlane(texZ, 270, 46);
+            planeZ.position.set(x, 455, -310);
+            // No Y rotation — faces +Z by default
+            this.group.add(planeZ);
+
+            // Spine face toward -X (idle left-angle)
+            const texX = this.makeLabel(label, 384, 64, 24, 0.55, '#c8bfa8');
+            const planeX = this.makePlane(texX, 270, 46);
+            planeX.position.set(x - 18, 455, -310);
+            planeX.rotation.y = Math.PI / 2;
+            this.group.add(planeX);
         });
 
-        // ─── Paper / tray label: "BUILD DIARY" ───────────────────────────────
-        // Flat paper on the desk surface — faces up (+Y). Bumped for legibility.
-        const paperTex = this.makeLabel('BUILD DIARY', 512, 80, 28, 0.52);
-        const paperPlane = this.makePlane(paperTex, 400, 60);
-        paperPlane.position.set(900, 399, 200);
-        paperPlane.rotation.x = -Math.PI / 2;
-        this.group.add(paperPlane);
+        // ═══════════════════════════════════════════════════════════════════════
+        // PAPER TRAY — top surface label (the beige tray box, upper-left)
+        // ═══════════════════════════════════════════════════════════════════════
+
+        const trayTex = this.makeLabel('BUILD DIARY', 512, 72, 24, 0.50, '#c0b090');
+        const trayPlane = this.makePlane(trayTex, 360, 52);
+        trayPlane.position.set(-1050, 560, 80);   // top of tray
+        trayPlane.rotation.x = -Math.PI / 2;
+        this.group.add(trayPlane);
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // PAPER STACK — top page label (the white paper stack, left desk area)
+        // ═══════════════════════════════════════════════════════════════════════
+
+        const stackTex = this.makeLabel('KNOWLEDGE INDEX', 640, 72, 22, 0.45, '#b8ac90');
+        const stackPlane = this.makePlane(stackTex, 420, 48);
+        stackPlane.position.set(-280, 430, 200);   // top of paper stack
+        stackPlane.rotation.x = -Math.PI / 2;
+        this.group.add(stackPlane);
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // LOOSE PAPER — flat sheet, lower-left foreground
+        // ═══════════════════════════════════════════════════════════════════════
+
+        // Main line
+        const looseTex = this.makeLabel('OPERATOR CHECKLIST', 640, 64, 20, 0.42, '#b0a888');
+        const loosePlane = this.makePlane(looseTex, 430, 44);
+        loosePlane.position.set(-850, 402, 480);
+        loosePlane.rotation.x = -Math.PI / 2;
+        this.group.add(loosePlane);
+
+        // Sub-line (node identifier below)
+        const looseSubTex = this.makeLabel('LOCAL NODE / AH-01', 512, 48, 16, 0.32, '#a09878');
+        const looseSubPlane = this.makePlane(looseSubTex, 340, 32);
+        looseSubPlane.position.set(-850, 402, 530);
+        looseSubPlane.rotation.x = -Math.PI / 2;
+        this.group.add(looseSubPlane);
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // CPU / TOWER — front panel small label (below floppy drive)
+        // ═══════════════════════════════════════════════════════════════════════
+
+        const cpuTex = this.makeLabel('LOCAL MODE', 384, 56, 18, 0.40, '#c0bdb0');
+        const cpuPlane = this.makePlane(cpuTex, 240, 35);
+        cpuPlane.position.set(0, 540, 1500);
+        this.group.add(cpuPlane);
     }
 }
+
