@@ -44,7 +44,7 @@ const VerticalNavbar: React.FC<VerticalNavbarProps> = (props) => {
                 <Link
                     containerStyle={styles.link}
                     to="archive"
-                    text={language === 'id' ? 'ARSIP' : 'ARCHIVE'}
+                    text={language === 'id' ? 'BUKU HARIAN' : 'BUILD DIARY'}
                 />
 
             </div>

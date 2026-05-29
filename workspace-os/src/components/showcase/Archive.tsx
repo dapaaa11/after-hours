@@ -23,170 +23,152 @@ const getNotes = (lang: string): LabNote[] => [
     {
         id: 'LN-009',
         timestamp: '2025.05.21',
-        tag: 'build',
-        title: lang === 'id' ? 'perluasan bagian workspace-os' : 'workspace-os section expansion',
+        tag: 'todo',
+        title: lang === 'id' ? 'persiapan akhir penyiapan' : 'final deployment preparation',
         body: lang === 'id' ? [
-            'Menambahkan struktur dunia baru ke lapisan OS: Operators, Channel, Systems, Archive, Experiments, Lab Notes.',
-            'Setiap bagian mengikuti estetika log terminal yang sama seperti pada versi awal.',
-            'Mempertahankan rute ABOUT / EXPERIENCE / PROJECTS / CONTACT yang lama tetap aktif selama masa transisi.',
-            'Navigasi menjadi semakin panjang — perlu memikirkan pengorganisasian sebelum pembersihan akhir.',
+            'Menyiapkan proyek untuk juri Indonesia dan konteks kompetisi pendidikan/informasi.',
+            'Memastikan antarmuka bilingual (EN/ID) stabil di semua bagian sistem.',
+            'Membersihkan sisa-sisa rute lama dan memastikan workspace-os berdiri sebagai lingkungan yang terpadu.',
+            'Memverifikasi bahwa nada dokumentasi tetap reflektif dan menjaga ilusi OS lokal.',
         ] : [
-            'Adding new world structure to the OS layer: Operators, Channel, Systems, Archive, Experiments, Lab Notes.',
-            'Each section follows the same terminal log aesthetic established in the initial build.',
-            'Keeping the old ABOUT / EXPERIENCE / PROJECTS / CONTACT routes live during transition.',
-            'Navigation is getting longer — will need to think about organization before final cleanup.',
+            'Preparing the project for Indonesian judges and the education/information competition context.',
+            'Ensuring the bilingual (EN/ID) interface is stable across all system sections.',
+            'Cleaning up previous route remnants and making sure workspace-os stands as a unified environment.',
+            'Verifying that the documentation tone remains reflective and maintains the local OS illusion.',
         ],
     },
     {
         id: 'LN-008',
         timestamp: '2025.04.18',
-        tag: 'decision',
-        title: lang === 'id' ? 'jembatan iframe dibanding penyematan komponen' : 'iframe bridge over component embedding',
+        tag: 'build',
+        title: lang === 'id' ? 'menetapkan referensi sebagai registri' : 'establishing reference as registry',
         body: lang === 'id' ? [
-            'Memutuskan untuk menjalankan lapisan OS di dalam iframe daripada menyematkannya langsung sebagai overlay DOM pada kanvas Three.js.',
-            'Pemisahan ini berarti OS bisa crash atau dimuat ulang tanpa mempengaruhi scene 3D.',
-            'Protokol postMessage menangani komunikasi antar-konteks yang diperlukan.',
-            'Isolasi performa adalah alasan utamanya. Loop centang 3D tidak peduli dengan render React.',
+            'Reference (Referensi) kini sepenuhnya berfungsi sebagai registri identitas proyek dan tim.',
+            'Bagian-bagian seperti Operators, Channel, Systems, dan Build Diary menjadi komponen yang disengaja dalam arsitektur ini.',
+            'Pendekatan ini memberikan konteks internal yang lebih kaya dibandingkan dokumen standar.',
+            'Setiap log terasa seperti catatan sistem yang ditarik dari mesin lokal.',
         ] : [
-            'Decided to keep the OS layer running inside an iframe rather than embedding it directly as a DOM overlay on the Three.js canvas.',
-            'The decoupling means the OS can crash or reload without affecting the 3D scene.',
-            'postMessage protocol handles any necessary cross-context communication.',
-            'Performance isolation is the main reason. The 3D tick loop does not care about React renders.',
+            'Reference now fully serves as the identity registry for the project and team.',
+            'Sections like Operators, Channel, Systems, and Build Diary have become intentional components of this architecture.',
+            'This approach provides richer internal context compared to standard documents.',
+            'Every log feels like a system record pulled directly from the local machine.',
         ],
     },
     {
         id: 'LN-007',
         timestamp: '2025.04.02',
-        tag: 'observation',
-        title: lang === 'id' ? 'tentang mendesain untuk atmosfer vs fungsionalitas' : 'on designing for atmosphere vs usability',
+        tag: 'build',
+        title: lang === 'id' ? 'knowledge browser sebagai portal informasi' : 'knowledge browser as information portal',
         body: lang === 'id' ? [
-            'Ada ketegangan antara membuat sesuatu terasa pas dan membuatnya mudah digunakan.',
-            'Estetika OS retro memaksakan batasan — segala sesuatu harus terasa sedikit lambat, disengaja, dan tidak sempurna.',
-            'Konvensi UX modern (umpan balik instan, animasi halus, keterjangkauan yang jelas) dapat merusak suasana.',
-            'Tujuannya bukan untuk memaksimalkan kegunaan. Melainkan memaksimalkan imersi.',
-            'Pengguna yang sejalan dengan ini akan menemukannya. Pengguna yang tidak akan pergi. Tidak apa-apa.',
+            'Knowledge Browser telah disiapkan sebagai permukaan utama untuk pendidikan dan informasi.',
+            'Menerapkan dukungan EN/ID penuh untuk memfasilitasi juri Indonesia.',
+            'Sistem peruteannya meniru navigasi awal — sengaja dibatasi agar terasa seperti direktori intranet lama.',
+            'Portal ini menjembatani celah antara lingkungan imersif dan penyampaian konten yang jelas.',
         ] : [
-            'There is a tension between making things feel right and making them easy to use.',
-            'The retro OS aesthetic imposes constraints — things should feel slightly slow, deliberate, and imperfect.',
-            'Modern UX conventions (instant feedback, smooth animations, obvious affordances) can break the atmosphere.',
-            'The goal is not to maximize usability. It is to maximize immersion.',
-            'Users who resonate with this will find it. Users who do not will leave. That is fine.',
+            'Knowledge Browser is now set up as the primary surface for education and information.',
+            'Implemented full EN/ID support to facilitate Indonesian judges.',
+            'Its routing system mimics early navigation — intentionally constrained to feel like an old intranet directory.',
+            'This portal bridges the gap between the immersive environment and clear content delivery.',
         ],
     },
     {
         id: 'LN-006',
         timestamp: '2025.03.15',
-        tag: 'build',
-        title: lang === 'id' ? 'sistem font: pasangan Terminal + Millennium' : 'font system: Terminal + Millennium pairing',
+        tag: 'decision',
+        title: lang === 'id' ? 'pergeseran bahasa visual' : 'visual language shift',
         body: lang === 'id' ? [
-            'Memilih Terminal (monospace, nuansa bitmap retro) untuk label, metadata, kunci, dan krom UI.',
-            'Millennium (serif, sedikit bernuansa tajuk rencana) untuk teks isi dan prosa.',
-            'Kontras antara keduanya membawa sebagian besar hierarki tanpa memerlukan perubahan ukuran.',
-            'h1 menggunakan gastromond — bobot besar dan tajuk untuk judul halaman saja.',
-            'Pasangan ini sekarang menjadi sistem desain di seluruh bagian workspace-os.',
+            'Mengarahkan antarmuka pengguna menuju nostalgia browser lama dan Windows klasik bernuansa biru-abu.',
+            'Pasangan font Terminal + Millennium berfungsi ganda: Terminal untuk krom UI, Millennium untuk teks isi.',
+            'Estetika OS retro memaksakan batasan — segala sesuatu harus terasa sedikit berat, terarah, dan tidak sempurna.',
+            'Tujuannya adalah imersi. Pengguna harus merasa seperti sedang mengoperasikan mesin yang tertinggal di masa lalu.',
         ] : [
-            'Settled on Terminal (monospace, retro bitmap feel) for labels, metadata, keys, and UI chrome.',
-            'Millennium (serif, slightly editorial) for body text and prose.',
-            'The contrast between the two carries most of the hierarchy without needing size changes.',
-            'h1 uses gastromond — large, editorial weight for page titles only.',
-            'This pairing is now the design system across all workspace-os sections.',
+            'Pivoting the user interface toward classic blue-gray Windows and old browser nostalgia.',
+            'The Terminal + Millennium font pairing does double duty: Terminal for UI chrome, Millennium for prose.',
+            'The retro OS aesthetic imposes constraints — things should feel slightly heavy, deliberate, and imperfect.',
+            'The goal is immersion. Users should feel like they are operating a machine left behind in time.',
         ],
     },
     {
         id: 'LN-005',
         timestamp: '2025.02.28',
         tag: 'process',
-        title: lang === 'id' ? 'membangun sistem jendela dari awal' : 'building the windowing system from scratch',
+        title: lang === 'id' ? 'mengembangkan sistem jendela lokal' : 'developing the local windowing system',
         body: lang === 'id' ? [
-            'Tanpa pustaka jendela pihak ketiga — membangun fungsionalitas seret, ubah ukuran, minimalkan, dan fokus z-index dari prinsip dasar.',
-            'Seret diimplementasikan melalui pendengar mousedown/mousemove/mouseup pada dokumen, bukan elemen.',
-            'Ubah ukuran menggunakan pendekatan serupa dengan deteksi sudut pegangan.',
+            'Tanpa pustaka jendela pihak ketiga — membangun fungsionalitas seret, ubah ukuran, minimalkan dari awal.',
             'Z-index dikelola melalui tumpukan fokus — jendela yang paling baru berinteraksi naik ke atas.',
-            'Batasan dari pendekatan ini menjaga perilakunya tetap konsisten dengan konvensi OS retro.',
+            'Perilakunya dijaga agar tetap konsisten dengan konvensi OS retro, memperkuat gagasan bahwa ini adalah sistem tertutup.',
         ] : [
-            'No third-party windowing library — built drag, resize, minimize, and z-index focus from first principles.',
-            'Drag implemented via mousedown/mousemove/mouseup listeners on document rather than element.',
-            'Resize uses a similar approach with resize handle corner detection.',
+            'No third-party windowing library — built drag, resize, and minimize from first principles.',
             'Z-index managed via a focus stack — most recently interacted window rises to top.',
-            'The constraints of this approach keep the behavior consistent with retro OS conventions.',
+            'Behavior is kept strictly consistent with retro OS conventions, reinforcing the idea that this is an enclosed system.',
         ],
     },
     {
         id: 'LN-004',
         timestamp: '2025.02.10',
         tag: 'reflection',
-        title: lang === 'id' ? 'mengapa ruang kerja 3D' : 'why the 3D workspace',
+        title: lang === 'id' ? 'memunculkan lapisan os lokal' : 'surfacing the local os layer',
         body: lang === 'id' ? [
-            'Portofolio yang terlihat seperti portofolio selalu terasa seperti sebuah pertunjukan.',
-            'Ruang kerja 3D adalah upaya untuk membuat karya tersebut terasa seperti ditemukan daripada disajikan.',
-            'Jika seseorang menjelajahinya dan menemukan lapisan OS serta membuka jendela — itulah pengalaman yang dimaksudkan.',
-            'Suasana harus berbicara lebih dulu sebelum konten apa pun.',
-            'Atmosfer sebagai argumen.',
+            'workspace-os berubah menjadi lapisan sistem operasi lokal yang kecil.',
+            'Dijalankan di dalam jembatan iframe, memastikan bahwa lapisan UI beroperasi secara independen dari adegan 3D.',
+            'Isolasi performa ini memungkinkan OS untuk dimuat ulang atau crash tanpa menjatuhkan ruangan secara keseluruhan.',
+            'Meninggalkan pola desain tradisional demi metafora ruang kerja yang utuh.',
         ] : [
-            'A portfolio that looks like a portfolio always feels like a performance.',
-            'The 3D workspace is an attempt to make the work feel found rather than presented.',
-            'If someone explores it and discovers the OS layer and opens a window — that is the intended experience.',
-            'The atmosphere should do the talking before any content does.',
-            'Atmosphere as argument.',
+            'workspace-os is evolving into a small local operating system layer.',
+            'Running inside an iframe bridge, ensuring the UI layer operates independently of the 3D scene.',
+            'This performance isolation allows the OS to reload or crash without taking down the room.',
+            'Leaving behind traditional design patterns in favor of a complete workspace metaphor.',
         ],
     },
     {
         id: 'LN-003',
         timestamp: '2025.01.22',
-        tag: 'build',
-        title: lang === 'id' ? 'keputusan tumpukan pasca-pemrosesan' : 'post-processing stack decisions',
+        tag: 'observation',
+        title: lang === 'id' ? 'identitas ruang kerja 3d' : '3d workstation identity',
         body: lang === 'id' ? [
-            'Menggunakan EffectComposer Three.js dengan urutan lintasan kustom.',
-            'Urutan: RenderPass → UnrealBloomPass → FilmPass kustom (butiran + garis pindai) → ShaderPass (vignette).',
-            'Ambang batas mekar dijaga tinggi — hanya elemen paling terang yang mekar. Mencegah kekeruhan.',
-            'Intensitas butiran film diatur rendah — tekstur tanpa gangguan.',
-            'Vignette menggelapkan sudut dan menambatkan adegan. Membantu fokus pada interior ruang kerja.',
+            'workspace-3d sekarang diformat sebagai ruang fisik untuk menampung sistem operasi.',
+            'Detail lingkungan ditambahkan: pembingkaian kamera sinematik, suasana monitor yang bersinar, dan label di meja.',
+            'Ruangan itu terasa seperti tempat di mana sistem ini benar-benar berjalan — sunyi dan terisolasi.',
+            'Tampilan overlay dan alur pasca-pemrosesan menjaga rendering tetap terasa membumi.',
         ] : [
-            'Using Three.js EffectComposer with a custom pass sequence.',
-            'Order: RenderPass → UnrealBloomPass → custom FilmPass (grain + scanlines) → ShaderPass (vignette).',
-            'Bloom threshold kept high — only the brightest elements bloom. Prevents muddiness.',
-            'Film grain intensity set low — texture without distraction.',
-            'Vignette darkens corners and anchors the scene. Helps focus on the workspace interior.',
+            'workspace-3d is now formatted as the physical room housing the operating system.',
+            'Environmental details added: cinematic camera framing, glowing monitor mood, and labels on the desk.',
+            'The room feels like the actual place where this system runs — quiet and isolated.',
+            'The overlay view and post-processing pipeline keep the rendering grounded.',
         ],
     },
     {
         id: 'LN-002',
         timestamp: '2024.12.05',
-        tag: 'todo',
-        title: lang === 'id' ? 'hal-hal yang pada akhirnya harus diselesaikan' : 'things to finish eventually',
+        tag: 'process',
+        title: lang === 'id' ? 'tumpukan efek dan filter' : 'effects stack and filters',
         body: lang === 'id' ? [
-            'Visualisasi cakupan audio di monitor dalam ruangan 3D.',
-            'Pencahayaan ambien berbasis jam — ruangan menjadi lebih gelap lewat tengah malam.',
-            'Partikel debu reaktif kursor mengambang di cahaya adegan.',
-            'Indikator kehadiran WebSocket — tampilkan saat operator lain sedang online.',
-            'Efek suara mengetik pada peristiwa keyboard lapisan OS.',
-            'Pengalaman cadangan seluler — versi 2D dari ruang kerja untuk layar kecil.',
+            'Menyempurnakan alur rendering untuk workspace-3d.',
+            'Ambang batas cahaya dijaga agar tinggi, memastikan hanya layar monitor yang memancarkan pendaran cahaya.',
+            'Intensitas butiran film diatur rendah untuk memberikan tekstur tanpa mengganggu visibilitas OS.',
+            'Vignette menggelapkan sudut ruangan, memusatkan fokus sepenuhnya pada layar terminal.',
         ] : [
-            'Audio scope visualization on the monitor inside the 3D room.',
-            'Clock-driven ambient lighting — room gets darker past midnight.',
-            'Cursor-reactive dust particles floating in the scene light.',
-            'WebSocket presence indicator — show when another operator is online.',
-            'Typing sound effects on the OS layer keyboard events.',
-            'Mobile fallback experience — 2D version of the workspace for small screens.',
+            'Refining the rendering pipeline for workspace-3d.',
+            'Bloom threshold kept high, ensuring only the monitor screen casts a real glow.',
+            'Film grain intensity set low to provide texture without distracting from the OS visibility.',
+            'Vignette darkens the room corners, centering all focus on the terminal screen.',
         ],
     },
     {
         id: 'LN-001',
         timestamp: '2024.11.01',
         tag: 'build',
-        title: lang === 'id' ? 'entri pertama — awal proyek' : 'first entry — project start',
+        title: lang === 'id' ? 'inisialisasi sistem utama' : 'primary system initialization',
         body: lang === 'id' ? [
-            'Mulai membangun ruang kerja 3D. Idenya: portofolio yang terasa seperti sebuah tempat, bukan halaman.',
-            'Adegan awal: ruangan kosong. Monitor di atas meja. Jendela dengan pemandangan kota. Cahaya ambien.',
-            'Tantangan pertama: membuat kamera terasa sinematik tanpa dikendalikan oleh pengguna.',
-            'Memilih paralaks melayang perlahan berdasarkan posisi kursor — cukup halus untuk terasa hidup.',
-            'Ruangan itu harus terasa seperti tempat seseorang benar-benar bekerja. Larut malam.',
+            'Mulai membangun lingkungan ruang kerja AFTER-HOURS.',
+            'Tujuannya: menyusun kolektif digital yang terasa seperti tempat fisik, yang dioperasikan melalui OS retro.',
+            'Adegan awal: ruangan kosong yang sunyi. Monitor di atas meja menyala dalam kegelapan.',
+            'Hanya terminal dan alat-alat yang tertinggal.',
         ] : [
-            'Started building the 3D workspace. The idea: a portfolio that feels like a place, not a page.',
-            'Initial scene: an empty room. Monitor on a desk. A window with a city view. Ambient light.',
-            'First challenge: making the camera feel cinematic without being controlled by the user.',
-            'Settled on a slow, drifting parallax based on cursor position — subtle enough to feel alive.',
-            'The room needs to feel like somewhere someone actually works. Late at night.',
+            'Started building the AFTER-HOURS workspace environment.',
+            'The directive: construct a digital collective that feels like a physical place, operated via a retro OS.',
+            'Initial boot scene: a quiet empty room. A monitor on a desk glowing in the dark.',
+            'Just a terminal and the tools left behind.',
         ],
     },
 ];
@@ -318,20 +300,20 @@ const getRecords = (lang: string): ArchiveRecord[] => [
     {
         id: 'ARC-003',
         year: '2024',
-        tag: 'portfolio-v2',
-        name: 'Portfolio Site v2',
+        tag: 'foundation-web',
+        name: lang === 'id' ? 'Fondasi Web Awal' : 'Foundation Web Layer',
         status: 'archived',
-        type: lang === 'id' ? 'proyek web' : 'web project',
+        type: lang === 'id' ? 'lingkungan web' : 'web environment',
         description: lang === 'id' ?
-            'Iterasi portofolio pribadi sebelumnya. SPA standar, berbasis React. Digantikan oleh pendekatan ruang kerja 3D.' :
-            'Previous iteration of the personal portfolio. Standard SPA, React-based. Replaced by the 3D workspace approach.',
+            'Iterasi lingkungan web sebelumnya. SPA standar, berbasis React. Digantikan oleh pendekatan ruang kerja 3D.' :
+            'Previous iteration of the web environment. Standard SPA, React-based. Replaced by the 3D workstation approach.',
         notes: lang === 'id' ? [
             'Aplikasi halaman tunggal React + TypeScript',
-            'Etalase proyek, pengalaman, formulir kontak',
+            'Sistem perutean standar',
             'Basis kode dasar yang kemudian diadaptasi menjadi workspace-os',
         ] : [
             'React + TypeScript single page application',
-            'Showcase of projects, experience, contact form',
+            'Standard routing system',
             'Foundation codebase later adapted into workspace-os',
         ],
     },
@@ -497,9 +479,9 @@ const Archive: React.FC<ArchiveProps> = () => {
     return (
         <div className="site-page-content">
             <div style={styles.pageHeader}>
-                <h1 style={styles.title}>Archive</h1>
+                <h1 style={styles.title}>Build Diary</h1>
                 <p style={styles.subtitle}>
-                    AFTER-HOURS / {language === 'id' ? 'registrasi proyek & artefak' : 'project & artifact registry'}
+                    AFTER-HOURS / {language === 'id' ? 'buku harian pengembangan' : 'build diary'}
                 </p>
             </div>
 
@@ -533,7 +515,7 @@ const Archive: React.FC<ArchiveProps> = () => {
             <div style={styles.terminalLine}>
                 <span style={styles.terminalPrompt}>{'>'}</span>
                 <span style={styles.terminalCmd}>
-                    archive --read --all --sort=year
+                    diary --read --all --sort=timestamp
                 </span>
             </div>
 
@@ -546,7 +528,7 @@ const Archive: React.FC<ArchiveProps> = () => {
             {/* Build Diary Section */}
             <div style={{ marginTop: 40, marginBottom: 20 }}>
                 <div style={styles.logDivider} />
-                <p style={styles.subtitle}>— {language === 'id' ? 'buku harian pembangunan' : 'build diary'}</p>
+                <p style={styles.subtitle}>— {language === 'id' ? 'buku harian pengembangan' : 'build diary'}</p>
             </div>
 
             <div style={styles.recordList}>
