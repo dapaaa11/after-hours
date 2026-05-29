@@ -166,8 +166,8 @@ const Operators: React.FC<OperatorsProps> = () => {
             <div style={styles.footer}>
                 <p style={styles.footerText}>
                     {language === 'id'
-                        ? '— beroperasi sejak 2025. di suatu tempat setelah tengah malam.'
-                        : '— operating since 2025. somewhere after midnight.'}
+                        ? '— beroperasi sejak 2026. di suatu tempat setelah tengah malam.'
+                        : '— operating since 2026. somewhere after midnight.'}
                 </p>
             </div>
         </div>

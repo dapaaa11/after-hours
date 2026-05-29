@@ -22,7 +22,7 @@ interface LabNote {
 const getNotes = (lang: string): LabNote[] => [
     {
         id: 'LN-009',
-        timestamp: '2025.05.21',
+        timestamp: '2026.05.21',
         tag: 'todo',
         title: lang === 'id' ? 'persiapan akhir penyiapan' : 'final deployment preparation',
         body: lang === 'id' ? [
@@ -39,7 +39,7 @@ const getNotes = (lang: string): LabNote[] => [
     },
     {
         id: 'LN-008',
-        timestamp: '2025.04.18',
+        timestamp: '2026.04.18',
         tag: 'build',
         title: lang === 'id' ? 'menetapkan referensi sebagai registri' : 'establishing reference as registry',
         body: lang === 'id' ? [
@@ -56,7 +56,7 @@ const getNotes = (lang: string): LabNote[] => [
     },
     {
         id: 'LN-007',
-        timestamp: '2025.04.02',
+        timestamp: '2026.04.02',
         tag: 'build',
         title: lang === 'id' ? 'knowledge browser sebagai portal informasi' : 'knowledge browser as information portal',
         body: lang === 'id' ? [
@@ -73,7 +73,7 @@ const getNotes = (lang: string): LabNote[] => [
     },
     {
         id: 'LN-006',
-        timestamp: '2025.03.15',
+        timestamp: '2026.03.15',
         tag: 'decision',
         title: lang === 'id' ? 'pergeseran bahasa visual' : 'visual language shift',
         body: lang === 'id' ? [
@@ -90,7 +90,7 @@ const getNotes = (lang: string): LabNote[] => [
     },
     {
         id: 'LN-005',
-        timestamp: '2025.02.28',
+        timestamp: '2026.02.28',
         tag: 'process',
         title: lang === 'id' ? 'mengembangkan sistem jendela lokal' : 'developing the local windowing system',
         body: lang === 'id' ? [
@@ -105,7 +105,7 @@ const getNotes = (lang: string): LabNote[] => [
     },
     {
         id: 'LN-004',
-        timestamp: '2025.02.10',
+        timestamp: '2026.02.10',
         tag: 'reflection',
         title: lang === 'id' ? 'memunculkan lapisan os lokal' : 'surfacing the local os layer',
         body: lang === 'id' ? [
@@ -122,7 +122,7 @@ const getNotes = (lang: string): LabNote[] => [
     },
     {
         id: 'LN-003',
-        timestamp: '2025.01.22',
+        timestamp: '2026.01.22',
         tag: 'observation',
         title: lang === 'id' ? 'identitas ruang kerja 3d' : '3d workstation identity',
         body: lang === 'id' ? [
@@ -251,7 +251,7 @@ interface ArchiveRecord {
 const getRecords = (lang: string): ArchiveRecord[] => [
     {
         id: 'ARC-001',
-        year: '2025',
+        year: '2026',
         tag: 'workspace-3d',
         name: 'AFTER-HOURS Workspace',
         status: 'complete',
@@ -275,7 +275,7 @@ const getRecords = (lang: string): ArchiveRecord[] => [
     },
     {
         id: 'ARC-002',
-        year: '2025',
+        year: '2026',
         tag: 'workspace-os',
         name: 'Retro OS Interface Layer',
         status: 'complete',

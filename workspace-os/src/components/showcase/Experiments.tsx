@@ -18,7 +18,7 @@ interface Experiment {
 const EXPERIMENTS: Experiment[] = [
     {
         id: 'EXP-001',
-        date: '2025.04',
+        date: '2026.04',
         tag: 'shader / atmosphere',
         name: 'CRT Phosphor Decay',
         status: 'concluded',
@@ -33,7 +33,7 @@ const EXPERIMENTS: Experiment[] = [
     },
     {
         id: 'EXP-002',
-        date: '2025.03',
+        date: '2026.03',
         tag: 'interface / motion',
         name: 'Windowed OS Drag Inertia',
         status: 'shelved',
@@ -48,7 +48,7 @@ const EXPERIMENTS: Experiment[] = [
     },
     {
         id: 'EXP-003',
-        date: '2025.02',
+        date: '2026.02',
         tag: 'audio / reactive',
         name: 'Ambient Score Reactivity',
         status: 'prototype',
@@ -63,7 +63,7 @@ const EXPERIMENTS: Experiment[] = [
     },
     {
         id: 'EXP-004',
-        date: '2025.01',
+        date: '2026.01',
         tag: 'layout / typography',
         name: 'Terminal Log UI Language',
         status: 'concluded',

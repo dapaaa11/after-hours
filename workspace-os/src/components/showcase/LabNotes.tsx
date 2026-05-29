@@ -21,7 +21,7 @@ interface LabNote {
 const NOTES: LabNote[] = [
     {
         id: 'LN-009',
-        timestamp: '2025.05.21',
+        timestamp: '2026.05.21',
         tag: 'build',
         title: 'workspace-os section expansion',
         body: [
@@ -33,7 +33,7 @@ const NOTES: LabNote[] = [
     },
     {
         id: 'LN-008',
-        timestamp: '2025.04.18',
+        timestamp: '2026.04.18',
         tag: 'decision',
         title: 'iframe bridge over component embedding',
         body: [
@@ -45,7 +45,7 @@ const NOTES: LabNote[] = [
     },
     {
         id: 'LN-007',
-        timestamp: '2025.04.02',
+        timestamp: '2026.04.02',
         tag: 'observation',
         title: 'on designing for atmosphere vs usability',
         body: [
@@ -58,7 +58,7 @@ const NOTES: LabNote[] = [
     },
     {
         id: 'LN-006',
-        timestamp: '2025.03.15',
+        timestamp: '2026.03.15',
         tag: 'build',
         title: 'font system: Terminal + Millennium pairing',
         body: [
@@ -71,7 +71,7 @@ const NOTES: LabNote[] = [
     },
     {
         id: 'LN-005',
-        timestamp: '2025.02.28',
+        timestamp: '2026.02.28',
         tag: 'process',
         title: 'building the windowing system from scratch',
         body: [
@@ -84,7 +84,7 @@ const NOTES: LabNote[] = [
     },
     {
         id: 'LN-004',
-        timestamp: '2025.02.10',
+        timestamp: '2026.02.10',
         tag: 'reflection',
         title: 'why the 3D workspace',
         body: [
@@ -97,7 +97,7 @@ const NOTES: LabNote[] = [
     },
     {
         id: 'LN-003',
-        timestamp: '2025.01.22',
+        timestamp: '2026.01.22',
         tag: 'build',
         title: 'post-processing stack decisions',
         body: [

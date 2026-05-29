@@ -19,7 +19,7 @@ interface Experiment {
 const getExperiments = (lang: string): Experiment[] => [
     {
         id: 'EXP-001',
-        date: '2025.04',
+        date: '2026.04',
         tag: 'shader / atmosphere',
         name: 'CRT Phosphor Decay',
         status: 'concluded',
@@ -41,7 +41,7 @@ const getExperiments = (lang: string): Experiment[] => [
     },
     {
         id: 'EXP-002',
-        date: '2025.03',
+        date: '2026.03',
         tag: 'interface / motion',
         name: 'Windowed OS Drag Inertia',
         status: 'shelved',
@@ -63,7 +63,7 @@ const getExperiments = (lang: string): Experiment[] => [
     },
     {
         id: 'EXP-003',
-        date: '2025.02',
+        date: '2026.02',
         tag: 'audio / reactive',
         name: 'Ambient Score Reactivity',
         status: 'prototype',
@@ -85,7 +85,7 @@ const getExperiments = (lang: string): Experiment[] => [
     },
     {
         id: 'EXP-004',
-        date: '2025.01',
+        date: '2026.01',
         tag: 'layout / typography',
         name: 'Terminal Log UI Language',
         status: 'concluded',
@@ -516,8 +516,8 @@ const Systems: React.FC<SystemsProps> = () => {
             <div style={styles.footer}>
                 <p style={styles.footerText}>
                     {language === 'id'
-                        ? '— registrasi terakhir diperbarui: 2025. sistem berjalan setelah jam kerja.'
-                        : '— registry last updated: 2025. systems running after hours.'}
+                        ? '— registrasi terakhir diperbarui: 2026. sistem berjalan setelah jam kerja.'
+                        : '— registry last updated: 2026. systems running after hours.'}
                 </p>
             </div>
         </div>

@@ -27,7 +27,7 @@ const ShowcaseExplorer: React.FC<ShowcaseExplorerProps> = (props) => {
             closeWindow={props.onClose}
             onInteract={props.onInteract}
             minimizeWindow={props.onMinimize}
-            bottomLeftText={'© 2025 after-hours collective'}
+            bottomLeftText={'© 2026 after-hours collective'}
         >
             <Router>
                 <LanguageProvider>
